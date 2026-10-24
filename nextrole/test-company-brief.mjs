@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {listingOverview,companyHeadlines} from './dist/company-brief.mjs';
+const job={company:'Example (AI)',description:'About us\nExample (AI) is a software company. We are hiring engineers.'};
+const overview=listingOverview(job);
+assert.equal(overview,'Example (AI) is a software company.');
+assert(job.description.includes(overview));
+assert.equal(listingOverview({...job,description:'Work with other organizations. No business overview supplied.'}),'');
+assert.equal(listingOverview({company:'',description:job.description}),'');
+const feed={available:true,items:[{title:'A music review - Notion',publisher:'Notion'},{title:'Notion launches a new product - Example News',publisher:'Example News'},{title:'Metabolic discoveries',publisher:'Research News'}]};
+assert.equal(companyHeadlines(feed,'Notion').items.length,1);
+assert.equal(companyHeadlines(feed,'Meta').items.length,0);
+assert.equal(companyHeadlines({items:[{title:'Tennis ATP BNP Paribas Open: match results',publisher:'Sports News'}]},'BNP Paribas').items.length,0);
+console.log('Passed: company overviews use exact employer-named source text and leave missing information unknown.');

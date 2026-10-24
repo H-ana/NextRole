@@ -1,0 +1,14 @@
+# Local agent metadata and private applicant artifacts
+.openai/
+.codex/
+.agents/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.docx
+*.pdf
+# Development screenshots may contain applicant names and contact details
+/nextrole/*.png

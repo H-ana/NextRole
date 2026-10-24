@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {buildReviewedDraft} from './dist/tailoring-draft.mjs';
+const source='Alex\nProfile\nOriginal summary.\nExperience\nEmployer A | 2022–2024\nFirst bullet.\nSecond bullet.\nEmployer B | 2020–2022\nOther bullet.\nProjects\nProject A\nProject A bullet.\nProject B\nProject B bullet.';
+const data={suggestions:[{line_index:5,original:'First bullet.',replacement:'Improved first bullet.'}],summary_suggestion:{text:'Approved summary.',replace_indices:[2]},ordering_suggestions:[{kind:'bullets',items:[[5],[6]],item_order:[1,0]},{kind:'projects',items:[[10,11],[12,13]],item_order:[1,0]}]};
+assert.equal(buildReviewedDraft(source,data),source);
+const result=buildReviewedDraft(source,data,{wordings:[0],summary:true,orderings:[0,1]});
+assert(result.includes('Profile\nApproved summary.'));assert(result.includes('Second bullet.\nImproved first bullet.'));
+assert(result.indexOf('Employer A')<result.indexOf('Employer B'));assert(result.includes('Projects\nProject B\nProject B bullet.\nProject A\nProject A bullet.'));
+assert.equal(source.split('\n')[2],'Original summary.');
+const overlapping={...data,suggestions:[{line_index:2,original:'Original summary.',replacement:'Another summary.'}]};assert.throws(()=>buildReviewedDraft(source,overlapping,{wordings:[0],summary:true}),/either/);
+assert.throws(()=>buildReviewedDraft(source.replace('First bullet.','changed'),data,{wordings:[0]}),/changed/);
+const malformed={...data,ordering_suggestions:[{items:[[5],[6]],item_order:[1,1]}]};assert.throws(()=>buildReviewedDraft(source,malformed,{orderings:[0]}),/Invalid/);
+const noSummary={...data,summary_suggestion:{text:'New summary.',replace_indices:[]}};assert(buildReviewedDraft('Alex\nExperience\nEmployer',noSummary,{summary:true}).includes('Alex\nSUMMARY\nNew summary.\n\nExperience'));
+console.log('Passed: independent approvals, immutable source, summary replacement/insertion, role-bound bullet order and whole-project moves.');

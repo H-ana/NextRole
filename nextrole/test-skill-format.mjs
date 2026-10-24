@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {formatSkillSections} from './dist/skill-format.mjs';
+import {resumePreview} from './dist/resume-preview.mjs';
+import {buildReviewedDraft} from './dist/tailoring-draft.mjs';
+const skills='PythonAnthropic Claude\nMicrosoft ExcelPrompt EngineeringMachine Learning\nAPILangGraph\nPostgresSQLData analysisSQL';
+const comma='Python, Anthropic Claude, Microsoft Excel, Prompt Engineering, Machine Learning, API, LangGraph, PostgresSQL, Data analysis, SQL';
+const source='Alex Example\nPROFILE\nPython reporting experience.\nSKILLS\n'+skills+'\n\nCERTIFICATIONS\nExample Certificate\nPROJECTS\nBuilt SQL reports.';
+const expected=source.replace(skills,comma);
+assert.equal(formatSkillSections(source),expected);
+assert.equal(formatSkillSections(expected),expected,'Formatting must be idempotent');
+assert.equal(buildReviewedDraft(source,{suggestions:[]}),expected);
+assert(resumePreview(source).includes(comma));
+assert.equal(formatSkillSections('Technical skills\nC++, C#; Node.js | Power BI\nFinancial modeling\nEDUCATION\nDegree'),'Technical skills\nC++, C#, Node.js, Power BI, Financial modeling\nEDUCATION\nDegree');
+assert.equal(formatSkillSections('Skills: PythonSQL\nExperience\nBuilt SQL reports.'),'Skills:\nPython, SQL\nExperience\nBuilt SQL reports.');
+assert.equal(formatSkillSections('Skills\nUnknownThingSQL\nNoSQL\nEducation\nDegree'),'Skills\nUnknownThingSQL, NoSQL\nEducation\nDegree','Unknown merged terms must not be guessed or discarded');
+assert.equal(formatSkillSections('Profile\nPythonSQL\nExperience\nNo changes.'),'Profile\nPythonSQL\nExperience\nNo changes.','Only skills sections can change');
+assert.equal(formatSkillSections(source).replace(/[\s,]/g,''),source.replace(/[\s,]/g,''),'Existing skill spellings and all other content must remain unchanged');
+console.log('Passed: comma-separated skills across preview/drafts, joined known skills, unknown skill preservation, multiword names, section boundaries and unchanged facts.');

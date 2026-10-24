@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {allCorrectionChoices,mergeCorrectionBatch} from './dist/correction-selection.mjs';
+import {applyExtractionCorrections} from './dist/extraction-review.mjs';
+const data={suggestions:Array.from({length:10},(_,i)=>({line_index:i+3})),ordering_suggestions:[{group_id:'projects'}],summary_suggestion:{replace_indices:[3]},advice:['Keep facts'],review_progress:{remaining:2}};
+const choices=allCorrectionChoices(data);assert.equal(choices.wordings.length,10);assert.equal(choices.orderings.length,1);assert.equal(choices.summary,false);assert.equal(choices.conflict,true);
+assert.equal(allCorrectionChoices({...data,summary_suggestion:{replace_indices:[]}}).summary,true);
+const merged=mergeCorrectionBatch(data,{suggestions:[{line_index:3},{line_index:50}],advice:['Keep facts','More advice'],review_progress:{remaining:0}});
+assert.equal(merged.suggestions.length,11);assert.equal(merged.review_progress.remaining,0);assert.equal(data.suggestions.length,10);assert.equal(merged.advice.length,2);
+const source='PythonSQL\n03/04/2024';
+const corrections=[{index:0,original:'PythonSQL',replacement:'Python, SQL'},{index:1,original:'03/04/2024',replacement:'4 March 2024'}];
+assert.equal(applyExtractionCorrections(source,corrections,[0,1]),'Python, SQL\n4 March 2024');
+assert.throws(()=>applyExtractionCorrections(source,[...corrections,{index:0,original:'PythonSQL',replacement:'Python | SQL'}],[0,2]),/same line/);
+console.log('Passed: bulk selection beyond six, explicit summary conflicts, cumulative review batches, and all automatic/manual extraction corrections.');

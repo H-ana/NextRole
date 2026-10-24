@@ -1,0 +1,133 @@
+[
+  {
+    "id": "figma",
+    "company": "Figma",
+    "provider": "careers",
+    "careers_url": "https://www.figma.com/careers/",
+    "allowed_hosts": [
+      "job-boards.greenhouse.io",
+      "boards.greenhouse.io"
+    ]
+  },
+  {
+    "id": "stripe",
+    "company": "Stripe",
+    "provider": "careers",
+    "careers_url": "https://stripe.com/careers/search",
+    "allowed_hosts": []
+  },
+  {
+    "id": "calendly",
+    "company": "Calendly",
+    "provider": "careers",
+    "careers_url": "https://calendly.com/careers",
+    "allowed_hosts": [
+      "job-boards.greenhouse.io",
+      "boards.greenhouse.io"
+    ]
+  },
+  {
+    "id": "rubrik",
+    "company": "Rubrik",
+    "provider": "careers",
+    "careers_url": "https://www.rubrik.com/company/careers",
+    "allowed_hosts": [
+      "careers.rubrik.com",
+      "job-boards.greenhouse.io",
+      "boards.greenhouse.io"
+    ]
+  },
+  {
+    "id": "databricks",
+    "company": "Databricks",
+    "provider": "careers",
+    "careers_url": "https://www.databricks.com/company/careers/open-positions",
+    "allowed_hosts": [
+      "job-boards.greenhouse.io",
+      "boards.greenhouse.io"
+    ]
+  },
+  {
+    "id": "razorpay",
+    "company": "Razorpay",
+    "provider": "careers",
+    "careers_url": "https://razorpay.com/careers/",
+    "allowed_hosts": [
+      "job-boards.greenhouse.io",
+      "boards.greenhouse.io"
+    ]
+  },
+  {
+    "id": "notion",
+    "company": "Notion",
+    "provider": "careers",
+    "careers_url": "https://www.notion.com/careers",
+    "allowed_hosts": [
+      "jobs.ashbyhq.com"
+    ]
+  },
+  {
+    "id": "ramp",
+    "company": "Ramp",
+    "provider": "careers",
+    "careers_url": "https://ramp.com/careers",
+    "allowed_hosts": [
+      "jobs.ashbyhq.com"
+    ]
+  },
+  {
+    "id": "atlan",
+    "company": "Atlan",
+    "provider": "careers",
+    "careers_url": "https://atlan.com/careers/",
+    "allowed_hosts": [
+      "jobs.lever.co",
+      "jobs.ashbyhq.com"
+    ]
+  },
+  {
+    "id": "linkedin",
+    "company": "LinkedIn jobs added by you",
+    "provider": "manual"
+  },
+  {
+    "id": "naukri",
+    "company": "Naukri jobs added by you",
+    "provider": "manual"
+  },
+  {
+    "id": "indeed",
+    "company": "Indeed jobs added by you",
+    "provider": "manual"
+  },
+  {
+    "provider": "platform",
+    "id": "jobspy",
+    "company": "JobSpy platform listings"
+  },
+  {
+    "provider": "manual",
+    "id": "glassdoor",
+    "company": "Glassdoor jobs added by you"
+  },
+  {
+    "provider": "manual",
+    "id": "ziprecruiter",
+    "company": "ZipRecruiter jobs added by you"
+  },
+  {
+    "provider": "manual",
+    "id": "bayt",
+    "company": "Bayt jobs added by you"
+  },
+  {
+    "provider": "manual",
+    "id": "bdjobs",
+    "company": "BDJobs jobs added by you"
+  },
+  {
+    "provider": "manual",
+    "id": "hellowork",
+    "company": "HelloWork jobs added by you"
+  }
+]

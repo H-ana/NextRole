@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {displayedScore} from './dist/job-ranking.mjs';
+assert.equal(displayedScore({relevance_score:0},false),null,'An empty browse query must not display a zero relevance rating');
+assert.equal(displayedScore({relevance_score:85},false),null,'Old rank values must not be reused while browsing');
+assert.equal(displayedScore({relevance_score:0},true),0,'A genuine ranked zero must remain visible');
+assert.equal(displayedScore({relevance_score:74},true),74);
+assert.equal(displayedScore({agent:{score:0},relevance_score:74},true),0,'Fit review zero must not fall through to the relevance score');
+assert.equal(displayedScore({},true),null,'Missing ranking must not become a keyword score');
+assert.equal(displayedScore({relevance_score:NaN},true),null);
+console.log('Passed: unranked browsing has no score; ranked and reviewed zero scores are preserved; missing/invalid scores stay unknown.');

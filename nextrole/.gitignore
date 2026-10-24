@@ -1,0 +1,10 @@
+.env
+.env.local
+__pycache__/
+*.pyc
+.local-deps/
+.jobspy-deps/
+.models/
+.browsers/
+data/
+export-qa/
