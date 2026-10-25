@@ -90,16 +90,24 @@ Your original resume stays loaded in that browser until you replace or remove it
 
 ## How matching works
 
-```mermaid
-flowchart LR
-    A[Company careers pages] --> C[Public job cache]
-    B[JobSpy platform searches] --> C
-    R[Original resume and preferences] --> M[Local matching]
-    C --> M
-    M --> J[Ranked jobs and application links]
-    J --> G[Optional Gemini review and tailoring]
-    G --> U[User-approved draft]
-    U --> W[Validated Word export]
+```text
+Company careers pages --+
+                       +--> Public job cache
+JobSpy searches -------+           |
+                                   v
+Original resume + preferences --> Local matching
+                                   |
+                                   v
+                         Ranked jobs + apply links
+                                   |
+                                   v
+                         Optional Gemini review
+                                   |
+                                   v
+                          User-approved resume
+                                   |
+                                   v
+                          Validated Word export
 ```
 
 Search first applies location, work-style and clearly stated experience rules. Unknown requirements remain uncertain rather than being treated as verified qualifications.
