@@ -16,6 +16,24 @@ class TailoringV2Tests(unittest.TestCase):
             return {'checks':[{'line_index':e['line_index'],'faithful':verify,'reason':'test'} for e in prompt['edits']]}
         return tailor({'resume':RESUME,'job':JOB},model)
 
+    def test_confirmed_scope_is_preserved_and_guidance_uses_only_source(self):
+        source=RESUME.replace('- Automated SQL reporting.', '- Automated SQL reporting. Reviewed 500 records weekly.')
+        proposal=response()
+        proposal['suggestions']=[dict(line_index=6,original=source.splitlines()[6],replacement='- Automated SQL reporting; reviewed 500 records each week.',job_quote='SQL reporting.',rationale='Shows verified scope')]
+        calls=[]
+        def model(schema,name,prompt):
+            calls.append((name,prompt))
+            if name=='resume_suggestions':
+                self.assertIn('action + scope + method + outcome',prompt['task'])
+                self.assertIn('Reviewed 500 records weekly.',prompt['resume'])
+                return copy.deepcopy(proposal)
+            self.assertIn('500',prompt['edits'][0]['original'])
+            return {'checks':[{'line_index':6,'faithful':True,'reason':'Preserves confirmed scope'}]}
+        result=tailor({'resume':source,'job':JOB},model)
+        self.assertEqual(len(result['suggestions']),1)
+        self.assertEqual(calls[-1][0],'factual_verification')
+        self.assertNotIn('500',RESUME)
+
     def test_short_bullets_editable_but_headers_dates_and_qualifications_locked(self):
         indices={r['line_index'] for r in editable_lines(RESUME)}
         self.assertIn(6,indices);self.assertIn(9,indices)

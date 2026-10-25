@@ -1,8 +1,8 @@
 const headings=/^(profile|career objective|objective|relevant skills|professional summary|summary|experience|work experience|professional experience|employment history|education|skills|technical skills|soft skills|additional skills|projects|certifications|certificates|achievements|publications|languages)\s*:?$/i;
 const escape=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-import {formatSkillSections} from './skill-format.mjs?v=39';
-import {personalContact} from './resume-header.mjs?v=39';
+import {formatSkillSections} from './skill-format.mjs?v=91';
+import {personalContact} from './resume-header.mjs?v=91';
 // Formatting only: preserve skill names and never infer qualifications.
 export function resumePreview(text){
  text=formatSkillSections(text);

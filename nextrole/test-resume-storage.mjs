@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {readRetainedResume,retainResume} from './dist/resume-storage.mjs';
+let record=null;const storage={getItem:()=>record,setItem:(k,v)=>{record=v;},removeItem:()=>{record=null;}};
+assert.equal(readRetainedResume(storage),'');assert(retainResume(storage,'Original SQL resume\nExperience'));assert.equal(readRetainedResume(storage),'Original SQL resume\nExperience');
+assert(retainResume(storage,'Replacement Python resume'));assert.equal(readRetainedResume(storage),'Replacement Python resume');
+assert(retainResume(storage,''));assert.equal(readRetainedResume(storage),'');
+retainResume(storage,'Old resume');const full={...storage,setItem:()=>{throw new Error('Quota exceeded');}};assert.equal(retainResume(full,'New resume'),false);assert.equal(readRetainedResume(storage),'','A failed replacement must not resurrect the old resume');
+record='{invalid';assert.equal(readRetainedResume(storage),'');record=JSON.stringify({version:1,text:123});assert.equal(readRetainedResume(storage),'');
+assert.equal(readRetainedResume(null),'');assert.equal(retainResume(null,'Resume'),false);
+assert.throws(()=>retainResume(storage,{}),/string/);
+console.log('Resume retention, replacement, removal, corrupted storage and storage failure checks passed.');

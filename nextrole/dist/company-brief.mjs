@@ -1,4 +1,4 @@
-import {findBackend,apiRequest} from './api-client.mjs?v=39';
+import {findBackend,apiRequest} from './api-client.mjs?v=91';
 
 const safe=value=>{try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password?u.href:null;}catch{return null;}};
 const node=(tag,text,className)=>{const e=document.createElement(tag);if(text)e.textContent=text;if(className)e.className=className;return e;};

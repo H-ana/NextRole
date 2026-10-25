@@ -1,5 +1,5 @@
-import {formatSkillSections} from './skill-format.mjs?v=39';
-import {resumePreview} from './resume-preview.mjs?v=39';
+import {formatSkillSections} from './skill-format.mjs?v=91';
+import {resumePreview} from './resume-preview.mjs?v=91';
 
 const heading=/^(profile|summary|professional summary|career objective|objective|experience|work experience|professional experience|employment history|projects|education|skills|technical skills|relevant skills|soft skills|additional skills|certifications|certificates|qualifications|licenses|achievements|publications|languages)\s*:?$/i;
 const skillHeading=/^(?:skills|technical skills|relevant skills|soft skills|additional skills)\s*:?$/i;

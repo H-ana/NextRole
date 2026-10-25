@@ -1,5 +1,5 @@
 // Change separators only. Never infer skills or correct their spelling.
-import {personalContact} from './resume-header.mjs?v=39';
+import {personalContact} from './resume-header.mjs?v=91';
 const known=['Anthropic Claude','Microsoft Excel','Prompt Engineering','Machine Learning','Data Analysis','PostgreSQL','PostgresSQL','NoSQL','MySQL','OpenAPI','ReactJS','Python','FastAPI','LangGraph','Claude API','Power BI','SQL','API','Excel','Docker','Kubernetes','JavaScript','TypeScript','React','Git','Node.js','Java','AWS','Figma','Product Design','Project Management','Communication','Tableau','Agile','HTML','CSS','C++','C#','Rust','Go','R'].sort((a,b)=>b.length-a.length);
 const skillHeading=/^\s*(?:skills|technical skills|relevant skills|soft skills|additional skills)\s*:?\s*$/i;
 const sectionHeading=/^\s*(?:profile|career objective|objective|professional summary|summary|experience|work experience|professional experience|employment history|education|projects|certifications|certificates|qualifications|licenses|achievements|publications|languages)\s*:?\s*$/i;

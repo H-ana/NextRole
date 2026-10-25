@@ -7,7 +7,8 @@ class Element{
  set id(value){this._id=value;if(value)elements.set(value,this);}get id(){return this._id;}
  set innerHTML(value){this.html=value;}get innerHTML(){return this.html||'';}
  setAttribute(name,value){this[name]=value;}addEventListener(name,handler){(this.listeners[name]??=[]).push(handler);}
- append(e){this.children.push(e);}after(){}before(){}replaceChildren(){this.children=[];this.html='';this.textContent='';}scrollIntoView(){}
+ get childNodes(){return this.children;}
+ append(e){this.children.push(e);}after(){}before(){}replaceChildren(...items){this.children=items;this.html='';this.textContent='';}scrollIntoView(){}
  querySelector(){return el('description');}querySelectorAll(){return [];}
  showModal(){this.open=true;}close(){this.open=false;for(const handler of this.listeners.close||[])handler({});}
 }
@@ -27,7 +28,8 @@ globalThis.fetch=async(url,options)=>{
  if(url.endsWith('/api/agent/tailor'))return {ok:true,json:async()=>({suggestions:[],advice:[],note:'Preserve original facts.'})};
  throw new Error('Unexpected endpoint '+url);
 };
-const app=setupAgentUI({getResume:()=>resume,getPreferences:()=>preferences,acceptSearch:r=>searches.push(r),acceptAssessment:(j,a)=>reviews.push(a),onSearchStart:()=>{searchStarts++;},canTailor:()=>extractionReady});
+let approvedAddition='';
+const app=setupAgentUI({interview:async source=>({source:source+approvedAddition,facts:[]}),getResume:()=>resume,getPreferences:()=>preferences,acceptSearch:r=>searches.push(r),acceptAssessment:(j,a)=>reviews.push(a),onSearchStart:()=>{searchStarts++;},canTailor:()=>extractionReady});
 assert.equal(calls.length,0,'No diagnostic/model requests on startup');
 assert.equal(created.some(e=>/Your resume, understood once|Compare model speed|GEMINI MODEL/.test(e.innerHTML)),false,'No technical panel is created');
 const submit=()=>el('job-search-form').onsubmit({preventDefault(){}});
@@ -51,6 +53,8 @@ const before=calls.length;await review.onclick();assert.equal(calls.length,befor
 preferences={experience:3,cities:['Mumbai'],workstyle:'Hybrid'};await review.onclick();assert.equal(calls.length,before+1,'Updated preferences require a fresh fit review');
 const beforeWarning=calls.length;extractionReady=false;await el('ai-tailor').onclick();assert.equal(calls.length,beforeWarning);assert.match(el('ai-tailoring').textContent,/acknowledge/);
 extractionReady=true;await el('ai-tailor').onclick();assert.match(calls.at(-1).url,/agent\/tailor$/);assert.equal(el('ai-tailor').disabled,false);
+approvedAddition=' Confirmed scope: 500 records.';await el('ai-tailor').onclick();assert.equal(calls.at(-1).body.resume,resume+approvedAddition);assert.equal(el('tailor-source').value,resume,'The original matching resume remains unchanged');approvedAddition='';
+const retainedDraft=new Element('retained-draft');el('ai-tailoring').append(retainedDraft);quota=true;await el('ai-tailor').onclick();assert(el('ai-tailoring').children.includes(retainedDraft),'Quota failures retain the existing draft DOM and controls');quota=false;
 assert.equal(calls.some(c=>/profile$|benchmark$|connection-test$/.test(c.url)),false,'No separate parse or diagnostic action is exposed or invoked');
 const manage=created.find(e=>e.textContent==='AI data permission');pending=manage.onclick();
 for(const handler of el('ai-permission').listeners.cancel)handler({preventDefault(){}});await pending;

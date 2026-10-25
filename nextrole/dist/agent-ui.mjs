@@ -1,8 +1,9 @@
-import {downloadOnePageResume} from './one-page-export.mjs?v=39';
-import {buildReviewedDraft} from './tailoring-draft.mjs?v=39';
-import {mountResumeBuilder} from './resume-builder.mjs?v=39';
-import {allCorrectionChoices,mergeCorrectionBatch} from './correction-selection.mjs?v=39';
-import {findBackend,apiRequest} from './api-client.mjs?v=39';
+import {clarifyResume,draftChanges} from './resume-interview.mjs?v=91';
+import {downloadOnePageResume} from './one-page-export.mjs?v=91';
+import {buildReviewedDraft} from './tailoring-draft.mjs?v=91';
+import {mountResumeBuilder} from './resume-builder.mjs?v=91';
+import {allCorrectionChoices,mergeCorrectionBatch} from './correction-selection.mjs?v=91';
+import {findBackend,apiRequest} from './api-client.mjs?v=91';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function withConfirmedExperience(assessment,years){
@@ -16,7 +17,7 @@ export function friendlyAiError(error){
  if(/changed|complete.*resume|upload|paste|acknowledge|warnings|Restart the backend/i.test(message))return message;
  return 'AI assistance is temporarily unavailable. Please try again later. Job search and applications are still available.';
 }
-export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssessment,onSearchStart=()=>{},canTailor=()=>true}){
+export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssessment,onSearchStart=()=>{},canTailor=()=>true,filterJobs=jobs=>jobs,interview=clarifyResume}){
  let running=false,consented=false,permissionPromise=null,consentResolver=null,revision=0;
  const completedReviews=new Map();
  try{consented=sessionStorage.getItem('nextrole-ai-consent')==='allowed';}catch{}
@@ -55,15 +56,16 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
  }
  const fingerprint=()=>JSON.stringify({resume:getResume(),preferences:getPreferences()});
  let platformPoll=null,searchSequence=0;
- const searchMessage=(result,hasResume)=>result.jobs.length?(hasResume?`${result.jobs.length} jobs ranked for your resume.`:`${result.jobs.length} jobs found for your preferences. Upload a resume to rank them.`):'No matching jobs found. Try more cities or a broader search.';
+ const searchMessage=(result,hasResume)=>result.jobs.length?(hasResume?`${result.jobs.length} jobs ranked for your resume.`:`${result.jobs.length} jobs found for your preferences. Upload a resume to rank them.`):(result.filtered_count?'No matching jobs found. Try another search or refresh jobs.':'No matching jobs found. Try more cities or a broader search.');
  function pollPlatform(body,snapshot,sequence,hasResume,attempt=0){
   platformPoll=setTimeout(async()=>{
    if(sequence!==searchSequence||snapshot!==fingerprint())return;
    try{
     const context=await findBackend();const result=await apiRequest(context.origin,'/api/jobs/search',body);
     if(sequence!==searchSequence||snapshot!==fingerprint())return;
-    acceptSearch({...result,resume_ranked:hasResume,incremental:true});
-    searchStatus.textContent=searchMessage(result,hasResume);
+    const visible={...result,jobs:filterJobs(result.jobs)};visible.filtered_count=result.jobs.length-visible.jobs.length;
+    acceptSearch({...visible,resume_ranked:hasResume,incremental:true});
+    searchStatus.textContent=searchMessage(visible,hasResume);
     if(result.platform_search?.refreshing&&attempt<99)pollPlatform(body,snapshot,sequence,hasResume,attempt+1);
    }catch{/* Keep the current results while a background update is unavailable. */}
   },3000);
@@ -84,7 +86,8 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
    }
    const result=await apiRequest(context.origin,'/api/jobs/search',body);
    if(snapshot!==fingerprint())throw new Error('Your resume or preferences changed. Search again with the updated information.');
-   acceptSearch({...result,resume_ranked:hasResume});searchStatus.textContent=searchMessage(result,hasResume);
+   const visible={...result,jobs:filterJobs(result.jobs)};visible.filtered_count=result.jobs.length-visible.jobs.length;
+   acceptSearch({...visible,resume_ranked:hasResume});searchStatus.textContent=searchMessage(visible,hasResume);
    if(result.platform_search?.refreshing)pollPlatform(body,snapshot,sequence,hasResume);
   }catch(e){searchStatus.textContent=/changed/.test(e.message)?e.message:'Job search is temporarily unavailable. Please try again shortly.';}
   finally{running=false;$('find-jobs').disabled=false;}
@@ -96,7 +99,7 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
  function showJobTools(job){
   const description=$('detail-content').querySelector('.job-description');
   const reviewArea=document.createElement('div');reviewArea.id='ai-fit-review';description.after(reviewArea);reviewArea.innerHTML=assessmentHtml(job.agent);
-  const reviewButton=document.createElement('button');reviewButton.className='secondary';reviewButton.type='button';reviewButton.textContent='Review my fit';reviewArea.before(reviewButton);
+  const reviewButton=document.createElement('button');reviewButton.id='review-fit-button';reviewButton.className='secondary';reviewButton.type='button';reviewButton.textContent='Review my fit';reviewArea.before(reviewButton);
   const dataPermission=document.createElement('button');dataPermission.type='button';dataPermission.className='data-permission';dataPermission.textContent='AI data permission';reviewArea.after(dataPermission);dataPermission.onclick=()=>permission(true);
   reviewButton.onclick=async()=>{
    const source=getResume().replace(/\r\n?/g,'\n'),snapshot=fingerprint();
@@ -121,22 +124,25 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
   const container=document.createElement('div');container.id='ai-tailoring';button.after(container);
   $('tailor-source').addEventListener('input',()=>{revision++;container.replaceChildren();});
   button.onclick=async()=>{
-   const source=$('tailor-source').value.replace(/\r\n?/g,'\n');
+   const matchingSource=$('tailor-source').value.replace(/\r\n?/g,'\n');let source=matchingSource,confirmedFacts=[],previousContent=null;
    const startedRevision=++revision;
    if(source.trim().length<40){container.textContent='Provide your complete original resume first.';return;}
    button.disabled=true;
    try{
-    if(source!==getResume().replace(/\r\n?/g,'\n'))throw new Error('Your resume changed here. Update the matching resume using Use this resume before AI tailoring.');
-    if(!canTailor(source))throw new Error('Review your imported resume warnings above the job results and acknowledge them before AI tailoring.');
+    if(matchingSource!==getResume().replace(/\r\n?/g,'\n'))throw new Error('Your resume changed here. Update the matching resume using Use this resume before AI tailoring.');
+    if(!canTailor(matchingSource))throw new Error('Review your imported resume warnings above the job results and acknowledge them before AI tailoring.');
+    const answers=await interview(matchingSource,job);if(!answers)return;source=answers.source;confirmedFacts=answers.facts||[];
+    if(!container.isConnected||startedRevision!==revision||getResume().replace(/\r\n?/g,'\n')!==matchingSource)throw new Error('Your resume changed. Start a fresh review.');
     const context=await requireAI();
     if(!(context.status.capabilities||[]).includes('tailoring-evidence-v2'))throw new Error('Restart the backend with python start_agent.py to load evidence-based tailoring.');
     if(!(context.status.capabilities||[]).includes('bulk-resume-corrections'))throw new Error('Restart the backend with python start_agent.py to load full resume review and bulk corrections.');
-    if(!container.isConnected||$('tailor-source').value.replace(/\r\n?/g,'\n')!==source)throw new Error('Your resume changed. Request fresh suggestions.');
-    if(source!==getResume().replace(/\r\n?/g,'\n'))throw new Error('Your resume changed here. Update the matching resume using Use this resume before AI tailoring.');
-    if(!canTailor(source))throw new Error('Review your imported resume warnings above the job results and acknowledge them before AI tailoring.');
+    if(!container.isConnected||$('tailor-source').value.replace(/\r\n?/g,'\n')!==matchingSource)throw new Error('Your resume changed. Request fresh suggestions.');
+    if(matchingSource!==getResume().replace(/\r\n?/g,'\n'))throw new Error('Your resume changed here. Update the matching resume using Use this resume before AI tailoring.');
+    if(!canTailor(matchingSource))throw new Error('Review your imported resume warnings above the job results and acknowledge them before AI tailoring.');
+    previousContent=[...container.childNodes];
     container.textContent='Preparing the job evidence map and checking role-specific suggestions against your original experience...';
     let data=await requestAI(context,'/api/agent/tailor',{resume:source,job:{id:job.id,title:job.title,company:job.company,description:job.description,location:job.location}});
-    if(!container.isConnected||startedRevision!==revision||getResume().replace(/\r\n?/g,'\n')!==source||$('tailor-source').value.replace(/\r\n?/g,'\n')!==source||!consented)return;
+    if(!container.isConnected||startedRevision!==revision||getResume().replace(/\r\n?/g,'\n')!==matchingSource||$('tailor-source').value.replace(/\r\n?/g,'\n')!==matchingSource||!consented)return;
     function renderSuggestions(selection=null){
     const labels={supported:'Supported',partial:'Partially supported',missing:'Missing',unknown:'Unclear'};
     container.innerHTML=`<h4>Job requirement evidence</h4><p>A focused review of up to eight decisive requirements, not an exhaustive eligibility assessment. Missing qualifications are never added to your resume.</p>${(data.requirements||[]).map(r=>`<div class="requirement ${esc(r.status)}"><strong>${esc(r.requirement)}</strong><span>${esc(r.importance)} · ${esc(labels[r.status]||'Unclear')}</span><p><b>Job:</b> ${esc(r.job_quote||'Evidence unavailable')}</p><p><b>Resume:</b> ${esc(r.resume_quote||'Not evidenced')}</p></div>`).join('')||'<p>No validated evidence map was returned.</p>'}<h4>Review proposed wording changes</h4><p>${esc(data.note)}</p><p>${data.review_progress?`${data.review_progress.reviewed} of ${data.review_progress.total} editable wording lines reviewed. ${data.review_progress.remaining} remaining.`:""}</p><div class="correction-actions"><button type="button" id="select-all-ai" class="secondary">Select all compatible changes</button><button type="button" id="clear-ai-selection" class="secondary">Clear selection</button><button type="button" id="apply-all-ai" class="find-jobs">Apply all compatible changes</button>${data.review_progress?.remaining?`<button type="button" id="review-more-lines" class="secondary">Review next ${Math.min(8,data.review_progress.remaining)} lines</button>`:""}</div><p id="correction-selection-status" role="status"></p>${data.suggestions.map((s,i)=>`<label class="ai-edit"><input type="checkbox" data-wording="${i}" value="${i}"><span><strong>Original</strong><p>${esc(s.original)}</p><strong>Suggestion</strong><p>${esc(s.replacement)}</p><small>${esc(s.rationale)}</small><p><b>Job evidence:</b> ${esc(s.job_quote)}</p></span></label>`).join('')||'<p>No wording changes passed the factual checks. Keep the original text and review the advice below.</p>'}${data.summary_suggestion?`<h4>Optional role-specific summary</h4><label class="ai-edit"><input type="checkbox" id="select-summary"><span><strong>${data.summary_suggestion.replace_indices.length?'Replace existing summary':'Insert summary'}</strong><p>${esc(data.summary_suggestion.text)}</p><small>${esc(data.summary_suggestion.rationale)}</small><p><b>Resume evidence:</b> ${data.summary_suggestion.resume_quotes.map(esc).join('<br>')}</p><p><b>Job evidence:</b> ${esc(data.summary_suggestion.job_quote)}</p></span></label>`:''}${(data.ordering_suggestions||[]).length?`<h4>Optional emphasis and ordering</h4>${data.ordering_suggestions.map((o,i)=>`<label class="ai-edit"><input type="checkbox" data-ordering="${i}"><span><strong>${esc(o.label)}</strong><p>${esc(o.rationale)}</p><p><b>Proposed order:</b> ${o.item_order.map(n=>esc(source.split('\n')[o.items[n][0]])).join(' → ')}</p><p><b>Job evidence:</b> ${esc(o.job_quote)}</p></span></label>`).join('')}`:''}<h4>Job-specific advice</h4><p>${data.advice.map(esc).join('<br>')}</p><button id="apply-ai-edits" class="secondary">Build draft with selected edits</button><div id="ai-draft"></div>`;
@@ -161,17 +167,18 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
     if(data.review_progress?.remaining)$('review-more-lines').onclick=async()=>{
      const nextButton=$('review-more-lines'),progressStatus=$('correction-selection-status');nextButton.disabled=true;progressStatus.textContent='Reviewing the next wording lines. Existing corrections remain available.';
      try{
-      if(!consented||startedRevision!==revision||getResume().replace(/\r\n?/g,'\n')!==source)throw new Error('Your resume or permission changed. Start a fresh review.');
+      if(!consented||startedRevision!==revision||getResume().replace(/\r\n?/g,'\n')!==matchingSource)throw new Error('Your resume or permission changed. Start a fresh review.');
       const next=await requestAI(context,'/api/agent/tailor',{resume:source,job:{id:job.id,title:job.title,company:job.company,description:job.description,location:job.location},reviewed_line_indices:data.review_progress.reviewed_line_indices});
-      if(!container.isConnected||!consented||startedRevision!==revision||getResume().replace(/\r\n?/g,'\n')!==source)return;
+      if(!container.isConnected||!consented||startedRevision!==revision||getResume().replace(/\r\n?/g,'\n')!==matchingSource)return;
       const selected={wordingIds:[...container.querySelectorAll('[data-wording]:checked')].map(x=>data.suggestions[Number(x.dataset.wording)].line_index),orderingIds:[...container.querySelectorAll('[data-ordering]:checked')].map(x=>data.ordering_suggestions[Number(x.dataset.ordering)].group_id),summary:!!$('select-summary')?.checked};
       data=mergeCorrectionBatch(data,next);renderSuggestions(selected);
      }catch(error){progressStatus.textContent=friendlyAiError(error)+' Your earlier corrections are still available.';}finally{nextButton.disabled=false;}
     };
     $('apply-ai-edits').onclick=()=>{
-     if(!consented||getResume().replace(/\r\n?/g,'\n')!==source||$('tailor-source').value.replace(/\r\n?/g,'\n')!==source){container.textContent='Your resume or AI permission changed. Request fresh suggestions.';return;}
-     let draft;try{draft=buildReviewedDraft(source,data,{wordings:[...container.querySelectorAll('[data-wording]:checked')].map(x=>Number(x.dataset.wording)),summary:!!$('select-summary')?.checked,orderings:[...container.querySelectorAll('[data-ordering]:checked')].map(x=>Number(x.dataset.ordering))});}catch(error){container.textContent=error.message;return;}
-     $('ai-draft').innerHTML=`<h4>Your reviewed ATS draft</h4><p>Only your selected wording, summary, and ordering changes are applied. Existing skills are separated with commas; no skills are added. Review the full draft before applying. Your original matching resume is unchanged.</p><div id="ai-builder"></div><details class="resume-plain-text"><summary>View plain resume text</summary><textarea id="ai-preview" readonly aria-label="AI tailored resume draft"></textarea></details><button id="ai-word" class="find-jobs">Download one-page Word resume (.docx)</button><p id="ai-download-status" role="status"></p>`;
+     if(!consented||getResume().replace(/\r\n?/g,'\n')!==matchingSource||$('tailor-source').value.replace(/\r\n?/g,'\n')!==matchingSource){container.textContent='Your resume or AI permission changed. Request fresh suggestions.';return;}
+     const approvedSelection={wordings:[...container.querySelectorAll('[data-wording]:checked')].map(x=>Number(x.dataset.wording)),summary:!!$('select-summary')?.checked,orderings:[...container.querySelectorAll('[data-ordering]:checked')].map(x=>Number(x.dataset.ordering))};let draft;try{draft=buildReviewedDraft(source,data,approvedSelection);}catch(error){container.textContent=error.message;return;}
+     const changes=draftChanges(matchingSource,source,draft,data,approvedSelection,confirmedFacts);
+     $('ai-draft').innerHTML=`<h4>Your reviewed ATS draft</h4><details class="draft-change-review"><summary>Review changes and job evidence (${changes.length})</summary>${changes.map(c=>`<article><strong>${esc(c.kind)}</strong><p><b>Before / source:</b> ${esc(c.before)}</p><p><b>After / addition:</b> ${esc(c.after)}</p><p>${esc(c.reason)}</p>${c.job?`<p><b>Job requirement:</b> ${esc(c.job)}</p>`:''}</article>`).join('')||'<p>No content changes selected. Formatting only.</p>'}<p>Unmet or unclear requirements remain in the evidence map above. No ATS or selection guarantee is implied.</p></details><p>Only your approved clarification facts and selected wording, summary, and ordering changes are applied. Existing skills are separated with commas; AI cannot add unsupported skills. Review the full draft before applying. Your original matching resume is unchanged.</p><div id="ai-builder"></div><details class="resume-plain-text"><summary>View plain resume text</summary><textarea id="ai-preview" readonly aria-label="AI tailored resume draft"></textarea></details><button id="ai-word" class="find-jobs">Download one-page Word resume (.docx)</button><p id="ai-download-status" role="status"></p>`;
      const builderRoot=$('ai-builder');
      const builder=mountResumeBuilder(builderRoot,{text:draft,job,onChange:text=>{$('ai-preview').value=text;$('ai-download-status').textContent='Layout updated. Download again to verify the current draft.';}});
      $('ai-preview').value=draft;
@@ -184,7 +191,7 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
     };
     }
     renderSuggestions();
-   }catch(e){if(container.isConnected)container.textContent=friendlyAiError(e);}finally{button.disabled=false;}
+   }catch(e){if(container.isConnected&&startedRevision===revision){if(previousContent?.length){container.replaceChildren(...previousContent);const error=document.createElement('p');error.setAttribute('role','status');error.textContent=friendlyAiError(e)+' Your previous draft is unchanged.';container.append(error);}else container.textContent=friendlyAiError(e);}}finally{button.disabled=false;}
   };
  }
  function invalidate(){revision++;completedReviews.clear();$('ai-tailoring')?.replaceChildren();$('ai-fit-review')?.replaceChildren();$('draft-output')?.replaceChildren();}

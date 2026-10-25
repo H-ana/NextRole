@@ -1,6 +1,6 @@
-import {findBackend,apiRequest} from './api-client.mjs?v=39';
-import {formatSkillSections} from './skill-format.mjs?v=39';
-import {assertResumeHeader} from './resume-header.mjs?v=39';
+import {findBackend,apiRequest} from './api-client.mjs?v=91';
+import {formatSkillSections} from './skill-format.mjs?v=91';
+import {assertResumeHeader} from './resume-header.mjs?v=91';
 
 export async function downloadOnePageResume(text,filename,isCurrent=()=>true){
  text=formatSkillSections(text);

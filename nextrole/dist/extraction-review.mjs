@@ -52,7 +52,7 @@ export function applyExtractionCorrections(text,issues,selected){
 }
 export function setupExtractionReview({getResume,onCorrected}){
  let acknowledged=null;
- const panel=document.createElement('section');panel.id='extraction-review';panel.className='extraction-review';document.getElementById('job-search-form').after(panel);
+ const panel=document.createElement('section');panel.id='extraction-review';panel.className='extraction-review';panel.hidden=true;document.getElementById('job-search-form').after(panel);
  function render(){
   const source=getResume(),issues=extractionIssues(source);
   if(!issues.length){panel.hidden=true;return;}panel.hidden=false;

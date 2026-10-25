@@ -1,4 +1,4 @@
-import {findBackend,apiRequest} from './api-client.mjs?v=39';
+import {findBackend,apiRequest} from './api-client.mjs?v=91';
 
 export function platformName(value){
  try{const p=new URL(value),host=p.hostname;
@@ -19,7 +19,7 @@ export function applicationLabel(job){return platformName(job.url)?`Apply on ${p
 export function matchesJobSite(job,site='all'){
  if(site==='all')return true;
  const sites=new Set([job.url,...(job.application_links||[]).map(link=>link.url)].map(platformName).filter(Boolean));
- if(site==='careers')return !sites.size&&!/^(platform|manual):/.test(job.source||'');
+ if(site==='careers')return (job.application_links||[]).some(link=>!platformName(link.url)&&/^https:\/\//.test(link.url))||!sites.size&&!/^(platform|manual):/.test(job.source||'');
  return sites.has(site);
 }
 

@@ -27,6 +27,12 @@ def rows(site='indeed'):
              'description':DESCRIPTION,'location':'Bengaluru, India','is_remote':False}]
 
 class NormalizationTests(unittest.TestCase):
+    def test_preserves_source_posting_date_and_salary_without_inventing_values(self):
+        item={**rows()[0],'date_posted':1790000000000,'min_amount':100000,'max_amount':150000,'currency':'INR','interval':'monthly'}
+        job=normalize_results([item])[0]
+        for field in ('date_posted','min_amount','max_amount','currency','interval'):self.assertEqual(job[field],item[field])
+        self.assertNotIn('date_posted',normalize_results(rows())[0])
+
     def test_all_eight_sources_use_actual_application_links_and_original_requirements(self):
         jobs=normalize_results([row for site in SITES for row in rows(site)])
         self.assertEqual(len(jobs),8)

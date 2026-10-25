@@ -1,4 +1,4 @@
-import {formatSkillSections} from './skill-format.mjs?v=39';
+import {formatSkillSections} from './skill-format.mjs?v=91';
 export function buildReviewedDraft(source,data,{wordings=[],summary=false,orderings=[]}={}){
  const lines=source.split('\n'),values=[...lines];let sequence=lines.map((_,i)=>i);
  if(summary&&wordings.some(index=>(data.summary_suggestion?.replace_indices||[]).includes(data.suggestions[index]?.line_index)))throw new Error('Choose either the replacement summary or wording edits to the existing summary.');

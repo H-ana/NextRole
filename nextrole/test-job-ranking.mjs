@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {displayedScore} from './dist/job-ranking.mjs';
+import {displayedScore,strongMatch,fitReviewContext} from './dist/job-ranking.mjs';
 assert.equal(displayedScore({relevance_score:0},false),null,'An empty browse query must not display a zero relevance rating');
 assert.equal(displayedScore({relevance_score:85},false),null,'Old rank values must not be reused while browsing');
 assert.equal(displayedScore({relevance_score:0},true),0,'A genuine ranked zero must remain visible');
@@ -8,3 +8,21 @@ assert.equal(displayedScore({agent:{score:0},relevance_score:74},true),0,'Fit re
 assert.equal(displayedScore({},true),null,'Missing ranking must not become a keyword score');
 assert.equal(displayedScore({relevance_score:NaN},true),null);
 console.log('Passed: unranked browsing has no score; ranked and reviewed zero scores are preserved; missing/invalid scores stay unknown.');
+
+const resume='Built Python services and reconciled payroll records using SQL.';
+const job={id:'one',title:'Engineer',company:'Example',location:'Bengaluru',style:'Hybrid',years:2,description:'Requires 2 years of experience. Required: Python services. Hybrid in Bengaluru.',relevance_score:55};
+const preferences={experience:2,workstyle:'Hybrid'};
+const review={job_id:'one',score:55,decision:'shortlist',experience:'meets',experience_quote:'Requires 2 years of experience.',work_style:'Hybrid',work_style_quote:'Hybrid in Bengaluru.',requirements:[{importance:'required',status:'supported',job_quote:'Required: Python services.',resume_quote:'Built Python services'}]};
+const fits=change=>strongMatch({...job,agent:{...review,...change}},resume,preferences).strong;
+assert.equal(strongMatch({...job,relevance_score:99},resume,preferences).strong,false,'High similarity alone is not a strong fit');
+assert.equal(fits({}),true,'A supported fit can qualify below 70');
+assert.equal(fits({decision:'review'}),false);assert.equal(fits({experience:'gap'}),false);assert.equal(fits({experience:'unknown'}),false);assert.equal(fits({work_style:'Remote'}),false);assert.equal(fits({requirements:[]}),false);assert.equal(fits({job_id:'different'}),false);
+for(const status of ['missing','partial','unknown'])assert.equal(fits({requirements:[{...review.requirements[0],status}]}),false);
+assert.equal(fits({requirements:[{...review.requirements[0],resume_quote:'Invented AWS expertise'}]}),false);
+assert.equal(fits({requirements:[{...review.requirements[0],job_quote:'Invented qualification'}]}),false);
+assert.equal(fits({requirements:[...review.requirements,{importance:'preferred',status:'missing',job_quote:'',resume_quote:''}]}),true,'Missing preferences do not block supported mandatory fit');
+assert.equal(strongMatch({...job,agent:review},resume,{...preferences,experience:1}).strong,false);
+assert.notEqual(fitReviewContext(job,resume,preferences),fitReviewContext({...job,description:job.description+' New mandatory qualification.'},resume,preferences));
+assert.notEqual(fitReviewContext(job,resume,preferences),fitReviewContext(job,resume+' Changed.',preferences));
+assert.notEqual(fitReviewContext(job,resume,preferences),fitReviewContext(job,resume,{...preferences,experience:1}));
+console.log('Evidence-based strong matches, verified quotes, experience/preferences and review context checks passed.');

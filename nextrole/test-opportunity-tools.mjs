@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import {deduplicateJobs,matchExplanation,feedbackPenalty,collectNewMatches,preferenceKey,additionalApplicationLinks} from './dist/opportunity-tools.mjs';
+const body='Responsible for building Python services and reconciling financial records with SQL. '.repeat(15);
+const company={id:'direct',company:'Example',title:'Software Engineer',location:'Bengaluru',url:'https://example.com/careers/123',description:body,skills:['Python','AWS'],years:3,relevance_score:85};
+const linkedin={...company,id:'li',url:'https://www.linkedin.com/jobs/view/1234567890/',listed_on:['LinkedIn']};
+const merged=deduplicateJobs([linkedin,company]);assert.equal(merged.length,1);assert.equal(merged[0].url,company.url);assert.equal(merged[0].application_links.length,2);assert.deepEqual(merged[0].alias_ids,['li','direct']);
+assert.equal(deduplicateJobs([linkedin,{...linkedin,id:'another',url:'https://www.linkedin.com/jobs/view/999999/'}]).length,2);
+assert.equal(deduplicateJobs([company,{...linkedin,description:'Different duties and qualifications.'.repeat(30)}]).length,2);
+assert.equal(deduplicateJobs([company,{...company,id:'track',url:company.url+'?utm_source=linkedin'}]).length,1);
+assert.match(matchExplanation(company,'Built Python APIs and SQL reports.',2),/Experience gap/);assert.match(matchExplanation(company,'Built Python APIs and SQL reports.',4),/domain experience/);assert.doesNotMatch(matchExplanation(company,'Built Python APIs.',4),/mentions.*AWS/);
+assert(feedbackPenalty(company,[{reason:'Wrong role',title:company.title}])>0);assert.equal(feedbackPenalty(company,[{reason:'Wrong role',title:'Graphic Designer'}]),0);
+let state={contexts:{},notifications:[]};state=collectNewMatches(state,[company],'profile',true,1);assert.equal(state.notifications.length,0);
+const fresh={...company,id:'new',title:'Data Engineer',date_posted:'2026-10-24'};state=collectNewMatches(state,[company,fresh],'profile',true,2);assert.equal(state.notifications.length,1);assert.equal(state.notifications[0].posted,'2026-10-24');assert.equal(state.notifications[0].discovered,2);
+state=collectNewMatches(state,[company,fresh],'profile',true,3);assert.equal(state.notifications.length,1);
+assert.equal(collectNewMatches(state,[{...fresh,title:'Other',relevance_score:20}],'profile',true,4).notifications.length,1);
+assert.equal(collectNewMatches(state,[{...fresh,title:'Other'}],'changed-profile',true,4).notifications.length,1);
+assert.equal(collectNewMatches(state,[fresh],'profile',false),state);
+assert.equal(preferenceKey('resume',{city:'A'}),preferenceKey('resume',{city:'A'}));assert.notEqual(preferenceKey('resume',{city:'A'}),preferenceKey('resume2',{city:'A'}));
+console.log('Dedupe safety, employer links, evidence explanations, feedback and profile-scoped new-match alerts passed.');
+
+assert.deepEqual(additionalApplicationLinks({...linkedin,application_links:[{url:linkedin.url,platform:'LinkedIn'},{url:linkedin.url+'?utm_source=app',platform:'LinkedIn'}]}),[]);
+const extras=additionalApplicationLinks({...linkedin,application_links:[{url:linkedin.url},{url:'https://in.indeed.com/viewjob?jk=abc'},{url:'https://in.indeed.com/viewjob?jk=abc&utm_source=app'},{url:company.url}]});assert.equal(extras.length,2);assert.equal(extras[0].platform,'Indeed');assert.equal(extras[1].platform,'Company careers');

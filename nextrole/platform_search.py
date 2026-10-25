@@ -82,7 +82,12 @@ def normalize_results(rows):
         job=make_job({**SOURCE,'company':company},title,plain_text(description),location,url,
                      collection_method='JobSpy public listing',application_links=[{'platform':SITES[site],'url':url}],
                      listed_on=[SITES[site]],style=style,company_description=item.get('company_description','')[:2000] if isinstance(item.get('company_description'),str) else '')
-        if job:seen.add(url);jobs.append(job)
+        if job:
+            # Preserve public source metadata; missing values remain unknown.
+            for field in ('date_posted','min_amount','max_amount','interval','currency'):
+                value=item.get(field)
+                if isinstance(value,(str,int,float)) and not isinstance(value,bool):job[field]=value
+            seen.add(url);jobs.append(job)
     return jobs
 
 def fetch_jobs(plan):

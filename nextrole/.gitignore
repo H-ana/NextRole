@@ -8,3 +8,6 @@ __pycache__/
 .browsers/
 data/
 export-qa/
+client_secret*.json
+gmail-credentials*.json
+gmail-token*.json
