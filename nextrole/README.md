@@ -1,199 +1,33 @@
-# NextRole
+# NextRole application
 
-Local resume-based job discovery with company careers-page scraping, local semantic ranking, optional Gemini fit review, and fact-preserving ATS resume suggestions with Word export.
+The main **[project README](../README.md)** contains the feature overview, installation instructions, architecture, privacy model and troubleshooting guide.
 
-## Start
-
-Python 3.12+ runs the backend and public-feed cache. The local embedding model needs a one-time setup:
+## Start from this folder
 
 ```powershell
-cd C:\Users\hp\jobapply\nextrole
-python setup_semantic.py
-python start_agent.py
+python setup_semantic.py   # Optional local semantic ranking
+python setup_jobspy.py     # Optional platform collection
+python start_agent.py      # Optional Gemini key prompt; Enter to skip
 ```
 
-Setup installs NumPy, ONNX Runtime and Tokenizers into `.local-deps/`, then downloads the pinned Apache-2.0 `sentence-transformers/all-MiniLM-L6-v2` tokenizer and roughly 23 MB quantized ONNX model into `.models/`. The model download is checksum-verified. It does not upload applicant documents. Setup performs a synthetic similarity check. Subsequent ranking runs locally and requires no model API calls or network downloads.
+Open **http://localhost:8081/**. No npm build is required.
 
-Collection is currently set to **HTML-only** in `scraping_settings.json` (`"mode": "html"`). No Playwright or Chromium installation is needed. The collector does not import or launch a browser in this mode, even if one is installed. Server-rendered careers pages and embedded JobPosting JSON-LD are supported; JavaScript-only openings can be missing, and source status explains this limitation.
-
-Optional browser collection can later be enabled by running `python setup_scraping.py`, changing the setting to `"mode": "browser"`, and restarting the backend. The installer downloads Playwright from PyPI and Chromium from its official distribution into `.local-deps/` and `.browsers/`. It does not access resumes. Browser rendering reads the page DOM, with a fresh unsigned-in context and no stealth plugins, user cookies, proxy rotation, or CAPTCHA solving. A failed optional download does not prevent HTML-only collection.
-
-Enter your Gemini key at the hidden prompt. It is held only in the process environment, never written to files, logs, or the browser. Open http://localhost:8081/ or use the existing static preview at http://localhost:8080/. To browse and search without Gemini, run `python server.py --port 8081` instead. The key is required only for explicitly requested AI actions.
-
-The backend selects the Gemini model internally through `GEMINI_MODEL`, defaulting to `gemini-3.6-flash`. The main app has no model selector, connection test, benchmark, or manual resume-understanding panel. `.env.example` documents settings; .env files are not loaded automatically. LOW thinking is the default. Synthetic connection and speed-comparison endpoints remain available to developers through the API and are never called automatically by the browser.
-
-After backend code changes, stop the old process with Ctrl+C and rerun `python start_agent.py`, re-entering the hidden key. Python does not reload the running module automatically. Frontend-only changes need a page reload, not a backend restart.
-
-## Search and AI flow
-
-1. Import a text PDF, DOCX or TXT resume, or paste its full text. Text extraction is local. Review reading order and confirm your actual total years. Select multiple Indian hiring cities and work style; Remote bypasses city selection.
-2. One **Find jobs** button searches cached public listings. With a full resume, it ranks using the original text and preferences. Without a resume, it searches by preferences and shows **Not ranked yet**. It works without a Gemini key or AI consent. It never calls Gemini, and it never inserts proposed resume wording into matching inputs.
-   A successful file import or **Use this resume** starts local ranking automatically using the current preferences. Review detected experience and rerun Find jobs after correcting preferences. Starting a search invalidates pending browse responses so they cannot replace scored results. Refresh jobs updates the company collection and retains resume-based ranking while a readable resume is loaded.
-   The separate Browse jobs button was removed. Resume ranking requires at least 40 characters; nonempty shorter text prompts the user to provide the full resume or clear it. Genuine zero scores from a completed relevance search or explicit fit review remain visible. Resume text stays in memory and clears on reload; the upload status explains when no resume is loaded.
-3. Local sentence embeddings compare responsibility-level meaning. Every job is split into overlapping chunks so requirements near the end are retained. Unchanged job embeddings are reused from SQLite; query embeddings remain in a bounded in-memory cache. Semantic ranking is combined with full-text relevance. During initial indexing, search explicitly uses full-text ranking until all eligible jobs have vectors; it never labels that fallback as semantic search. Relevance scores are not qualification assessments or hiring probabilities.
-4. Location/work-style rules and clearly required experience limits are applied before ranking. Unknown work style or experience remains visible with uncertainty notes. Preferred experience and ambiguous years are not hard exclusions. Remote listings can still have country/timezone restrictions; inspect the original description.
-5. The first **Review my fit** action automatically creates a concise structured profile internally: summary, role families, exact supporting facts/quotes, and uncertainties. The app asks for permission before the first AI action in the tab session. Consent covers sending the original resume, preferences, and selected job description to Google Gemini. Declining does not block local search or applications. A small **AI data permission** link in job details lets the user review or revoke that session permission. The API key remains on the backend. The backend caches up to eight profiles for at most 24 hours in memory, keyed by the original resume, model, thinking level, and date. Search location, work style, target terms, and confirmed years are deliberately excluded from the parse cache key. Failed parses are never cached. Changing preferences does not trigger another Gemini parse.
-6. Open a job and choose **Review my fit** for a requirement-by-requirement assessment of that one role. Completed assessments can be reused in the page only when the original resume, preferences, model and complete job input match. Missing required qualifications produce a gap; unknown required evidence cannot produce a confident shortlist. Exact job/resume evidence is validated. The user's confirmed total years are shown in experience-gap explanations rather than an unverified model calculation. Initial search does not perform these per-job calls.
-7. **Tailor my resume** returns a focused evidence map of up to eight decisive requirements, conservative wording edits, an optional evidence-backed summary, and optional ordering suggestions. Eligible wording lines are reviewed in batches of eight, with progress and an explicit **Review next** action; there is no six-correction total limit. Further batches retain earlier corrections and selections. Useful changes are proposed only where supported. Exact original lines, job quotes, protected sections, dates, numbers and explicit proficiency/ownership terms are checked; a second AI call checks wording and summary consistency. Approve changes individually or use **Select all compatible changes** / **Apply all compatible changes**. A summary replacement is an alternative to wording changes on its source lines; bulk approval prefers those wording changes to avoid applying conflicting alternatives. Bullet moves stay inside the original role; project moves preserve complete blocks; employer chronology is never reordered. Invalid or ambiguous evidence becomes Unclear. No unselected advice or missing qualification enters the draft. Local simple formatting remains available without Gemini.
-
-### Resume extraction review
-
-PDF text is reconstructed from text-item positions and baseline boundaries. A local review panel flags recognized joined skill names, ambiguous numeric dates, unusually fragmented text and wide gaps that may indicate columns. Select proposed corrections individually or select/apply all available corrections together. For uncertain text, enter a manual correction beside the original; dates and unfamiliar words are never guessed. Conflicting corrections for the same line are blocked. Applying corrections updates the original matching resume, clears old assessments/drafts, and reruns local ranking. Warnings may remain during job search but must be acknowledged for that exact text before AI tailoring. Drafts stay separate from the matching resume. These heuristics cannot recover every malformed or scanned document; users can edit and confirm the imported text.
-
-### Company briefs
-
-Each job card includes **Company brief**, with a compact two-column overview in job details. The on-demand `/api/company/brief` endpoint accepts only the ID of a currently cached job. It uses same-employer public listings for role/location snapshots, any supplied company description, technology mentions with exact source quotes, and explicitly stated role-specific hiring timelines. It does not infer a company-wide hiring average from listing age, urgency or application counts.
-
-Recent news (30 days) and layoff-related headlines (90 days) are collected from public Google News RSS searches using only the employer name. Dates and employer-name matches are checked, and publisher names and article links are displayed. These are discovery headlines, not verified event summaries or a confirmed layoff status. Missing data remains unknown; failed feeds differ from empty searches. No applicant resume, API key or Gemini call is used. News is cached in memory for one hour (five minutes on feed failure), with at most 32 employers; request timeouts and feed sizes are bounded. The briefing layout limits headlines, technology mentions and role examples to keep it concise. It is an in-app summary, not a page-count-validated PDF export.
-
-### LinkedIn referral contacts
-
-Each job card has **Find a referral**, which opens role-specific referral tools in job details. Links search LinkedIn people by the selected employer, recruiting terms or job title. These are search shortcuts, not a verified employee directory or confirmed referral contacts; users should check the current employer on LinkedIn. Only public company/title search terms go to LinkedIn when a link is opened. No applicant resume or LinkedIn credentials are sent, and no messages or connection requests are sent automatically. An editable, in-memory request draft includes the original application link and can be copied locally. It makes no claims about qualifications or relationships.
-
-## One-page Word export
-
-The candidate name and contact block must precede section headings. Personal contact text is never flattened into comma-separated skills, recognized headings are never styled as the candidate name, and the browser blocks malformed legacy drafts from downloading. Rebuild such drafts from the original resume. For frontend releases run `python version_frontend.py <integer-version>` so the HTML entrypoint and all relative module imports refresh together; updating only the entrypoint can leave older cached formatter code active.
-
-### Structured role-specific builder
-
-Both the simple and AI-reviewed draft flows use a shared in-memory section model and live preview, informed by the public ATSResume builder patterns documented in `THIRD_PARTY_REFERENCES.md`. Arrange complete sections with up/down controls, reset to the current draft's original layout, or explicitly prioritize existing comma-separated skills whose full phrases occur in the selected job description. Names/contact details stay in the fixed header and employment entries retain their internal chronology. No job-required skill, example applicant data or replacement job title is inserted. Soft Skills and Additional Skills are supported as separate sections.
-
-The readiness checklist covers recognized structure, contact presence, experience/projects, skills and a word-count guide; it is not an employer ATS score or a substitute for the Gemini evidence review. All controls update the preview, plain-text draft and downloads together without updating the original matching resume or making extra AI calls. Word export still checks the actual one-page fit. If the draft changes while export is in progress, the obsolete download is blocked.
-
-Generated drafts normalize Skills, Technical Skills and Relevant Skills sections into comma-separated lists in the preview, plain-text draft and Word request. Recognizable concatenated skill names are separated only when the complete source chunk can be consumed without changing its letters; unknown names and original spellings stay intact. This formatting does not update the original matching resume or add job-description skills.
-
-Both Word download actions use `resume_export.py` and `fit_resume.ps1` for verified one-page export. They preserve all visible draft text and use a compact A4 single-column layout: black standard-width Calibri, a larger name, smaller contact line, uppercase section headings, bold employment/education/project entry titles, hanging indents for existing bullets, consistent spacing, and 0.5â€“0.4 inch margins. Microsoft Word on the user's Windows backend checks pagination and tries 11, 10.5 and 10-point body layouts. Download requires exactly one page, matching Calibri metadata, and agreement between the approved draft, saved OOXML and Word body text (content, reading order, recognized contacts and sections). No columns, text boxes, images, tables or contact details in headers/footers are added. ATS parsing and selection cannot be guaranteed. Both draft flows show a formatted HTML preview with a collapsible plain-text view; the preview is illustrative and the final Word export remains the pagination authority. Layout recognition never rewrites resume facts or guesses how to split merged source words.
-
-If the complete draft still exceeds one page at 10 points, export stops and asks for repeated wording to be shortened; it never silently deletes experience or uses unreadably small text. If Word cannot be launched from the backend session, the draft is preserved and the verification error is shown. A browser font estimate is not treated as proof of pagination. Restart the backend to load this endpoint. Formatting makes no Gemini calls.
-
-## Public job cache
-
-`job_sources.json` now configures official careers URLs for Figma, Stripe, Calendly, Rubrik, Databricks, Razorpay, Notion, Ramp and Atlan. `careers_scraper.py` starts at those URLs, follows published job links and employer-linked application pages, parses schema.org JobPosting JSON-LD or visible job descriptions, and uses optional Chromium DOM rendering for JavaScript pages. Some employers host their careers/application pages on Greenhouse, Lever or Ashby; those employer-linked HTML pages remain supported. No configured source calls their job-board APIs. Legacy feed parsers are retained only for backward compatibility and fixtures, and old API-cache records are excluded from current search results.
-
-Inspired by the provider separation and source-health reporting in [career-ops](https://github.com/career-ops-hq/career-ops). This implementation was written separately; no repository code was copied. That project itself combines HTTP/API providers, browser verification and search fallbacks.
-
-Automatic platform collection now uses the upstream [speedyapply/JobSpy](https://github.com/speedyapply/JobSpy) package (`python-jobspy==1.4.1`) through `platform_search.py` and `jobspy_worker.py`. Run `python setup_jobspy.py` once, then restart `python start_agent.py`. The package is isolated in `.jobspy-deps` so it does not replace the local semantic model's dependencies. There is no platform API key or login prompt. The optional Gemini key is only used for AI resume help. JSearch request code, key prompts and monthly budgets have been removed; legacy `platform:indexed` records are excluded from active search without deleting the old database.
-
-All eight adapters are integrated: LinkedIn, Indeed, Glassdoor, ZipRecruiter, Bayt, Naukri, BDJobs and HelloWork. The current location selector covers India. JobSpy documents ZipRecruiter as US/Canada-only, BDJobs as Bangladesh-only and HelloWork as France-only, so those three report **unsupported location** instead of making foreign searches for Indian preferences. LinkedIn, Indeed, Glassdoor, Bayt and Naukri are queried for the selected Indian cities. Remote uses India without selected cities; remote eligibility still requires checking the original listing. Manual job import accepts direct links from all eight platforms.
-
-Find jobs immediately ranks the cache locally and starts bounded JobSpy collection in the background. Only a broad role title and city/remote setting leave the backend; the original resume stays local. Each action starts at most five source/location searches, with two workers at a time, 20 requested listings per source and a 90-second timeout per worker process. Find jobs again continues remaining city searches. Successful queries are cached for six hours; failures have a 15-minute cooldown. There are no automatic retry loops, configured proxies, account cookies or CAPTCHA-solving integrations. Each subprocess receives only its search plan and has API key/token/proxy environment variables removed. Applicant text and query plans are not written to disk.
-
-Accepted results require a full description and a recognised HTTPS application URL matching the returned source. Only job-description evidence determines experience requirements. Search snippets without descriptions are excluded, not scored as complete jobs. Public results expire from search after 24 hours. Blocked/failed collectors and zero usable results have distinct internal backend statuses. Collection messages, per-source diagnostics and cache counts are not rendered on the user page; job results update silently in the background. Collection is partial and destination sites must confirm availability; JobSpy does not guarantee exhaustive results or access. Original application links appear in job details and job cards. Existing company careers-page collection, Gemini tailoring and Word downloads remain available independently.
-
-External LinkedIn/Naukri/Indeed search links and manual Add a job remain available without setup. Manual imports are labelled Added by you, preserve application identifiers and expire after 30 days.
-
-The loopback backend refreshes careers pages on startup and every 15 minutes after the preceding refresh/index cycle, with at most three companies in parallel. Each company scan has a 35-page and two-minute budget, sequential page requests at least 1.5 seconds apart (or a longer declared crawl delay), bounded responses and timeouts. Robots rules, HTTPS/public-network addresses, redirect destinations and configured employer hosts are checked. Access denials, rate limits, login walls and challenges stop collection; browser rendering is not used to bypass an access denial. Additional employer application hosts must be explicitly included in `allowed_hosts`. The generic crawler can miss JavaScript widgets, custom URLs, nonstandard descriptions and hidden pagination; source notes disclose limited coverage. Site-specific adapters can be added later for those layouts.
-
-Public jobs, source state, timestamps, content hashes and local job vectors are stored in `data/jobs.sqlite3`. No applicant documents or query vectors go into this database. Application links are read from published pages and must use HTTPS; they are not guessed. Unknown location and experience remain unknown, rather than fabricated from a page title.
-
-Visible job-header locations (for example, the city between the job title and Apply on a Greenhouse-hosted careers page) are extracted even without a Location label. Startup repairs missing locations in cached careers descriptions using that same explicit header evidence, preserving the original check timestamp, experience facts and vectors. Empty browse queries skip model loading and vector retrieval. Zero-result responses include separate city/location, work-style and experience exclusion counts; the page explains those filters and clears obsolete search messages when browsing again.
-
-Generic careers-page scans are always treated as partial: unvisited jobs are retained rather than declared closed. Scraped listings not seen again within 24 hours expire from search, even if later refreshes fail. Expired structured postings are skipped. Confirmed complete snapshots from a future site-specific adapter can close missing listings immediately. Failed/malformed refreshes retain unexpired cache and expose a safe source error. Closed jobs are purged after seven days. A manual refresh returns immediately and updates in the background; cached results remain searchable. First startup may require several minutes to fetch and index. Browse shows up to 200 listings; relevance search uses the full eligible active cache and returns up to 100 in the UI.
-
-## Interfaces
-
-- `GET /api/status`: provider/key configuration and supported capabilities; never credentials.
-- `GET /api/jobs`: cached browse results, sources, freshness and semantic-index progress.
-- `POST /api/jobs/refresh`: background public-feed refresh; no Gemini key/consent required.
-- `POST /api/jobs/search`: original resume, preferences, optional result limit; local ranking only, no Gemini key/consent required.
-- `POST /api/jobs/platform-search`: bounded JobSpy collection; requires the local package setup and sends only role/location terms. No platform key, login or Gemini calls.
-- `POST /api/jobs/import`: user-pasted LinkedIn/Naukri job description and original job URL; no page fetching or Gemini call. Public job data only.
-- `POST /api/resume/export`: draft text to verified one-page DOCX; local Microsoft Word required, no Gemini key or consent required. Optional developer `preview: true` includes an internal PDF for visual QA.
-- `POST /api/agent/profile`: consented one-time resume understanding, independent of preferences.
-- `POST /api/agent/shortlist`: optional detailed assessment (the UI sends one job).
-- `POST /api/agent/tailor`: proposed edits with separate factual verification.
-- `POST /api/connection-test` and `/api/models/benchmark`: explicit synthetic diagnostics, no applicant resume.
-
-AI requests use structured JSON and bounded retries for transient service errors. Permanent key/permission/quota failures are not blindly repeated. Each AI workflow has a five-minute deadline and each model request at most 120 seconds. Provider availability can change after a successful diagnostic. The separate local search remains usable during Gemini errors. User-facing messages explain unavailable AI assistance without exposing provider configuration, benchmark output, or indexing diagnostics. Job-source freshness remains available because it helps users verify whether a listing is current.
-
-## Privacy and validation
-
-**Recruiter locations:** Recruiter searches include recognized cities from the job's posted location, using city aliases and OR for multiple cities. The employer's Current company restriction remains applied. These are location search terms, not a verified LinkedIn geographic filter; users can refine with Locations on LinkedIn. Remote and unrecognized locations retain the broader employer search. If employer identity is unresolved, select the employer first and apply the posted location on LinkedIn. Resume location preferences do not override the vacancy's posted city.
-
-**Referral requests:** Formal, friendly and concise drafts preserve edits when switching tones and include **Reset drafts**. A single **Find people at the company** link opens LinkedIn without in-app degree steps or a CSV import. Known employer IDs use the **Current company** filter; Figma's verified organization ID is 3650502, sourced from its own [employee link](https://www.linkedin.com/company/figma). A provided LinkedIn company page can open its People tab. When employer identity is unresolved, the link searches LinkedIn companies so the user can choose the correct employer and open People; it never falls back to searching profiles for the company name, which can confuse tools such as Figma with employers. All connection degrees remain eligible; LinkedIn controls personalized result ranking, so a strict first/second/other order is not guaranteed. Recruiter and similar-role searches use the same employer restriction when an ID is available. See [LinkedIn people-search filters](https://www.linkedin.com/help/linkedin/answer/a520909).
-
-
-**Cover letters and recruiter messages:** Each job has a **Cover letter & message** action with formal, friendly and concise variants. Enter your name, choose a tone, and edit or copy either draft. Tone changes preserve edits within the open panel; **Reset drafts** explicitly replaces drafts. Drafts use the role, company and name only, without resume facts or a fact-selection step. They are local templates, not Gemini output, and stay in memory. No message is sent automatically.
-
-**Posting checks:** Job cards flag concrete payment, money-transfer, credential-request, and chat-only hiring patterns, plus source posting dates or observed posting history over 60 days. Filtering runs internally; no posting-check panel, evidence quotes, recruiter-verification links, or filter diagnostics are shown in job details. Repeated-role flags require at least two prior listing IDs for the same company/title/site and an observation over 60 days ago; they do not establish a ghost vacancy. Short collected descriptions and missing salary ranges are information gaps, without an alarming card badge. Recruiter identity remains unverified; the app offers a company recruiter lookup rather than claiming someone does not exist. Checks run locally without Gemini and do not alter relevance scores. Source dates and salary metadata become available on the next collection after a backend restart; unavailable history stays unknown. Pattern guidance: [FTC job scams](https://consumer.ftc.gov/articles/job-scams).
-
-**Recruiter notifications:** [Gmail setup and privacy details](GMAIL_SETUP.md). Connect Gmail once through the header **Notifications** button. Positive recruiter messages appear independently of application tracking, with connection setup hidden after authorization. This feature keeps application records and positive email metadata locally in a private database; encrypted OAuth tokens persist under the Windows account running the backend. Email bodies stay in memory and are never sent to Gemini. It requires separate read-only Google authorization, not a Gemini key. Checks run while the local backend is running.
-
-Applicant text and AI profiles/results are not stored in the job database or application logs. Search and AI data remain in memory. Word export temporarily writes the draft and generated document to a random local scratch folder, then deletes that folder after success or failure. Downloaded files are saved by the user. City/work-style settings and saved job IDs are local browser preferences. Only an explicit AI-permission choice is saved in sessionStorage for the current tab session; no document text or API key is stored there. Gemini receives applicant text only on the explicitly requested AI actions with consent; Google's API policies apply. The backend is loopback-only, rejects unrelated origins, limits inputs, validates evidence, treats documents as untrusted data, and does not log request/response bodies. It is a single-user local app, not an authenticated production service.
+## Development checks
 
 ```powershell
-python -m unittest test_agent test_tailoring_v2 test_job_store test_careers_scraper test_resume_export test_platform_search test_company_brief test_posting_history -v
-python -m unittest test_gmail_notifications -v
-node --preserve-symlinks --preserve-symlinks-main test-agent-ui.mjs
-node --preserve-symlinks --preserve-symlinks-main test-platform-jobs.mjs
-node --preserve-symlinks --preserve-symlinks-main test-referral-tools.mjs
-node --preserve-symlinks --preserve-symlinks-main test-job-ranking.mjs
-node --preserve-symlinks --preserve-symlinks-main test-one-page-export.mjs
-node --preserve-symlinks --preserve-symlinks-main test-resume-preview.mjs
-node --preserve-symlinks --preserve-symlinks-main test-extraction-review.mjs
-node --preserve-symlinks --preserve-symlinks-main test-correction-selection.mjs
-node --preserve-symlinks --preserve-symlinks-main test-tailoring-draft.mjs
-node --preserve-symlinks --preserve-symlinks-main test-skill-format.mjs
-node --preserve-symlinks --preserve-symlinks-main test-resume-builder.mjs
-node --preserve-symlinks --preserve-symlinks-main test-resume-header.mjs
-Get-Content -Raw dist/resume-tools.mjs | node --preserve-symlinks --preserve-symlinks-main test-resume.mjs
-node --preserve-symlinks --preserve-symlinks-main test-export.mjs | python verify-export.py
+python -m unittest discover -s . -p "test_*.py" -q
 ```
 
-Tests use synthetic fixtures and model stubs. A real local semantic check runs when the model is installed; no applicant data or live Gemini calls are used in automated tests. Live UI/provider checks require the restarted backend. Word validation needs python-docx (available in the bundled document runtime).
+For frontend checks and the legacy standard-input test invocation, see [Development](../README.md#development).
 
-References: [Sentence Transformers model](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2), [JobPosting schema](https://schema.org/JobPosting), [Playwright Python](https://playwright.dev/python/docs/intro), [career-ops](https://github.com/career-ops-hq/career-ops), [LinkedIn crawling rules](https://www.linkedin.com/robots.txt).
+After changing Python code, restart the backend. After changing frontend modules, update the shared cache version with `python version_frontend.py <integer-version>` and reload the browser.
 
+## Further documentation
 
-Find jobs excludes listings with concrete scam-pattern warnings or stale/recurring-posting flags. Missing salary, limited collected descriptions and personal email addresses alone do not exclude a job. The filter applies to initial results, ranked searches, background platform updates and saved-job views. Counts use filtered results. These signals can still flag legitimate vacancies; absence of a detected signal does not verify authenticity or recruiter identity.
+- [Gmail connection and privacy](GMAIL_SETUP.md)
+- [Third-party references](THIRD_PARTY_REFERENCES.md)
+- [Environment variable template](.env.example)
+- [Company source configuration](job_sources.json)
+- [HTML/browser collection setting](scraping_settings.json)
 
-### Referral tracking
-
-Choose Find a referral on a job, or open a LinkedIn people/recruiter search in its details. NextRole automatically adds the job to Referrals as Not contacted yet. Repeated searches for the same job do not add duplicate records. In Referrals, choose Update referral to enter the person’s name, contact date, LinkedIn profile/conversation link, notes and reply status. Filter by status or job ID (the source ID when available, or NextRole’s ID, both displayed on the card). Existing manual records remain available. Opening a search does not confirm a request was sent. LinkedIn messages are not synced. Records stay in this browser’s local storage; clearing browser data removes them.
-
-### Match explanations, duplicates, feedback and new-job alerts
-
-Cards explain resume keyword evidence, known experience gaps and validated AI gaps when available. A keyword mention is not proof of proficiency, and relevance is not eligibility. Duplicate grouping preserves all application links, prefers the employer’s link, and requires a shared canonical URL or identical normalized description/company/title/location across different sites. Different requisitions on the same site remain separate. Saved-job aliases are retained.
-
-Not a fit lets you dismiss a job with a reason. Local feedback hides that vacancy and lowers similar roles by an explicit bounded preference penalty, without changing displayed fit scores or inferred qualifications. Reset job feedback under Recommendation preferences restores the jobs. Feedback and public alert metadata are kept in browser storage; applicant documents and interview answers are not persisted there.
-
-New matches uses a separate header button from Gmail notifications. Your first locally ranked search establishes a baseline for that resume/preferences hash. Newly discovered jobs at 70+ relevance create in-app alerts, with original source posting date (if provided) separate from discovery time. Saved alerts remain associated with the search profile used when discovered. Results are rechecked every five minutes while the app is visible and a resume is loaded; the backend collector runs independently. No push/email alert service or Gemini search call is added. This is newly discovered coverage, not a claim every alerted vacancy was just published.
-
-### Clarification interview and tailoring review
-
-Tailor my resume first offers three optional questions: personal contribution/tools, verified scope or outcomes, and a public repository/demo/case-study link. Each answer must be attached to an existing accomplishment under its original role/project. Answers are reviewed with individually unchecked approval controls before inclusion. No numbers, proficiency or qualifications are guessed. Approved additions are used only as the tailoring source in memory, leaving the original job-matching resume unchanged. Cancel stops the request; Continue without additions uses the original source.
-
-The model prioritizes role-specific evidence, natural supported terminology and action/scope/method/outcome writing. Existing evidence-quote validation, protected facts and a separate factual verification pass still apply. Optional summary and within-role/project ordering approvals remain separate. The final draft includes a change review with confirmed evidence, wording, summary, ordering and linked job-description evidence; unresolved gaps remain visible in the evidence map. Existing Calibri, one-page, minimum 10-point and export content/reading-order checks are retained. Failed AI retries preserve an existing draft and its controls. Restart the backend after updating agent_service.py to load the strengthened prompt.
-
-### Retained original resume
-
-The original uploaded/pasted resume text (including user-approved extraction corrections) is saved in local browser storage and restored on reload, return navigation and reopening NextRole at the same browser address. Replacing or editing it updates that saved original; Remove resume clears it. Only the original matching text is retained, not the uploaded binary file, interview answers, tailored drafts or AI reviews. Clearing browser data also removes it. Browser-storage failures are shown and the previous saved document is removed when possible so a failed replacement does not restore an outdated resume. This explicitly requested retention supersedes earlier memory-only behavior for the original resume; tailoring/interview data remain in memory.
-
-Interview refinement: contributions already stated in the resume are reused directly. Only missing result/scope, unresolved evidence tied to a clear source accomplishment, or an absent public project link is requested, with no accomplishment dropdown. Each question names its source context; approvals still show the proposed placement. When no useful missing detail is found, tailoring proceeds without an interview. Application links are shown once per site, excluding the primary Apply destination from Also listed on.
-
-### Published recruiter contacts
-
-Recruiter details on each job displays explicitly labelled recruiting contact names, recruitment email addresses and LinkedIn profile URLs from the collected job description, with the original posting as source. General accommodation/privacy/security/support addresses are excluded. These are listed contacts, not independently verified identities. If no contact is published, the panel offers the existing company/location LinkedIn recruiter search without claiming those people handle this vacancy. No private profiles, email guessing, outreach or additional AI requests are used.
-
-Recruiter UI refinement: jobs without a published recruiting contact have neither a Recruiter details card action nor an empty recruiter section. The existing referral tools remain available. All three company people/recruiter/similar-role search links include recognized posted-city aliases when a verified numeric LinkedIn employer identity is available. Unknown employer identities still require company selection before LinkedIn location filtering; remote jobs do not force a city. City keywords narrow relevance and do not verify a profile’s current location.
-
-Direct people search refinement: all three referral buttons now open LinkedIn People results, including for employers without a resolved company ID. Verified numeric company IDs still use Current company; other employers use a quoted company-name keyword plus posted-city aliases and recruiter/role terms. Similar-role searches omit trailing job-specific title qualifiers. Keyword searches are not verified employer/location matches; users can refine Current company and Locations on LinkedIn. Company-directory fallback navigation has been removed.
-
-### Evidence-supported Strong matches
-
-Strong matches no longer uses the 70-point similarity cutoff. It requires a completed shortlist fit review for the exact job; every reviewed mandatory requirement must have supported status and quotes present in the original resume and job description. The review must establish experience fit, the confirmed total years must meet any known minimum, and an explicit work-style preference needs matching source evidence. Partial/unknown/missing mandatory evidence does not qualify. Missing preferred criteria alone do not block a strong match. This is a focused evidence review, not an exhaustive eligibility certification or prediction of hiring outcomes.
-
-When the tab is empty, Review best unreviewed match opens and reviews one currently filtered candidate after the existing AI consent flow. It does not bulk-review every job. Reviews are reused in page memory across background result refreshes only when resume, preferences and job content/metadata remain identical. Changes invalidate the review. Reloading the page requires a fresh fit review; the original resume remains retained separately. New-match discovery alerts remain a separate relevance-based feature.
-
-Recent posting highlights use date_posted from the source, never collection/check times. Exact timestamps are labelled Posted in last 24 hours or Posted 24–48 hours ago. Date-only sources use Posted today/Posted yesterday in the user’s India timezone, without implying an exact posting hour. Unknown, future and older dates have no freshness badge.
-
-
-### Interview preparation
-
-The top **Interview prep** tab lists positive Gmail interview invitations and assessment/next-step emails from the existing 90-day recruiter inbox. Application tracking is not required. Selecting an invitation reads its company and role locally and starts background research; ambiguous details require confirmation. The email body and resume are never used in public search queries or sent to Gemini. Only the public company name and role are sent to search services.
-
-Research discovers public articles through Bing RSS (with public HTML search fallback), then reads matching GeeksforGeeks, LeetCode, AmbitionBox, Glassdoor, Indeed, InterviewBit, InterviewQuery and Hello Interview pages where accessible. Collection checks robots rules, respects pacing, restricts HTTPS destinations and redirects, and does not bypass logins or blocks. Sources must mention the employer and related role. Short excerpts link back to each source; publication dates and years in titles are shown when present. Candidate reports are distinguished from preparation articles. General DSA/SQL/AI and behavioral practice is labelled separately and is never claimed to be a company's past question. No source access or exact-role historical coverage is guaranteed; unavailable collection shows search links instead of invented questions.
-
-Guides are cached in backend memory for up to 24 hours by public company/role (five minutes when sources are unavailable), with two concurrent research tasks maximum. Email bodies remain in memory only. This adds no AI provider, API key or platform login. After updating Python code, restart `python start_agent.py` once to load the interview endpoints.
-
-Interview research expands role aliases (for example SDE/SWE/Software Development Engineer) in both search and article validation. It diversifies sources, expands discovery after unreadable initial results, and shows matching source links even when article text is blocked. A small verified URL catalog supplies public starting points for Amazon software roles, including employer guidance; pages must still pass collection and relevance checks. **Refresh research** bypasses an empty cached guide. Forwarded emails continue to be treated as history and do not create new recruiter notifications.
+Gmail credentials, private data, applicant documents and development screenshots must stay out of Git. See the root README for the complete storage model and platform limitations.
