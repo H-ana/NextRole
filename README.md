@@ -1,5 +1,8 @@
 # NextRole
 
+**Published site:** [NextRole](https://nextrole-job-match.blueowl129.chatgpt.site/)
+
+
 ### Find relevant jobs. Tailor your resume. Prepare for the next conversation.
 
 NextRole is a local job-search assistant that connects your resume with public job openings, helps you create a role-specific resume without inventing qualifications, and brings positive recruiter updates into one workspace.
