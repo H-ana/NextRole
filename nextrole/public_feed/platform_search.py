@@ -75,14 +75,26 @@ def normalize_results(rows):
         values=[item.get(k) for k in ('title','company','description')]
         if not all(isinstance(v,str) and v.strip() for v in values):continue
         title,company,description=values
+        # Preserve the site's explicit experience field: many Naukri pages put
+        # it outside the description. Never guess years from the job title.
+        raw_band=item.get('experience_range');source_band=None
+        if site=='naukri' and isinstance(raw_band,str) and re.fullmatch(r'\s*\d{1,2}(?:\.\d+)?\s*(?:(?:-|–|—|to)\s*\d{1,2}(?:\.\d+)?)?\s*\+?\s*(?:years?|yrs?)?\s*',raw_band,re.I):
+            source_band=raw_band.strip()
+            label=source_band if re.search(r'years?|yrs?',source_band,re.I) else source_band+' years'
+            description='Experience range: '+label+'\n\n'+description
         location=item.get('location') if isinstance(item.get('location'),str) else ''
         # Only an explicit remote flag or original location wording establishes style.
         style='Remote' if item.get('is_remote') is True else 'Hybrid' if re.search(r'\bhybrid\b',location,re.I) else 'unknown'
+        declared_style=str(item.get('work_from_home_type') or '').strip().lower()
+        if declared_style=='hybrid':style='Hybrid'
+        elif declared_style=='remote':style='Remote'
+        elif declared_style in ('work from office','onsite','on-site'):style='On-site'
         if style=='Remote' and 'remote' not in location.lower():location='Remote - '+(location or 'Location not specified')
         job=make_job({**SOURCE,'company':company},title,plain_text(description),location,url,
                      collection_method='JobSpy public listing',application_links=[{'platform':SITES[site],'url':url}],
                      listed_on=[SITES[site]],style=style,company_description=item.get('company_description','')[:2000] if isinstance(item.get('company_description'),str) else '')
         if job:
+            if source_band:job.update(experience_source_quote=source_band,experience_source_url=url)
             direct=item.get('job_url_direct')
             if isinstance(direct,str):
                 from job_store import safe_url

@@ -6,7 +6,7 @@ The public app collects public vacancies separately from applicant documents. No
 
 - The public GitHub Actions workflow runs every four hours on standard Ubuntu runners, only while the repository is public. It scans every configured career source (up to 512), instead of rotating only 36. Individual employers still have bounded pages, deadlines and continuation cursors; a configured company is not a guarantee that its site is readable.
 - Employer-linked Greenhouse, Lever and Ashby feeds are collected as employer career sources. Board names are discovered from configured employer pages, never guessed.
-- JobSpy searches LinkedIn, Indeed, Naukri, Glassdoor and Bayt across the 17 supported Indian cities. One of five related engineering role queries rotates every four hours, completing that query cycle in approximately 20 hours, subject to scheduler delays and site availability.
+- JobSpy searches LinkedIn, Indeed, Naukri, Glassdoor and Bayt across the 17 supported Indian cities. All nine AI/software role variants run each cycle, plus AI and GenAI searches in each city, explicit remote searches and ten rotating employer-targeted queries. The forty priority employers complete their targeted rotation in about sixteen hours, subject to scheduler delays. Each query requests up to 20 LinkedIn results or 40 results on other supported platforms; sites may return fewer. Platform results are published before the longer career scan completes.
 - Platforms that block collection remain unavailable. No login, CAPTCHA bypass, proxy bypass or paid data service is used. Failed sources retain only still-fresh public cached jobs.
 - Employer listings expire from this cache after seven days without successful verification; platform copies expire after 24 hours. Rechecking is not a guarantee that a vacancy remains open.
 - Collection targets locations in India and explicitly worldwide remote listings. Overseas-only remote jobs are not assumed to accept applicants in India.
@@ -17,10 +17,14 @@ Canonical application URLs, same-source job IDs, direct employer application lin
 
 ## Matching
 
-The original resume is used locally. Selected employers, stated experience bands, location/work style and role alignment remain required. Explicit mandatory recognised technologies and unambiguous degree requirements are checked against resume evidence; clearly missing evidence excludes the role. Preferred skills do not become mandatory. These checks do not prove proficiency, domain experience, work authorization, or every free-text qualification. Unknown requirements remain unknown, not confirmed qualifications.
+The original resume is used locally. Selected employers, stated experience bands, location/work style and role alignment remain required. Explicit mandatory recognised technologies and degree requirements are checked for review. Missing evidence does not suppress a role-aligned partial-match suggestion. Preferred skills do not become mandatory. These checks do not prove proficiency, domain experience, work authorization, or every free-text qualification. Unknown requirements remain unknown, not confirmed qualifications.
 
-Semantic ranking refines relevance only. It does not waive experience, location or required-skill checks. Candidates outside the semantic batch remain available to keyword ranking rather than being deleted. The result limit is 200 distinct roles, subject to all user filters.
+Semantic ranking refines relevance only. It does not waive experience, location or role preferences. Qualification gaps remain gaps, even when a partially matching job is suggested. Candidates outside the semantic batch remain available to keyword ranking rather than being deleted. The result limit is 200 distinct roles, subject to all user filters.
 
 ## No-cost operation
 
 Only standard public-repository GitHub-hosted runners are used. There are no Actions artifact/cache uploads, paid providers, hosted applicant backend or shared model credentials. The collection workflow refuses to run for a private repository. Site blocking, fair-use limits, GitHub scheduling delays and source outages can reduce coverage. This is broad configured coverage, not a promise of every technology company or every vacancy.
+
+## Employer scope and original metadata
+
+The curated registry covers 250 leading technology and major enterprise employers, including banks, consulting, product and life-sciences companies. This is an explicit coverage scope, not a current ranking or proof of internal technology deployment. Exact employer names and reviewed aliases are required; a company merely mentioned in a description does not qualify. Relevant advertised AI/software roles supply the technology context. Naukri experience ranges and work modes supplied by its source listing are retained, even when the description omits them. Unrecognised experience text remains unknown.

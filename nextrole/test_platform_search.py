@@ -23,10 +23,20 @@ LINKS={
  'hellowork':'https://www.hellowork.com/fr-fr/emplois/12345.html'}
 
 def rows(site='indeed'):
-    return [{'site':site,'job_url':LINKS[site],'title':'Data Analyst','company':'Example',
+    return [{'site':site,'job_url':LINKS[site],'title':'Data Analyst','company':'Microsoft',
              'description':DESCRIPTION,'location':'Bengaluru, India','is_remote':False}]
 
 class NormalizationTests(unittest.TestCase):
+    def test_naukri_original_experience_metadata_is_preserved(self):
+        item={**rows('naukri')[0],'description':'Build production AI applications using Python and LangGraph, collaborate with product engineering teams and deliver tested software solutions.','experience_range':'2-5','work_from_home_type':'Hybrid'}
+        job=normalize_results([item])[0]
+        self.assertEqual(job['years'],2)
+        self.assertIn('Experience range: 2-5 years',job['description'])
+        self.assertEqual(job['experience_source_quote'],'2-5')
+        self.assertEqual(job['style'],'Hybrid')
+        invalid=normalize_results([{**item,'experience_range':'see employer website'}])[0]
+        self.assertNotIn('experience_source_quote',invalid)
+
     def test_preserves_source_posting_date_and_salary_without_inventing_values(self):
         item={**rows()[0],'date_posted':1790000000000,'min_amount':100000,'max_amount':150000,'currency':'INR','interval':'monthly'}
         job=normalize_results([item])[0]
@@ -142,7 +152,7 @@ class CollectorTests(unittest.TestCase):
     def test_manual_application_identifiers_and_legacy_cache_exclusion(self):
         with patch.object(self.store,'build_index'):
             for site in SITES:
-                job=self.store.import_platform_job({'url':LINKS[site],'title':'Data Analyst','company':'Example','location':'Bengaluru','description':DESCRIPTION})
+                job=self.store.import_platform_job({'url':LINKS[site],'title':'Data Analyst','company':'Microsoft','location':'Bengaluru','description':DESCRIPTION})
                 self.assertEqual(platform_for_url(job['url']),SITES[site])
                 if site=='bdjobs':self.assertIn('id=12345',job['url'])
                 if site=='glassdoor':self.assertIn('jl=123',job['url'])

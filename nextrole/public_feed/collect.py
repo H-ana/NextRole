@@ -5,7 +5,7 @@ from job_store import JobStore,source_key
 from experience_policy import requirement
 from mnc_employers import mnc_employer
 ROOT=Path(__file__).parent
-FIELDS=('id','source','company','title','description','location','url','style','years','skills','experience_quote','experience_requirement','last_checked','collection_method','posted_at','date_posted','posting_date','salary_min','salary_max','salary_currency','salary_interval','salary_source','scraped_from','job_requisition_id','application_links','listed_on','source_job_id')
+FIELDS=('id','source','company','title','description','location','url','style','years','skills','experience_quote','experience_requirement','last_checked','collection_method','posted_at','date_posted','posting_date','salary_min','salary_max','salary_currency','salary_interval','salary_source','scraped_from','job_requisition_id','application_links','listed_on','source_job_id','experience_source_quote','experience_source_url')
 
 def shard_sources(sources,index,count):
  if count<1 or not 0<=index<count:raise ValueError('Invalid source shard')
@@ -25,7 +25,7 @@ def export(store,now=None):
  return {'format':'nextrole-public-jobs','version':1,'generated_at':now,'max_age_seconds':7*86400,'jobs':jobs,'sources':[{'id':source_key(s),'company':s['company'],'careers_url':s['careers_url'],'last_success':states.get(source_key(s),{}).get('last_success'),'cursor':states.get(source_key(s),{}).get('cursor',0),'last_attempt':states.get(source_key(s),{}).get('last_attempt'),'available':not bool(states.get(source_key(s),{}).get('error'))} for s in store.sources if s['provider']=='careers']}
 def main():
  parser=argparse.ArgumentParser();parser.add_argument('--output',required=True);parser.add_argument('--previous');parser.add_argument('--seed-cache');parser.add_argument('--sources-file');parser.add_argument('--max-sources',type=int,default=512);parser.add_argument('--shard-index',type=int,default=0);parser.add_argument('--shard-count',type=int,default=1);args=parser.parse_args()
- sources=shard_sources([s for s in json.loads((Path(args.sources_file) if args.sources_file else ROOT/'job_sources.json').read_text(encoding='utf-8')) if s['provider']=='careers'],args.shard_index,args.shard_count);index={source_key(s):s for s in sources}
+ sources=shard_sources([s for s in json.loads((Path(args.sources_file) if args.sources_file else ROOT/'job_sources.json').read_text(encoding='utf-8')) if s['provider']=='careers' and mnc_employer({'company':s['company']})],args.shard_index,args.shard_count);index={source_key(s):s for s in sources}
  with tempfile.TemporaryDirectory() as folder:
   store=JobStore(Path(folder)/'public.sqlite3',sources=sources)
   if args.previous and Path(args.previous).exists():

@@ -3,7 +3,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).parent/'public_feed'))
 from collect import shard_sources,india_location
 from merge import merge_feeds
-from collect_platforms import collect
+from collect_platforms import collect,search_plan,ROLES
 
 class ExpandedFeedTests(unittest.TestCase):
  def job(self,id='a',**extra):return dict(id=id,company='Microsoft',source='careers:microsoft',title='AI Engineer',description='Requires 2 years of Python development experience.',location='Bengaluru, India',url='https://careers.microsoft.com/jobs/'+id,last_checked=1000000,**extra)
@@ -23,9 +23,19 @@ class ExpandedFeedTests(unittest.TestCase):
  def test_platforms_do_not_need_applicant_data(self):
   calls=[]
   def fetch(plan):calls.append(plan);return [self.job()],False
-  result=collect('linkedin',fetcher=fetch,now=1000100);self.assertEqual(len(calls),17);self.assertEqual(len(result['jobs']),1);self.assertTrue(all(set(p)=={'site','role','city','remote'} for p in calls));self.assertTrue(all('resume' not in p for p in calls))
+  result=collect('linkedin',fetcher=fetch,now=1000100);self.assertEqual(len(calls),len(search_plan('linkedin',1000100)));self.assertEqual(len(result['jobs']),1);self.assertTrue(all(set(p)=={'site','role','city','remote','results'} for p in calls));self.assertTrue(all('resume' not in p for p in calls))
+ def test_every_role_remote_and_targeted_employers_each_cycle(self):
+  for now in (0,14400,28800):
+   plans=search_plan('naukri',now)
+   self.assertTrue(set(ROLES).issubset({p['role'] for p in plans if p['city']=='India'}))
+   self.assertEqual(sum(p['remote'] for p in plans),2)
+   self.assertEqual(len(plans),55)
+   self.assertTrue(all(p['results']==40 for p in plans))
+  self.assertTrue(all(p['results']==20 for p in search_plan('linkedin',0)))
+ def test_employer_mentions_do_not_admit_unscoped_companies(self):
+  result=collect('naukri',fetcher=lambda p:([{**self.job(),'company':'Unknown AI startup'}],False),now=1000100)
+  self.assertEqual(result['jobs'],[])
  def test_india_scope(self):
   self.assertTrue(india_location('Bangalore, India'));self.assertFalse(india_location('Remote - United States'));self.assertTrue(india_location('Remote - Worldwide'))
 
 if __name__=='__main__':unittest.main()
-
