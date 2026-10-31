@@ -11,7 +11,7 @@ from careers_scraper import (CareersCrawler, CrawlError, CrawlResult, PageParser
 from job_store import JobStore, source_key, fetch_source
 from test_job_store import FakeEncoder
 
-SOURCE={'id':'example','provider':'careers','company':'Example','careers_url':'https://careers.example.com/jobs','allowed_hosts':['jobs.lever.co']}
+SOURCE={'id':'example','provider':'careers','company':'Microsoft','careers_url':'https://careers.example.com/jobs','allowed_hosts':['jobs.lever.co']}
 JD='Required: 2 years of experience.\nResponsibilities\nBuild automated reconciliation workflows and maintain financial reporting processes. Work with internal teams.'
 
 def page(job_id='123456', **extra):
@@ -22,6 +22,15 @@ def page(job_id='123456', **extra):
 
 
 class ScraperTests(unittest.TestCase):
+    def test_numeric_and_rel_next_pagination_are_collected(self):
+        for navigation in ['<a href="/jobs?page=2">2</a>','<link rel="next" href="/jobs?page=2">','<a aria-label="Next page" href="/jobs?page=2">→</a>']:
+            crawler=CareersCrawler({**SOURCE,'max_pages':4});calls=[]
+            def read(url,**kw):
+                calls.append(url)
+                return (navigation if '?' not in url else page()),url
+            with patch.object(crawler,'_open',side_effect=read):result=crawler.collect()
+            self.assertIn('https://careers.example.com/jobs?page=2',calls)
+            self.assertEqual(len(result.jobs),1)
     def test_greenhouse_visible_header_location_without_location_label(self):
         self.assertEqual(visible_location('Analyst, Banking Alliances','Back to jobs\nAnalyst, Banking Alliances\nChennai\nApply\nCompany works across India, Singapore and Malaysia.'),'Chennai')
         self.assertEqual(visible_location('Product Manager','Product Manager\nSan Francisco (Hybrid)\nApply\nResponsibilities'),'San Francisco (Hybrid)')

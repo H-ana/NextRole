@@ -168,3 +168,46 @@ def collect_oracle(source,crawler=None):
         if found:return CrawlResult(found,False,'Partial company careers scan; remaining openings will be retried.',offset+processed)
         if isinstance(error,CrawlError):raise
         raise CrawlError('Company careers feed could not be read; previously collected jobs retained.') from None
+
+
+def collect_smartrecruiters(source,crawler=None):
+    """Read employer-published external postings, never internal/authenticated jobs."""
+    parsed=urlsplit(source['careers_url']);parts=parsed.path.strip('/').split('/')
+    if parsed.hostname not in ('jobs.smartrecruiters.com','careers.smartrecruiters.com') or len(parts)!=1 or not re.fullmatch(r'[A-Za-z0-9_-]+',parts[0]):
+        raise CrawlError('Invalid configured SmartRecruiters employer board.')
+    company=parts[0];base='https://api.smartrecruiters.com/v1/companies/'+company+'/postings'
+    scoped={**source,'allowed_hosts':list(set(source.get('allowed_hosts',[]))|{'api.smartrecruiters.com','jobs.smartrecruiters.com'}),'allowed_path_prefixes':{**source.get('allowed_path_prefixes',{}),'api.smartrecruiters.com':['/v1/companies/'+company+'/postings'],'jobs.smartrecruiters.com':['/'+company]}}
+    crawler=crawler or CareersCrawler(scoped);offset=max(0,int(source.get('scan_offset',0)));found=[];calls=0;processed=0
+    try:
+        while calls<crawler.max_pages-1:
+            processed=0;crawler.check_deadline()
+            query=urlencode({'limit':20,'offset':offset,'country':'in','q':source.get('search_text','')})
+            raw,_=crawler._open(base+'?'+query,accept='application/json');calls+=1;data=json.loads(raw)
+            batch=data.get('content');total=data.get('totalFound')
+            if not isinstance(batch,list) or not isinstance(total,int):raise CrawlError('Unreadable employer postings list.')
+            if not batch:offset=0;break
+            for listing in batch:
+                if calls>=crawler.max_pages:break
+                crawler.check_deadline();identity=str(listing.get('id',''))
+                if not re.fullmatch(r'[A-Za-z0-9_-]+',identity):raise CrawlError('Invalid employer posting identifier.')
+                raw,_=crawler._open(base+'/'+identity,accept='application/json');calls+=1;detail=json.loads(raw);processed+=1
+                if detail.get('active') is False or detail.get('visibility') not in (None,'PUBLIC'):continue
+                if detail.get('company',{}).get('identifier')!=company:raise CrawlError('Employer board identity mismatch.')
+                sections=detail.get('jobAd',{}).get('sections',{})
+                description='\n'.join(text_html(sections.get(k,{}).get('text','')) for k in ('companyDescription','jobDescription','qualifications','additionalInformation'))
+                title=detail.get('name');place=detail.get('location') or {};location=place.get('fullLocation') or ', '.join(str(place[k]) for k in ('city','region','country') if place.get(k))
+                if place.get('country','').lower()=='in' and 'india' not in location.lower():location+=', India'
+                url=detail.get('postingUrl') or detail.get('applyUrl')
+                if not isinstance(url,str) or not crawler.allowed(url):raise CrawlError('Application URL outside employer board.')
+                if not isinstance(title,str) or not brand_matches(source,title,description):continue
+                style='Hybrid' if place.get('hybrid') else 'Remote' if place.get('remote') else 'unknown'
+                item=make_job(source,title,description,location,url,scraped_from=url,date_posted=detail.get('releasedDate'),style=style,collection_method='company careers site (SmartRecruiters)',job_requisition_id=detail.get('refNumber') or identity)
+                if item:found.append(item)
+            offset+=processed
+            if offset>=total:offset=0;break
+            if processed<len(batch):break
+        return CrawlResult(found,False,'Bounded employer-published scan; remaining postings continue next refresh.',offset)
+    except Exception as error:
+        if found:return CrawlResult(found,False,'Partial employer-published scan; remaining postings will be retried.',offset+processed)
+        if isinstance(error,CrawlError):raise
+        raise CrawlError('Employer postings could not be read; cached listings retained.') from None

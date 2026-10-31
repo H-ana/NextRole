@@ -14,7 +14,7 @@ def shard_sources(sources,index,count):
 def india_location(location):
  # Public users currently choose Indian cities. Do not fill the feed with
  # overseas-only roles, or assume every remote vacancy accepts Indian workers.
- return bool(re.search(r'\b(?:India|Bengaluru|Bangalore|Hyderabad|Pune|Chennai|Mumbai|Bombay|Gurugram|Gurgaon|Noida|New Delhi|Kolkata|Calcutta|Kochi|Cochin|Thiruvananthapuram|Trivandrum|Ahmedabad|Chandigarh|Coimbatore|Indore|Jaipur|Bhubaneswar|worldwide|anywhere in the world)\b',str(location),re.I))
+ return bool(re.search(r'\b(?:India|Secunderabad|Cyberabad|Thane|Panvel|Pimpri|Chinchwad|Whitefield|Hosur|Tambaram|Sriperumbudur|Mohali|Panchkula|Kakkanad|Bengaluru|Bangalore|Hyderabad|Pune|Chennai|Mumbai|Bombay|Gurugram|Gurgaon|Noida|New Delhi|Kolkata|Calcutta|Kochi|Cochin|Thiruvananthapuram|Trivandrum|Ahmedabad|Chandigarh|Coimbatore|Indore|Jaipur|Bhubaneswar|worldwide|anywhere in the world)\b',str(location),re.I))
 def export(store,now=None):
  now=now or time.time();valid={source_key(s) for s in store.sources if s['provider']=='careers'};jobs=[]
  with store.connect() as db:rows=db.execute('SELECT payload,last_seen FROM jobs WHERE active=1').fetchall();states={r['id']:dict(r) for r in db.execute('SELECT * FROM sources')}

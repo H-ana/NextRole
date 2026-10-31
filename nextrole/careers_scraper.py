@@ -59,6 +59,7 @@ class CrawlResult:
     jobs: list
     complete: bool = False
     note: str = 'Limited careers-page scan; additional openings may exist.'
+    next_cursor: int | None = None
 
 
 def public_url(value):
@@ -78,7 +79,7 @@ class PageParser(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.links = []; self.json_ld = []; self.parts = []; self.headings = []
-        self.anchor = None; self.script = None; self.hidden = 0; self.heading = None
+        self.anchor = None; self.script = None; self.hidden = 0; self.heading = None;self.link_positions={};self.pagination_links=set()
 
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
@@ -86,7 +87,10 @@ class PageParser(HTMLParser):
             self.hidden += 1
             if a.get('type', '').split(';')[0].lower() == 'application/ld+json': self.script = []
         elif tag in ('style', 'nav', 'footer', 'header'): self.hidden += 1
-        if tag == 'a': self.anchor = [a.get('href', ''), []]
+        if tag in ('a','link') and a.get('href') and ('next' in a.get('rel','').lower().split() or re.search(r'next(?: page)?',a.get('aria-label',''),re.I)):
+            self.pagination_links.add(a['href'])
+            if tag=='link':self.links.append((a['href'],'Next page'))
+        if tag == 'a': self.anchor = [a.get('href', ''), [],len(self.parts)]
         if tag == 'iframe' and a.get('src'): self.links.append((a['src'], 'Open jobs'))
         if tag == 'h1': self.heading = []
         if tag in ('p', 'div', 'li', 'br', 'h1', 'h2', 'h3', 'section'): self.parts.append('\n')
@@ -100,6 +104,7 @@ class PageParser(HTMLParser):
         if tag in ('script', 'style', 'nav', 'footer', 'header'): self.hidden = max(0, self.hidden - 1)
         if tag == 'a' and self.anchor:
             self.links.append((self.anchor[0], ' '.join(''.join(self.anchor[1]).split())))
+            self.link_positions[self.anchor[0]]=self.anchor[2]
             self.anchor = None
         if tag == 'h1' and self.heading is not None:
             self.headings.append(' '.join(''.join(self.heading).split())); self.heading = None
@@ -198,7 +203,7 @@ def structured_jobs(source, parser, page_url):
             if not isinstance(raw_url,str) and not is_detail(page_url): continue
             url = urljoin(page_url, raw_url) if isinstance(raw_url, str) else page_url
             job = make_job(source, item.get('title'), text_html(item.get('description')), location, url,
-                           scraped_from=page_url, date_posted=item.get('datePosted'))
+                           scraped_from=page_url, date_posted=item.get('datePosted'),job_requisition_id=(item.get('identifier',{}).get('value') if isinstance(item.get('identifier'),dict) else item.get('identifier')))
             if job: result.append(job)
     return result
 
@@ -208,25 +213,36 @@ def is_detail(url):
     return bool(re.search(r'/(?:jobs?|careers)/(?:listing/|detail/|view/)?[^/]+/(?:\d+|[a-f0-9-]{20,})(?:/|$)', path, re.I)
                 or re.search(r'/(?:jobs?|positions?)/(?:\d+|[a-f0-9-]{20,})(?:/|$)', path, re.I)
                 or (p.hostname in ATS_HOSTS and re.search(r'/(?:\d{4,}|[a-f0-9-]{30,})(?:/|$)', path, re.I))
+                or re.search(r'/careers/JobDetail/[^/?]+',path,re.I)
+                or re.search(r'/(?:job|jobs)/[^/]+-jid-\d+(?:/|$)',path,re.I)
+                or re.search(r'/details/\d{5,}(?:/|$)',path,re.I)
+                or (p.hostname=='www.novartis.com' and re.search(r'/career-search/job/details/req-\d+-[^/]+$',path,re.I))
+                or re.search(r'/job/[^/]+/[^/]+/\d{4,}/\d+(?:/|$)',path,re.I)
                 or 'gh_jid=' in p.query)
 
 
 class CareersCrawler:
     def __init__(self, source, max_pages=35, seconds=120):
-        self.source = source; self.max_pages = min(max_pages, 100); self.deadline = time.monotonic() + seconds
+        self.source = source; self.max_pages = max(2,min(max_pages,int(source.get('max_pages',max_pages)),100)); self.deadline = time.monotonic() + min(seconds,float(source.get('scan_seconds',seconds)))
         self.hosts = set(source.get('allowed_hosts', [])) | {urlsplit(source['careers_url']).hostname}
+        self.path_prefixes=dict(source.get('allowed_path_prefixes',{}))
+        main=urlsplit(source['careers_url'])
+        if main.hostname in ATS_HOSTS and main.path.strip('/'):
+            self.path_prefixes.setdefault(main.hostname,['/'+main.path.strip('/').split('/')[0]])
         self.robots = {}; self.delay = {}; self.browser = None; self.runtime = None
         self.visited = set(); self.rendered = 0; self.partial = False
         self.mode = scraping_mode()
 
     def allowed(self, url):
         p = urlsplit(url)
-        return p.scheme == 'https' and p.hostname in self.hosts and not p.username and not p.password and p.port in (None, 443)
+        prefixes=self.path_prefixes.get(p.hostname)
+        scoped=not prefixes or p.path=='/robots.txt' or any(p.path==prefix or p.path.startswith(prefix.rstrip('/')+'/') for prefix in prefixes)
+        return p.scheme == 'https' and p.hostname in self.hosts and not p.username and not p.password and p.port in (None, 443) and scoped
 
     def check_deadline(self):
         if time.monotonic() >= self.deadline: raise CrawlError('Careers-page scan reached its time limit; cached jobs retained.')
 
-    def _open(self, url, check_robots=True):
+    def _open(self, url, check_robots=True, payload=None, accept=None):
         self.check_deadline(); public_url(url)
         if not self.allowed(url): raise CrawlError('Careers page redirected outside the configured employer websites.')
         if check_robots: self.check_robots(url)
@@ -243,7 +259,9 @@ class CareersCrawler:
         host = urlsplit(url).hostname
         pace(host,self.delay.get(host,1.5),self.deadline)
         try:
-            req = urllib.request.Request(url, headers={'User-Agent': USER_AGENT, 'Accept': 'text/html,text/plain;q=0.9'})
+            headers={'User-Agent': USER_AGENT, 'Accept': accept or 'text/html,text/plain;q=0.9'}
+            if payload is not None:headers['Content-Type']='application/json'
+            req = urllib.request.Request(url, data=payload, headers=headers)
             with urllib.request.build_opener(Redirect()).open(req, timeout=max(1, min(20, self.deadline - time.monotonic()))) as response:
                 data = response.read(MAX_BYTES + 1)
                 if len(data) > MAX_BYTES: raise CrawlError('Careers page exceeds the supported size.')
@@ -303,7 +321,7 @@ class CareersCrawler:
         finally: context.close()
 
     def collect(self):
-        queue = [self.source['careers_url']]; found = {}; failures = 0; index_pages = 0
+        queue = [self.source['careers_url']]; found = {}; failures = 0; index_pages = 0;priorities={}; attempted_boards=set()
         try:
             while queue and len(self.visited) < self.max_pages and time.monotonic() < self.deadline:
                 url = queue.pop(0)
@@ -311,6 +329,30 @@ class CareersCrawler:
                 self.visited.add(url)
                 if not is_detail(url): index_pages += 1
                 try:
+                    # Once an employer links its public ATS, read the complete
+                    # company-published listing data instead of sampling only a
+                    # handful of individual HTML pages. Never guess board names.
+                    target=urlsplit(url)
+                    if target.hostname in ATS_HOSTS and target.path.strip('/'):
+                        board=(target.hostname,target.path.strip('/').split('/')[0])
+                        if board not in attempted_boards:
+                            attempted_boards.add(board)
+                            try:
+                                from company_collectors import collect_published_board
+                                published=collect_published_board({**self.source,'careers_url':url})
+                                for job in published.jobs:found[job['url']]=job
+                                if found:return CrawlResult(list(found.values()),False,'Employer-linked public careers feed collected.')
+                            except CrawlError:pass
+                    if re.fullmatch(r'[a-z0-9-]+\.wd\d+\.myworkdayjobs\.com',target.hostname or '') and not is_detail(url):
+                        from company_collectors import collect_workday
+                        try:
+                            result=collect_workday({**self.source,'careers_url':url});return result
+                        except CrawlError:pass
+                    if target.hostname in ('jobs.smartrecruiters.com','careers.smartrecruiters.com') and len(target.path.strip('/').split('/'))==1 and target.path.strip('/'):
+                        from company_collectors import collect_smartrecruiters
+                        try:
+                            result=collect_smartrecruiters({**self.source,'careers_url':url});return result
+                        except CrawlError:pass
                     raw, final = self._open(url)
                     if re.search(r'<title[^>]*>[^<]*(?:access denied|just a moment|captcha|sign in)',raw,re.I):
                         raise CrawlError('Website requires sign-in or a browser challenge; no bypass attempted.')
@@ -332,20 +374,30 @@ class CareersCrawler:
                             item = make_job(self.source, parser.headings[0], text, location, final, scraped_from=final)
                             if item: items.append(item)
                     for item in items:
-                        if self.allowed(item['url']): found[item['url']] = item
+                        from company_collectors import brand_matches
+                        if self.allowed(item['url']) and brand_matches(self.source,item['title'],item['description']): found[item['url']] = item
                     candidates = []
                     for href, label in parser.links:
                         dest = urljoin(final, href); p = urlsplit(dest)
                         dest = urlunsplit((p.scheme,p.netloc,p.path,p.query,''))
                         if not self.allowed(dest) or dest == final or dest in self.visited: continue
-                        if is_detail(dest): candidates.append(dest)
-                        elif not is_detail(final) and (re.search(r'\b(?:open roles|open positions|view jobs|all jobs|next|careers)\b',label,re.I)
-                              or (p.hostname in ATS_HOSTS and p.path.strip('/'))): candidates.append(dest)
+                        locale=re.match(r'^/([a-z]{2,6}-[a-z]{2})/jobs/',p.path,re.I)
+                        original_locale=re.match(r'^/([a-z]{2,6}-[a-z]{2})/jobs/',urlsplit(self.source['careers_url']).path,re.I)
+                        if locale and original_locale and locale[1].lower()!=original_locale[1].lower():continue
+                        if is_detail(dest):
+                            candidates.append(dest)
+                            position=parser.link_positions.get(href,0)
+                            nearby=' '.join(parser.parts[max(0,position-2):position+20])
+                            priorities[dest]=0 if re.search(r'\b(?:India|Bangalore|Bengaluru|Hyderabad|Chennai|Mumbai|Kochi|Pune|Gurugram|Noida)\b',nearby,re.I) else 1
+                        elif not is_detail(final) and index_pages<5 and p.hostname==urlsplit(final).hostname and p.path==urlsplit(final).path and (href in parser.pagination_links or label.strip().isdigit() and re.search(r'(?:[?&])(?:page|start|offset|pageNumber)=\d+',p.query and '?'+p.query,re.I)):
+                            candidates.append(dest);priorities[dest]=-1
+                        elif not is_detail(final) and (re.search(r'\b(?:open roles|open positions|view jobs|search jobs|search careers|job search|all jobs|next|careers|view all jobs|current openings|explore jobs)\b',label,re.I)
+                              or (p.hostname in ATS_HOSTS and p.path.strip('/')) or re.fullmatch(r'[a-z0-9-]+\.wd\d+\.myworkdayjobs\.com',p.hostname or '') or p.hostname in ('jobs.smartrecruiters.com','careers.smartrecruiters.com')): candidates.append(dest)
                     queue.extend(x for x in dict.fromkeys(candidates) if x not in queue and x not in found)
                     # Discover a few listing pages first, then rotate the detail sample
                     # across refreshes. Otherwise only the first roles are ever visited.
                     slot=str(int(time.time()//900))
-                    queue=sorted(queue,key=lambda x:(0 if not is_detail(x) and index_pages<8 else 1,hashlib.sha256((slot+x).encode()).hexdigest()))[:2000]
+                    queue=sorted(queue,key=lambda x:(0 if not is_detail(x) and index_pages<3 else 1,priorities.get(x,1),hashlib.sha256((slot+x).encode()).hexdigest()))[:2000]
                 except Exception as e:
                     failures += 1
                     if not found and len(self.visited) == 1:
@@ -367,4 +419,16 @@ class CareersCrawler:
 def scrape_source(source):
     if source.get('provider') == 'restricted':
         raise CrawlError(source['unavailable_reason'])
+    if source.get('adapter') == 'smartrecruiters':
+        from company_collectors import collect_smartrecruiters
+        return collect_smartrecruiters(source)
+    if source.get('adapter') == 'workday':
+        from company_collectors import collect_workday
+        return collect_workday(source)
+    if source.get('adapter') == 'oracle':
+        from company_collectors import collect_oracle
+        return collect_oracle(source)
+    if source.get('adapter') == 'published-board':
+        from company_collectors import collect_published_board
+        return collect_published_board(source)
     return CareersCrawler(source).collect()

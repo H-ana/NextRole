@@ -33,7 +33,7 @@ class ExpandedFeedTests(unittest.TestCase):
    plans=search_plan('naukri',now)
    self.assertTrue(set(ROLES).issubset({p['role'] for p in plans if p['city']=='India'}))
    self.assertEqual(sum(p['remote'] for p in plans),2)
-   self.assertEqual(len(plans),55)
+   self.assertEqual(len(plans),len(ROLES)+34+2+10)
    self.assertTrue(all(p['results']==40 for p in plans))
   self.assertTrue(all(p['results']==20 for p in search_plan('linkedin',0)))
  def test_employer_mentions_do_not_admit_unscoped_companies(self):
@@ -41,5 +41,24 @@ class ExpandedFeedTests(unittest.TestCase):
   self.assertEqual(result['jobs'],[])
  def test_india_scope(self):
   self.assertTrue(india_location('Bangalore, India'));self.assertFalse(india_location('Remote - United States'));self.assertTrue(india_location('Remote - Worldwide'))
+
+ def test_full_platform_page_fetches_one_extra_page_and_deduplicates(self):
+  from unittest.mock import patch
+  calls=[]
+  plan=dict(site='linkedin',role='AI Engineer',city='India',remote=False,results=20)
+  def fetch(p):
+   calls.append(p)
+   return [self.job(str(i)) for i in range(20)] if not p.get('offset') else [self.job('19'),self.job('20')],False
+  with patch('collect_platforms.search_plan',return_value=[plan]):result=collect('linkedin',fetcher=fetch,now=1000100)
+  self.assertEqual([p.get('offset',0) for p in calls],[0,20]);self.assertEqual(len(result['jobs']),21)
+
+ def test_failed_second_platform_page_preserves_first(self):
+  from unittest.mock import patch
+  plan=dict(site='naukri',role='AI Engineer',city='India',remote=False,results=20)
+  def fetch(p):
+   if p.get('offset'):raise RuntimeError('Source unavailable')
+   return [self.job(str(i)) for i in range(20)],False
+  with patch('collect_platforms.search_plan',return_value=[plan]):result=collect('naukri',fetcher=fetch,now=1000100)
+  self.assertEqual(len(result['jobs']),20);self.assertEqual(result['sources'][0]['queries_attempted'],2)
 
 if __name__=='__main__':unittest.main()

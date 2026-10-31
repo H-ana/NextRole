@@ -188,7 +188,7 @@ vector_version=CASE WHEN jobs.content_hash=excluded.content_hash THEN jobs.vecto
                 selected=ordinary+[s for s in due if s not in ordinary][:max(0,max_sources-len(ordinary))]
             from careers_scraper import scraping_mode
             with concurrent.futures.ThreadPoolExecutor(max_workers=3 if scraping_mode()=='browser' else 6) as pool:
-                futures={pool.submit(fetcher,{**source,'scan_offset':states.get(source_key(source),{}).get('cursor',0)} if source.get('adapter') in ('workday','oracle') else source):source for source in selected}
+                futures={pool.submit(fetcher,{**source,'scan_offset':states.get(source_key(source),{}).get('cursor',0)} if source.get('provider')=='careers' else source):source for source in selected}
                 for future in concurrent.futures.as_completed(futures):
                     source=futures[future];key=source_key(source)
                     try:
@@ -322,4 +322,3 @@ vector_version=CASE WHEN jobs.content_hash=excluded.content_hash THEN jobs.vecto
                 self.refresh(max_sources=18);self.build_index();time.sleep(60)
         threading.Thread(target=index_loop,daemon=True,name='job-index-scheduler').start()
         threading.Thread(target=loop,daemon=True,name='job-cache-scheduler').start()
-

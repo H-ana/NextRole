@@ -3205,6 +3205,13 @@
       "scope_categories": [
         "major-technology-or-enterprise-employer"
       ]
+    },
+    {
+      "name": "NCR Atleos",
+      "aliases": [],
+      "evidence_url": "https://www.ncratleos.com/careers",
+      "catalog": "thomson-reuters-tech-2018",
+      "reviewed_on": "2026-10-26"
     }
   ]
 }
