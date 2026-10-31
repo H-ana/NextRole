@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS sources (id TEXT PRIMARY KEY,last_attempt REAL,last_s
         now=time.time() if now is None else now;key=source_key(source)
         with self.connect() as db:
             if complete:db.execute('UPDATE jobs SET active=0 WHERE source=?',(key,))
-            else:db.execute('UPDATE jobs SET active=0 WHERE source=? AND last_seen<?',(key,now-(30*86400 if source['provider']=='manual' else 86400)))
+            else:db.execute('UPDATE jobs SET active=0 WHERE source=? AND last_seen<?',(key,now-(30*86400 if source['provider']=='manual' else 7*86400 if source['provider']=='careers' else 86400)))
             for job in jobs:
                 digest=hashlib.sha256((job['title']+'\n'+job['description']).encode()).hexdigest()
                 db.execute('''INSERT INTO jobs(id,source,payload,content_hash,last_seen,active) VALUES(?,?,?,?,?,1)
@@ -322,3 +322,4 @@ vector_version=CASE WHEN jobs.content_hash=excluded.content_hash THEN jobs.vecto
                 self.refresh(max_sources=18);self.build_index();time.sleep(60)
         threading.Thread(target=index_loop,daemon=True,name='job-index-scheduler').start()
         threading.Thread(target=loop,daemon=True,name='job-cache-scheduler').start()
+
