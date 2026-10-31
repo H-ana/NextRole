@@ -13,6 +13,8 @@ def run(plan):
         options=dict(site_name=[plan['site']],search_term=plan['role'],location=plan['city'] if plan['city']=='India' else plan['city']+', India',
                      country_indeed='India',results_wanted=max(10,min(40,int(plan.get('results',20)))),offset=max(0,min(80,int(plan.get('offset',0)))),description_format='plain',fetch_description=True,verbose=0)
         if plan['remote']:options['is_remote']=True
+        ids=plan.get('linkedin_company_ids')
+        if plan['site']=='linkedin' and isinstance(ids,list) and ids and all(isinstance(i,int) and not isinstance(i,bool) and i>0 for i in ids):options['linkedin_company_ids']=ids[:10]
         frame=scrape_jobs(**options)
         if frame.attrs.get('errors'):return {'error':'This source blocked or failed collection. Cached listings remain available; try after the cooldown.'}
         # pandas serializes NaN and datetimes safely; retain only public fields.
