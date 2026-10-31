@@ -83,6 +83,13 @@ def normalize_results(rows):
                      collection_method='JobSpy public listing',application_links=[{'platform':SITES[site],'url':url}],
                      listed_on=[SITES[site]],style=style,company_description=item.get('company_description','')[:2000] if isinstance(item.get('company_description'),str) else '')
         if job:
+            direct=item.get('job_url_direct')
+            if isinstance(direct,str):
+                from job_store import safe_url
+                if safe_url(direct) and not platform_for_url(direct):job['application_links'].append({'platform':'Company careers','url':direct})
+            if isinstance(item.get('id'),str):job['source_job_id']=item['id']
+            match=re.search(r'(?im)^\s*(?:job requisition|requisition|job)\s*(?:id|number|#)\s*[:#]\s*([A-Za-z0-9_-]{4,40})\s*$',description)
+            if match:job['job_requisition_id']=match.group(1)
             # Preserve public source metadata; missing values remain unknown.
             for field in ('date_posted','min_amount','max_amount','interval','currency'):
                 value=item.get(field)

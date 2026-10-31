@@ -1,0 +1,24 @@
+import unittest,sys,time
+from pathlib import Path
+sys.path.insert(0,str(Path(__file__).parent/'public_feed'))
+from collect import shard_sources,india_location
+from merge import merge_feeds
+from collect_platforms import collect
+
+class ExpandedFeedTests(unittest.TestCase):
+ def job(self,id='a',**extra):return dict(id=id,company='Microsoft',source='careers:microsoft',title='AI Engineer',description='Requires 2 years of Python development experience.',location='Bengaluru, India',url='https://careers.microsoft.com/jobs/'+id,last_checked=1000000,**extra)
+ def test_full_source_shards(self):
+  sources=[dict(provider='careers',id=str(i)) for i in range(403)];parts=[shard_sources(sources,i,8) for i in range(8)];self.assertEqual(sum(map(len,parts)),403);self.assertEqual(len({s['id'] for p in parts for s in p}),403)
+ def test_merge_ids_and_employers(self):
+  a=self.job(job_requisition_id='R123');b={**a,'id':'li','source':'platform:public:linkedin','url':'https://www.linkedin.com/jobs/view/123','listed_on':['LinkedIn']};c={**a,'id':'other','company':'Amazon','url':'https://amazon.jobs/jobs/123'}
+  result=merge_feeds([{'jobs':[a,b,c]}],now=1000100);self.assertEqual(len(result['jobs']),2);self.assertEqual(len(result['jobs'][0]['application_links']),2)
+ def test_freshness(self):
+  j=self.job();self.assertFalse(merge_feeds([{'jobs':[j]}],now=1000000+8*86400)['jobs']);j['source']='platform:public:indeed';self.assertFalse(merge_feeds([{'jobs':[j]}],now=1000000+2*86400)['jobs'])
+ def test_platforms_do_not_need_applicant_data(self):
+  calls=[]
+  def fetch(plan):calls.append(plan);return [self.job()],False
+  result=collect('linkedin',fetcher=fetch,now=1000100);self.assertEqual(len(calls),17);self.assertEqual(len(result['jobs']),1);self.assertTrue(all(set(p)=={'site','role','city','remote'} for p in calls));self.assertTrue(all('resume' not in p for p in calls))
+ def test_india_scope(self):
+  self.assertTrue(india_location('Bangalore, India'));self.assertFalse(india_location('Remote - United States'));self.assertTrue(india_location('Remote - Worldwide'))
+
+if __name__=='__main__':unittest.main()

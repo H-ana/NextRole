@@ -1,0 +1,42 @@
+name: Refresh public company jobs
+on:
+  workflow_dispatch:
+  push:
+    paths: ['nextrole/public_feed/**', '.github/workflows/public-jobs.yml']
+  schedule:
+    - cron: '23 */4 * * *'
+permissions:
+  contents: write
+concurrency:
+  group: public-jobs
+  cancel-in-progress: false
+jobs:
+  collect:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install public platform collector
+        run: python -m pip install 'python-jobspy==1.4.1'
+      - name: Collect every configured company without applicant data
+        run: |
+          mkdir -p public-job-parts
+          python nextrole/public_feed/collect.py --previous nextrole/dist/public-jobs.json --output public-job-parts/careers.json --max-sources 512
+      - name: Collect public platform listings
+        run: python nextrole/public_feed/collect_platforms.py --site all --previous nextrole/dist/public-jobs.json --output public-job-parts/platforms.json
+      - name: Merge and deduplicate public listings
+        run: python nextrole/public_feed/merge.py --input-dir public-job-parts --previous nextrole/dist/public-jobs.json --output nextrole/dist/public-jobs.json
+      - name: Publish only public listing data
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- nextrole/dist/public-jobs.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh expanded company and platform jobs [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi

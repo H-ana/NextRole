@@ -200,7 +200,7 @@ def structured_jobs(source, parser, page_url):
             if not isinstance(raw_url,str) and not is_detail(page_url): continue
             url = urljoin(page_url, raw_url) if isinstance(raw_url, str) else page_url
             job = make_job(source, item.get('title'), text_html(item.get('description')), location, url,
-                           scraped_from=page_url, date_posted=item.get('datePosted'))
+                           scraped_from=page_url, date_posted=item.get('datePosted'),job_requisition_id=(item.get('identifier',{}).get('value') if isinstance(item.get('identifier'),dict) else item.get('identifier')))
             if job: result.append(job)
     return result
 
@@ -318,7 +318,7 @@ class CareersCrawler:
         finally: context.close()
 
     def collect(self):
-        queue = [self.source['careers_url']]; found = {}; failures = 0; index_pages = 0;priorities={}
+        queue = [self.source['careers_url']]; found = {}; failures = 0; index_pages = 0;priorities={}; attempted_boards=set()
         try:
             while queue and len(self.visited) < self.max_pages and time.monotonic() < self.deadline:
                 url = queue.pop(0)
@@ -326,6 +326,20 @@ class CareersCrawler:
                 self.visited.add(url)
                 if not is_detail(url): index_pages += 1
                 try:
+                    # Once an employer links its public ATS, read the complete
+                    # company-published listing data instead of sampling only a
+                    # handful of individual HTML pages. Never guess board names.
+                    target=urlsplit(url)
+                    if target.hostname in ATS_HOSTS and target.path.strip('/'):
+                        board=(target.hostname,target.path.strip('/').split('/')[0])
+                        if board not in attempted_boards:
+                            attempted_boards.add(board)
+                            try:
+                                from company_collectors import collect_published_board
+                                published=collect_published_board({**self.source,'careers_url':url})
+                                for job in published.jobs:found[job['url']]=job
+                                if found:return CrawlResult(list(found.values()),False,'Employer-linked public careers feed collected.')
+                            except CrawlError:pass
                     raw, final = self._open(url)
                     if re.search(r'<title[^>]*>[^<]*(?:access denied|just a moment|captcha|sign in)',raw,re.I):
                         raise CrawlError('Website requires sign-in or a browser challenge; no bypass attempted.')
