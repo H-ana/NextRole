@@ -1,7 +1,7 @@
 """Source-backed experience bands for recommendations; no model or title inference."""
 import re
 
-VERSION='strict-experience-v2'
+VERSION='minimum-experience-v3'
 NUMBER=r'\d{1,2}(?:\.\d+)?'
 YEARS=r'(?:years?|yrs?)(?:[\u2019\u0027])?'
 BAND=rf'(?P<low>{NUMBER})(?:\s*(?:[-\u2013\u2014]|to)\s*(?P<high>{NUMBER}))?\s*(?P<plus>\+)?\s*{YEARS}'
@@ -59,5 +59,5 @@ def assess(band,actual):
     if not 0<=actual<=80:return None
     minimum=band['minimum'];maximum=band.get('maximum')
     shortfall=max(0,minimum-actual)
-    if shortfall>0 or maximum is not None and actual>maximum:return None
-    return {'status':'within-range','shortfall':0,'confirmed_years':actual,'policy_version':VERSION}
+    if shortfall>0:return None
+    return {'status':'meets-minimum' if maximum is not None and actual>maximum else 'within-range','shortfall':0,'confirmed_years':actual,'policy_version':VERSION}

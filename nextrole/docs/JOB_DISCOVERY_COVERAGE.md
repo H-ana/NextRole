@@ -17,7 +17,7 @@ Canonical application URLs, same-source job IDs, direct employer application lin
 
 ## Matching
 
-The original resume is used locally. Selected employers, stated experience bands, location/work style and role alignment remain required. Explicit mandatory recognised technologies and degree requirements are checked for review. Missing evidence does not suppress a role-aligned partial-match suggestion. Preferred skills do not become mandatory. These checks do not prove proficiency, domain experience, work authorization, or every free-text qualification. Unknown requirements remain unknown, not confirmed qualifications.
+The original resume is used locally. Selected employers, stated minimum experience requirements, location/work style and role alignment remain required. Explicit mandatory recognised technologies and degree requirements are checked for review. Missing evidence does not suppress a role-aligned partial-match suggestion. Preferred skills do not become mandatory. These checks do not prove proficiency, domain experience, work authorization, or every free-text qualification. Unknown requirements remain unknown, not confirmed qualifications.
 
 Semantic ranking refines relevance only. It does not waive experience, location or role preferences. Qualification gaps remain gaps, even when a partially matching job is suggested. Candidates outside the semantic batch remain available to keyword ranking rather than being deleted. The result limit is 200 distinct roles, subject to all user filters.
 
@@ -28,3 +28,5 @@ Only standard public-repository GitHub-hosted runners are used. There are no Act
 ## Employer scope and original metadata
 
 The curated registry covers 250 leading technology and major enterprise employers, including banks, consulting, product and life-sciences companies. This is an explicit coverage scope, not a current ranking or proof of internal technology deployment. Exact employer names and reviewed aliases are required; a company merely mentioned in a description does not qualify. Relevant advertised AI/software roles supply the technology context. Naukri experience ranges and work modes supplied by its source listing are retained, even when the description omits them. Unrecognised experience text remains unknown.
+
+Applicants meeting the stated minimum can also see lower-experience roles even if their years exceed the advertised upper range. Original ranges remain visible. Unknown, contradictory or higher minimum requirements stay excluded.

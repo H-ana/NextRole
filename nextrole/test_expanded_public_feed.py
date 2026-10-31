@@ -8,7 +8,11 @@ from collect_platforms import collect,search_plan,ROLES
 class ExpandedFeedTests(unittest.TestCase):
  def job(self,id='a',**extra):return dict(id=id,company='Microsoft',source='careers:microsoft',title='AI Engineer',description='Requires 2 years of Python development experience.',location='Bengaluru, India',url='https://careers.microsoft.com/jobs/'+id,last_checked=1000000,**extra)
  def test_partial_career_pages_retain_previous_pages_for_seven_days(self):
-  from job_store import JobStore
+  # Load the collector's store explicitly; the personal backend has the same
+  # module name and can already be cached by other tests in this process.
+  import importlib.util
+  spec=importlib.util.spec_from_file_location('public_feed_store_under_test',Path(__file__).parent/'public_feed'/'job_store.py')
+  module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);JobStore=module.JobStore
   source={'provider':'careers','id':'microsoft','company':'Microsoft','careers_url':'https://careers.microsoft.com'}
   with tempfile.TemporaryDirectory() as folder:
    store=JobStore(Path(folder)/'cache.sqlite3',sources=[source]);store.update_source(source,[self.job()],now=1000000,complete=False);store.update_source(source,[self.job('b')],now=1000000+2*86400,complete=False)
