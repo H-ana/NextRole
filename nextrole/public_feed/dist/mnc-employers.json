@@ -7,7 +7,8 @@
         "Microsoft India R&D",
         "Microsoft",
         "microsoft"
-      ]
+      ],
+      "evidence_url": "https://www.microsoft.com/en-us/worldwide"
     },
     {
       "name": "Amazon",
@@ -20,7 +21,8 @@
         "Amazon",
         "Amazon India",
         "amazon"
-      ]
+      ],
+      "evidence_url": "https://amazon.jobs/content/en/locations"
     },
     {
       "name": "Google",
@@ -29,7 +31,8 @@
         "Alphabet",
         "Google",
         "google"
-      ]
+      ],
+      "evidence_url": "https://www.google.com/about/careers/applications/locations"
     },
     {
       "name": "Tata Consultancy Services",
@@ -38,7 +41,8 @@
         "Tata Consultancy Services India",
         "Tata Consultancy Services",
         "TCS (Tata Consultancy Services)"
-      ]
+      ],
+      "evidence_url": "https://www.tcs.com/who-we-are/worldwide"
     },
     {
       "name": "Infosys",
@@ -46,7 +50,8 @@
         "Infosys Technologies",
         "Infosys",
         "Infosys Consulting"
-      ]
+      ],
+      "evidence_url": "https://www.infosys.com/about/locations.html"
     },
     {
       "name": "Accenture",
@@ -54,14 +59,16 @@
         "Accenture India",
         "Accenture Solutions",
         "Accenture"
-      ]
+      ],
+      "evidence_url": "https://www.accenture.com/us-en/about/location-index"
     },
     {
       "name": "Wipro",
       "aliases": [
         "Wipro Technologies",
         "Wipro"
-      ]
+      ],
+      "evidence_url": "https://www.wipro.com/locations/"
     },
     {
       "name": "Cognizant",
@@ -70,7 +77,8 @@
         "Cognizant Technology Solutions India",
         "Cognizant",
         "Cognizant India"
-      ]
+      ],
+      "evidence_url": "https://careers.cognizant.com/global-en/locations/"
     },
     {
       "name": "Capgemini",
@@ -79,7 +87,8 @@
         "Capgemini Engineering",
         "Capgemini",
         "Capgemini India"
-      ]
+      ],
+      "evidence_url": "https://www.capgemini.com/about-us/locations/"
     },
     {
       "name": "IBM",
@@ -87,7 +96,8 @@
         "IBM India",
         "International Business Machines",
         "IBM"
-      ]
+      ],
+      "evidence_url": "https://www.ibm.com/contact/global"
     },
     {
       "name": "Oracle",
@@ -96,7 +106,8 @@
         "Oracle Financial Services Software",
         "Oracle",
         "oracle"
-      ]
+      ],
+      "evidence_url": "https://www.oracle.com/corporate/contact/global.html"
     },
     {
       "name": "SAP",
@@ -105,7 +116,8 @@
         "SAP India",
         "SAP",
         "sap"
-      ]
+      ],
+      "evidence_url": "https://www.sap.com/about/company/office-locations.html"
     },
     {
       "name": "Deloitte",
@@ -115,7 +127,8 @@
         "Deloitte Consulting",
         "Deloitte Consulting India",
         "Deloitte Touche Tohmatsu India"
-      ]
+      ],
+      "evidence_url": "https://www2.deloitte.com/us/en/footerlinks/global-office-directory.html"
     },
     {
       "name": "Salesforce",
@@ -124,7 +137,8 @@
         "Salesforce.com",
         "Salesforce",
         "salesforce"
-      ]
+      ],
+      "evidence_url": "https://www.salesforce.com/company/locations/"
     },
     {
       "name": "Adobe",
@@ -133,7 +147,8 @@
         "Adobe Systems",
         "Adobe Systems India",
         "Adobe"
-      ]
+      ],
+      "evidence_url": "https://www.adobe.com/about-adobe/contact/offices.html"
     },
     {
       "name": "HCLTech",
@@ -142,20 +157,23 @@
         "HCL Technologies India",
         "HCL Technologies Ltd.",
         "HCLTech"
-      ]
+      ],
+      "evidence_url": "https://www.hcltech.com/global-delivery-network"
     },
     {
       "name": "Tech Mahindra",
       "aliases": [
         "Tech Mahindra"
-      ]
+      ],
+      "evidence_url": "https://www.techmahindra.com/contact-us/"
     },
     {
       "name": "Stripe",
       "aliases": [
         "Stripe",
         "stripe"
-      ]
+      ],
+      "evidence_url": "https://stripe.com/jobs"
     },
     {
       "name": "Databricks",
@@ -163,13 +181,15 @@
         "Databricks India",
         "Databricks",
         "databricks"
-      ]
+      ],
+      "evidence_url": "https://www.databricks.com/company/contact"
     },
     {
       "name": "Atlassian",
       "aliases": [
         "Atlassian India"
-      ]
+      ],
+      "evidence_url": "https://www.atlassian.com/company/contact"
     },
     {
       "name": "ServiceNow",
@@ -178,7 +198,8 @@
         "ServiceNow Software Development India",
         "ServiceNow",
         "servicenow"
-      ]
+      ],
+      "evidence_url": "https://www.servicenow.com/company/locations.html"
     },
     {
       "name": "Cisco",
@@ -187,13 +208,15 @@
         "Cisco Systems India",
         "Cisco",
         "cisco"
-      ]
+      ],
+      "evidence_url": "https://www.cisco.com/site/us/en/about/contact-cisco/index.html"
     },
     {
       "name": "Acer",
       "aliases": [
         "Acer"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "AMD",
@@ -201,138 +224,160 @@
         "Advanced Micro Devices (AMD)",
         "Advanced Micro Devices",
         "AMD India"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Advantest",
       "aliases": [
         "Advantest"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Akamai Technologies",
       "aliases": [
         "Akamai Technologies",
         "Akamai"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Amdocs",
       "aliases": [
         "Amdocs"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Analog Devices",
       "aliases": [
         "Analog Devices"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Apple",
       "aliases": [
         "Apple",
         "apple"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Applied Materials",
       "aliases": [
         "Applied Materials"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "ARRIS (Vistance Networks)",
       "aliases": [
         "ARRIS International",
         "ARRIS"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "ASE Group",
       "aliases": [
         "ASE Group"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "ASMPT",
       "aliases": [
         "ASM Pacific Technology",
         "ASMPT Technology"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "ASUS",
       "aliases": [
         "ASUS"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Atos",
       "aliases": [
         "Atos"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Autodesk",
       "aliases": [
         "Autodesk"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "CA Technologies (Broadcom)",
       "aliases": [
         "CA Technologies"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Canon",
       "aliases": [
         "Canon"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Celestica",
       "aliases": [
         "Celestica"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "CGI",
       "aliases": [
         "CGI"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "CommScope",
       "aliases": [
         "CommScope"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Computacenter",
       "aliases": [
         "Computacenter"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Computershare",
       "aliases": [
         "Computershare"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "dormakaba",
       "aliases": [
         "dormakaba"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "DXC Technology",
       "aliases": [
         "DXC Technology",
         "DXC Technology India"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "eBay",
@@ -340,13 +385,15 @@
         "eBay Inc.",
         "eBay",
         "ebay"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Ericsson",
       "aliases": [
         "Ericsson"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Meta",
@@ -355,126 +402,146 @@
         "Meta Platforms",
         "Meta",
         "facebook"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "FUJIFILM",
       "aliases": [
         "FUJIFILM"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Fujikura",
       "aliases": [
         "Fujikura Ltd."
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Fujitsu",
       "aliases": [
         "Fujitsu Ltd."
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Gemalto (Thales)",
       "aliases": [
         "Gemalto"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Hewlett Packard Enterprise",
       "aliases": [
         "Hewlett Packard Enterprise",
         "Hewlett Packard Enterprise (HPE) India"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "HP",
       "aliases": [
         "HP"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Infineon Technologies",
       "aliases": [
         "Infineon Technologies"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Intel",
       "aliases": [
         "Intel"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Intuit",
       "aliases": [
         "Intuit",
         "Intuit India"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Lam Research",
       "aliases": [
         "Lam Research"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Leidos",
       "aliases": [
         "Leidos"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Lenovo",
       "aliases": [
         "Lenovo"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "LG Electronics",
       "aliases": [
         "LG Electronics",
         "LG Electronics India"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "LITEON",
       "aliases": [
         "LITE-ON Technology",
         "Lite On Technology"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "ManTech",
       "aliases": [
         "ManTech International Corporation",
         "ManTech International"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Mastercard",
       "aliases": [
         "Mastercard"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Micron Technology",
       "aliases": [
         "Micron Technology"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Motorola Solutions",
       "aliases": [
         "Motorola Solutions"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Nanya Technology",
       "aliases": [
         "Nanya Technology"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "National Instruments (Emerson)",
@@ -483,26 +550,30 @@
         "NI",
         "National Instruments (Emerson)",
         "ni"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "NCR Voyix",
       "aliases": [
         "NCR Corporation",
         "NCR Voyix"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "NEC",
       "aliases": [
         "NEC"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Nokia",
       "aliases": [
         "Nokia"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "NVIDIA",
@@ -511,102 +582,118 @@
         "Nvidia Graphics",
         "NVIDIA",
         "nvidia"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "NXP Semiconductors",
       "aliases": [
         "NXP Semiconductors"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "OKI",
       "aliases": [
         "OKI Electric Industry Co., Ltd.",
         "OKI Electric Industry"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "onsemi",
       "aliases": [
         "ON Semiconductor"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Pegatron",
       "aliases": [
         "PEGATRON Corporation",
         "Pegatron Technology India"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Powertech Technology",
       "aliases": [
         "Powertech Technology Inc."
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Qisda",
       "aliases": [
         "Qisda Corporation"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Qualcomm",
       "aliases": [
         "Qualcomm",
         "qualcomm"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Quanta Computer",
       "aliases": [
         "Quanta Computer"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Renesas Electronics",
       "aliases": [
         "Renesas Electronics Corporation",
         "Renesas"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "ROHM",
       "aliases": [
         "ROHM"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Samsung Electronics",
       "aliases": [
         "Samsung Electronics"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Epson",
       "aliases": [
         "Seiko Epson Corporation"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Sharp",
       "aliases": [
         "Sharp Corporation"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "SPIL",
       "aliases": [
         "Siliconware Precision Industries Ltd. (SPIL)",
         "Siliconware Precision Industries"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "SK hynix",
       "aliases": [
         "SK Hynix Inc."
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Sony",
@@ -614,26 +701,30 @@
         "SONY",
         "Sony",
         "Sony India Software Centre"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Sopra Steria",
       "aliases": [
         "Sopra Steria"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "STMicroelectronics",
       "aliases": [
         "STMicroelectronics"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Symantec (Broadcom)",
       "aliases": [
         "Symantec Corporation",
         "Symantec"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "TSMC",
@@ -641,38 +732,44 @@
         "Taiwan Semiconductor Manufacturing Co., Ltd. (TSMC)",
         "Taiwan Semiconductor Manufacturing",
         "Taiwan Semiconductor Manufacturing Company"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Tencent",
       "aliases": [
         "Tencent"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Teradata",
       "aliases": [
         "Teradata"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Texas Instruments",
       "aliases": [
         "Texas Instruments"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Tieto",
       "aliases": [
         "Tieto",
         "Tietoevry"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Tokyo Electron",
       "aliases": [
         "Tokyo Electron"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "TSYS (FIS)",
@@ -680,19 +777,22 @@
         "Total System Services (TSYS)",
         "Total System Services",
         "TSYS"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Unisys",
       "aliases": [
         "Unisys"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "UMC",
       "aliases": [
         "United Microelectronics Corporation"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "VMware (Broadcom)",
@@ -700,1917 +800,2232 @@
         "VMware",
         "VMware (Broadcom)",
         "vmware"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Wistron",
       "aliases": [
         "Wistron Corporation"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Workday",
       "aliases": [
         "Workday",
         "workday"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "Xerox",
       "aliases": [
         "Xerox Corporation"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "ZTE",
       "aliases": [
         "ZTE Corporation"
-      ]
+      ],
+      "evidence_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100"
     },
     {
       "name": "NCR Atleos",
-      "aliases": []
+      "aliases": [],
+      "evidence_url": "https://www.ncratleos.com/careers"
     },
     {
       "name": "LTIMindtree",
       "aliases": [
         "LTIMindtree",
         "Mindtree"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Persistent Systems",
       "aliases": [
         "Persistent Systems"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Mphasis",
       "aliases": [
         "Mphasis"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Coforge",
       "aliases": [
         "Coforge",
         "Coforge (NIIT Tech)"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "L&T Technology Services",
       "aliases": [
         "L&T Technology Services"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Zensar Technologies",
       "aliases": [
         "Zensar Technologies"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Cyient",
       "aliases": [
         "Cyient"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Hexaware Technologies",
       "aliases": [
         "Hexaware Technologies"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Birlasoft",
       "aliases": [
         "Birlasoft"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "KPIT Technologies",
       "aliases": [
         "KPIT Technologies"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Sonata Software",
       "aliases": [
         "Sonata Software"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Happiest Minds",
       "aliases": [
         "Happiest Minds"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Firstsource Solutions",
       "aliases": [
         "Firstsource Solutions"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Mastek",
       "aliases": [
         "Mastek"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "NIIT Limited",
       "aliases": [
         "NIIT Limited"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Zoho",
       "aliases": [
         "Zoho",
         "Zoho Corporation"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Freshworks",
       "aliases": [
         "Freshworks"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Razorpay",
       "aliases": [
         "Razorpay"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Postman",
       "aliases": [
         "Postman"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Zerodha",
       "aliases": [
         "Zerodha"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "CRED",
       "aliases": [
         "CRED"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "PhonePe",
       "aliases": [
         "PhonePe"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Swiggy",
       "aliases": [
         "Swiggy"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Zomato",
       "aliases": [
         "Zomato"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Paytm",
       "aliases": [
         "Paytm",
         "Paytm (One97)"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Tata Elxsi",
       "aliases": [
         "Tata Elxsi"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "NTT DATA",
       "aliases": [
         "NTT DATA",
         "NTT Data India"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Microland",
       "aliases": [
         "Microland"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Sasken Technologies",
       "aliases": [
         "Sasken Technologies"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Newgen Software",
       "aliases": [
         "Newgen Software"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Intellect Design Arena",
       "aliases": [
         "Intellect Design Arena"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Nucleus Software",
       "aliases": [
         "Nucleus Software"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Quick Heal",
       "aliases": [
         "Quick Heal",
         "Quick Heal (Seqrite)"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Subex",
       "aliases": [
         "Subex"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Ramco Systems",
       "aliases": [
         "Ramco Systems"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Rashi Peripherals",
       "aliases": [
         "Rashi Peripherals"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "eClerx Services",
       "aliases": [
         "eClerx Services"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Route Mobile",
       "aliases": [
         "Route Mobile"
-      ]
+      ],
+      "evidence_url": "https://www.beginnersly.com/article/indian-it-companies-list"
     },
     {
       "name": "Fulcrum GT",
       "aliases": [
         "Fulcrum GT"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "StaTwig",
       "aliases": [
         "StaTwig"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Vertafore",
       "aliases": [
         "Vertafore"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Zaggle",
       "aliases": [
         "Zaggle"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "ProDiscover",
       "aliases": [
         "ProDiscover"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Skillsoft",
       "aliases": [
         "Skillsoft"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Nasuni",
       "aliases": [
         "Nasuni"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Opendoor",
       "aliases": [
         "Opendoor",
         "opendoor"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "GTM Buddy",
       "aliases": [
         "GTM Buddy"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Swipe",
       "aliases": [
         "Swipe"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Yext",
       "aliases": [
         "Yext"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "TurboHire",
       "aliases": [
         "TurboHire"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Incepteo",
       "aliases": [
         "Incepteo"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Darwinbox",
       "aliases": [
         "Darwinbox"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Notion",
       "aliases": [
         "Notion",
         "notion"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Byteridge",
       "aliases": [
         "Byteridge"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "HighRadius",
       "aliases": [
         "HighRadius"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "SmartRecon",
       "aliases": [
         "SmartRecon"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "CtrlS Datacenters",
       "aliases": [
         "CtrlS Datacenters"
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Schrödinger",
       "aliases": [
         "Schrödinger",
         "Schrödinger, Inc."
-      ]
+      ],
+      "evidence_url": "https://builtin.com/articles/software-companies-in-hyderabad"
     },
     {
       "name": "Dell Technologies",
       "aliases": [
         "Dell Technologies",
         "dell technologies"
-      ]
+      ],
+      "evidence_url": "https://www.geeksforgeeks.org/blogs/top-software-companies-in-bangalore/"
     },
     {
       "name": "Flipkart",
       "aliases": [
         "Flipkart"
-      ]
+      ],
+      "evidence_url": "https://www.geeksforgeeks.org/blogs/top-software-companies-in-bangalore/"
     },
     {
       "name": "Harman",
       "aliases": [
         "Harman",
         "Harman Connected Services"
-      ]
+      ],
+      "evidence_url": "https://www.geeksforgeeks.org/blogs/top-software-companies-in-bangalore/"
     },
     {
       "name": "NetApp",
       "aliases": [
         "NetApp",
         "NetApp India"
-      ]
+      ],
+      "evidence_url": "https://www.geeksforgeeks.org/blogs/top-software-companies-in-bangalore/"
     },
     {
       "name": "Goldman Sachs",
       "aliases": [
         "Goldman Sachs",
         "Goldman Sachs India"
-      ]
+      ],
+      "evidence_url": "https://www.geeksforgeeks.org/blogs/top-software-companies-in-bangalore/"
     },
     {
       "name": "McAfee",
       "aliases": [
         "McAfee",
         "McAfee India"
-      ]
+      ],
+      "evidence_url": "https://www.geeksforgeeks.org/blogs/top-software-companies-in-bangalore/"
     },
     {
       "name": "OpenAI",
       "aliases": [
         "openai"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Coupang",
       "aliases": [
         "coupang"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Clubhouse",
       "aliases": [
         "clubhouse"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Chai Research",
       "aliases": [
         "Chai Research",
         "chai research"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Netflix",
       "aliases": [
         "netflix"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Vatic Investments",
       "aliases": [
         "vatic investments"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "TGS Management",
       "aliases": [
         "TGS Management",
         "tgs management"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Radix Trading",
       "aliases": [
         "radix trading"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Hudson River Trading",
       "aliases": [
         "hudson river trading"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "OpenSea",
       "aliases": [
         "opensea"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Airbnb",
       "aliases": [
         "airbnb"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Snowflake",
       "aliases": [
         "snowflake"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Citadel",
       "aliases": [
         "citadel"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Cloudkitchens",
       "aliases": [
         "cloudkitchens"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Rippling",
       "aliases": [
         "rippling"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Arrowstreet Capital",
       "aliases": [
         "arrowstreet capital"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Jump Trading",
       "aliases": [
         "jump trading"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Old Mission",
       "aliases": [
         "old mission"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Titan",
       "aliases": [
         "titan"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Coinbase",
       "aliases": [
         "coinbase"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Chronosphere",
       "aliases": [
         "chronosphere"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Instacart",
       "aliases": [
         "instacart"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Cruise",
       "aliases": [
         "cruise"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Roblox",
       "aliases": [
         "roblox"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Waymo",
       "aliases": [
         "waymo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Roku",
       "aliases": [
         "roku"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Discord",
       "aliases": [
         "discord"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Toyota Research Institute",
       "aliases": [
         "toyota research institute"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Hightouch",
       "aliases": [
         "hightouch"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Brex",
       "aliases": [
         "brex"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Applovin",
       "aliases": [
         "applovin"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Jane Street",
       "aliases": [
         "jane street"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Lacework",
       "aliases": [
         "lacework"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Grammarly",
       "aliases": [
         "grammarly"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Strivr",
       "aliases": [
         "strivr"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Amplitude",
       "aliases": [
         "amplitude"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Newsbreak",
       "aliases": [
         "newsbreak"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Two Sigma",
       "aliases": [
         "two sigma"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Airtable",
       "aliases": [
         "airtable"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Striveworks",
       "aliases": [
         "striveworks"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Credit Karma",
       "aliases": [
         "credit karma"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Doordash",
       "aliases": [
         "doordash"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Luminar Technologies",
       "aliases": [
         "luminar technologies"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Thumbtack",
       "aliases": [
         "thumbtack"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Chime",
       "aliases": [
         "chime"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Nuro",
       "aliases": [
         "nuro"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Plaid",
       "aliases": [
         "plaid"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Samsara",
       "aliases": [
         "samsara"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Hallow",
       "aliases": [
         "hallow"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Polygon Technology",
       "aliases": [
         "polygon technology"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Broadcom",
       "aliases": [
         "broadcom"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Trumid",
       "aliases": [
         "trumid"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Five Rings",
       "aliases": [
         "five rings"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "HBO",
       "aliases": [
         "HBO",
         "hbo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Dropbox",
       "aliases": [
         "dropbox"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Hertz",
       "aliases": [
         "hertz"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Ponyai",
       "aliases": [
         "ponyai"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Confluent",
       "aliases": [
         "confluent"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Lyft",
       "aliases": [
         "lyft"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "ByteDance",
       "aliases": [
         "bytedance"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "The Voleon Group",
       "aliases": [
         "the voleon group"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Tanium",
       "aliases": [
         "tanium"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Etsy",
       "aliases": [
         "etsy"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Oscar Health",
       "aliases": [
         "oscar health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Reddit",
       "aliases": [
         "reddit"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Color",
       "aliases": [
         "color"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Affirm",
       "aliases": [
         "affirm"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Bridgewater Associates",
       "aliases": [
         "bridgewater associates"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Robinhood",
       "aliases": [
         "robinhood"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Pure Storage",
       "aliases": [
         "pure storage"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Palo Alto Networks",
       "aliases": [
         "palo alto networks"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Linkedin",
       "aliases": [
         "linkedin"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Hopper",
       "aliases": [
         "hopper"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Temporal Technologies",
       "aliases": [
         "temporal technologies"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Albert",
       "aliases": [
         "albert"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Point72",
       "aliases": [
         "point72"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Clickup",
       "aliases": [
         "clickup"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Mux",
       "aliases": [
         "mux"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "DocuSign",
       "aliases": [
         "docusign"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Latch",
       "aliases": [
         "latch"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Clear Street",
       "aliases": [
         "clear street"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Figma",
       "aliases": [
         "figma"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Cointracker",
       "aliases": [
         "cointracker"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Tinder",
       "aliases": [
         "Tinder",
         "tinder"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Kargo",
       "aliases": [
         "kargo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Pinterest",
       "aliases": [
         "pinterest"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Recharge",
       "aliases": [
         "recharge"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Recharge Payments",
       "aliases": [
         "recharge payments"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Seesaw",
       "aliases": [
         "seesaw"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Chan Zuckerberg Initiative",
       "aliases": [
         "chan zuckerberg initiative"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "UiPath",
       "aliases": [
         "UiPath",
         "uipath"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Braze",
       "aliases": [
         "braze"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Noom",
       "aliases": [
         "noom"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Embark Trucks",
       "aliases": [
         "embark trucks"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Stubhub",
       "aliases": [
         "stubhub"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Citizen",
       "aliases": [
         "citizen"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Imply",
       "aliases": [
         "imply"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Fastly",
       "aliases": [
         "fastly"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Verily",
       "aliases": [
         "verily"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Classdojo",
       "aliases": [
         "classdojo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Flexport",
       "aliases": [
         "flexport"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Xpeng Motors",
       "aliases": [
         "xpeng motors"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Pinwheel",
       "aliases": [
         "pinwheel"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Slack",
       "aliases": [
         "slack"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Innopeak Technology",
       "aliases": [
         "innopeak technology"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Convoy",
       "aliases": [
         "convoy"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Chicago Trading",
       "aliases": [
         "chicago trading"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "DRW",
       "aliases": [
         "drw"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Optiver",
       "aliases": [
         "optiver"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Alation",
       "aliases": [
         "alation"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Argo AI",
       "aliases": [
         "argo ai"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Autox",
       "aliases": [
         "autox"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Gusto",
       "aliases": [
         "gusto"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Marqeta",
       "aliases": [
         "marqeta"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "MongoDB",
       "aliases": [
         "mongodb"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Symbotic",
       "aliases": [
         "symbotic"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Woven by Toyota",
       "aliases": [
         "Woven by Toyota",
         "woven planet group"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Paxos",
       "aliases": [
         "paxos"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Metapack",
       "aliases": [
         "metapack"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Anaplan",
       "aliases": [
         "anaplan"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Caesars Entertainment",
       "aliases": [
         "caesars entertainment"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "CAE",
       "aliases": [
         "cae"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Twilio",
       "aliases": [
         "twilio"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "CAES",
       "aliases": [
         "caes"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Spotify",
       "aliases": [
         "spotify"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Modern Treasury",
       "aliases": [
         "modern treasury"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Maven Securities",
       "aliases": [
         "maven securities"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Klaviyo",
       "aliases": [
         "klaviyo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Datavant",
       "aliases": [
         "datavant"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Remitly",
       "aliases": [
         "remitly"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Omada Health",
       "aliases": [
         "omada health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Blackline",
       "aliases": [
         "blackline"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Chainlink Labs",
       "aliases": [
         "chainlink labs"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Akuna Capital",
       "aliases": [
         "akuna capital"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Exoduspoint Capital Management",
       "aliases": [
         "exoduspoint capital management"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Nextdoor",
       "aliases": [
         "nextdoor"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Mozilla",
       "aliases": [
         "mozilla"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "TRM Labs",
       "aliases": [
         "trm labs"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Vercel",
       "aliases": [
         "vercel"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Anduril Industries",
       "aliases": [
         "anduril industries"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Hubspot",
       "aliases": [
         "hubspot"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Haven Life",
       "aliases": [
         "haven life"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Mixpanel",
       "aliases": [
         "mixpanel"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Motional",
       "aliases": [
         "motional"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Interactive Brokers",
       "aliases": [
         "interactive brokers"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Attentive",
       "aliases": [
         "attentive"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Upstart",
       "aliases": [
         "upstart"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sumo Logic",
       "aliases": [
         "sumo logic"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Oportun",
       "aliases": [
         "oportun"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Asana",
       "aliases": [
         "asana"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Socure",
       "aliases": [
         "socure"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "HashiCorp",
       "aliases": [
         "hashicorp"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Patreon",
       "aliases": [
         "patreon"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Mysten Labs",
       "aliases": [
         "mysten labs"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Falconx",
       "aliases": [
         "falconx"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Pagerduty",
       "aliases": [
         "pagerduty"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Datadog",
       "aliases": [
         "datadog"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Protocol Labs",
       "aliases": [
         "protocol labs"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Neuralink",
       "aliases": [
         "neuralink"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Snapdocs",
       "aliases": [
         "snapdocs"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "BILL",
       "aliases": [
         "BILL",
         "billcom"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Balyasny Asset Management LP",
       "aliases": [
         "balyasny asset management lp"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Instabase",
       "aliases": [
         "instabase"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Medable",
       "aliases": [
         "medable"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Lithic",
       "aliases": [
         "lithic"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "PayPal",
       "aliases": [
         "paypal"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Rivian",
       "aliases": [
         "rivian"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Weights And Biases",
       "aliases": [
         "weights and biases"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "One Concern",
       "aliases": [
         "one concern"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Ripple",
       "aliases": [
         "ripple"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Zipline",
       "aliases": [
         "Zipline",
         "fly zipline"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Valon",
       "aliases": [
         "valon"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Verition Fund Management",
       "aliases": [
         "verition fund management"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Fubo",
       "aliases": [
         "Fubo",
         "fubotv"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Redfin",
       "aliases": [
         "redfin"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Quantlab",
       "aliases": [
         "quantlab"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sage Intacct",
       "aliases": [
         "sage intacct"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Okta",
       "aliases": [
         "okta"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Ava Labs",
       "aliases": [
         "ava labs"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Afresh",
       "aliases": [
         "afresh"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Stitch Fix",
       "aliases": [
         "stitch fix"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Thredup",
       "aliases": [
         "thredup"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Abnormal Security",
       "aliases": [
         "abnormal security"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Actblue",
       "aliases": [
         "actblue"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Grubhub",
       "aliases": [
         "grubhub"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Liveperson",
       "aliases": [
         "liveperson"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sysdig",
       "aliases": [
         "sysdig"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "The Trade Desk",
       "aliases": [
         "the trade desk"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "NYDIG",
       "aliases": [
         "NYDIG",
         "nydig"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Riot Games",
       "aliases": [
         "riot games"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Tableau Software",
       "aliases": [
         "tableau software"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Zillow",
       "aliases": [
         "zillow"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Percipientai",
       "aliases": [
         "percipientai"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Crowdstrike",
       "aliases": [
         "crowdstrike"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Faraday Future",
       "aliases": [
         "faraday future"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Cargurus",
       "aliases": [
         "cargurus"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Lendingclub",
       "aliases": [
         "lendingclub"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Navan",
       "aliases": [
         "Navan",
         "tripactions"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Lyra Health",
       "aliases": [
         "lyra health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Momentiveai",
       "aliases": [
         "momentiveai"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "GitHub",
       "aliases": [
         "github"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Captivateiq",
       "aliases": [
         "captivateiq"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Amazon Conservation Team",
       "aliases": [
         "amazon conservation team"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Blend",
       "aliases": [
         "blend"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Wepay",
       "aliases": [
         "wepay"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Tonal",
       "aliases": [
         "tonal"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Kodiak Robotics",
       "aliases": [
         "kodiak robotics"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Hap Capital",
       "aliases": [
         "hap capital"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Exabeam",
       "aliases": [
         "exabeam"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Eliseai",
       "aliases": [
         "eliseai"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Outschool",
       "aliases": [
         "outschool"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Nerdwallet",
       "aliases": [
         "nerdwallet"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Tubi",
       "aliases": [
         "tubi"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sofi",
       "aliases": [
         "sofi"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Siriusxm",
       "aliases": [
         "siriusxm"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Life360",
       "aliases": [
         "life360"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Stytch",
       "aliases": [
         "stytch"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "DNAnexus",
       "aliases": [
         "DNAnexus",
         "dnanexus"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Twitch",
       "aliases": [
         "twitch"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Haven Technologies",
       "aliases": [
         "haven technologies"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Highnote",
       "aliases": [
         "highnote"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Heap",
       "aliases": [
         "heap"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Opentable",
       "aliases": [
         "opentable"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Devoted Health",
       "aliases": [
         "devoted health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "23andme",
       "aliases": [
         "23andme"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Udemy",
       "aliases": [
         "udemy"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Verkada",
       "aliases": [
         "verkada"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Fanatics",
       "aliases": [
         "fanatics"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Huntress",
       "aliases": [
         "huntress"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Cloudera",
       "aliases": [
         "cloudera"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Cloudtrucks",
       "aliases": [
         "cloudtrucks"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Vanta",
       "aliases": [
         "vanta"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Procore Technologies",
       "aliases": [
         "procore technologies"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Splunk",
       "aliases": [
         "splunk"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Insitro",
       "aliases": [
         "insitro"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Zscaler",
       "aliases": [
         "zscaler"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Benchling",
       "aliases": [
         "benchling"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Dfinity",
       "aliases": [
         "dfinity"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Iterable",
       "aliases": [
         "iterable"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Turo",
       "aliases": [
         "turo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Squarespace",
       "aliases": [
         "squarespace"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Seatgeek",
       "aliases": [
         "seatgeek"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Kensho Technologies",
       "aliases": [
         "kensho technologies"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Walmart Global Tech",
       "aliases": [
         "Walmart Global Tech",
         "walmart global tech"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Human Interest",
       "aliases": [
         "human interest"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Warner Bros. Discovery",
@@ -2621,952 +3036,1110 @@
         "Warner Bros. Discovery",
         "Warner Bros Discovery",
         "Warnerbros"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Pie Insurance",
       "aliases": [
         "pie insurance"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Walmart",
       "aliases": [
         "walmart"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Anthropic",
       "aliases": [
         "anthropic"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Altana AI",
       "aliases": [
         "altana ai"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Endpoint",
       "aliases": [
         "endpoint"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Better",
       "aliases": [
         "better"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Better Mortgage",
       "aliases": [
         "better mortgage"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Glean",
       "aliases": [
         "glean"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Cockroach Labs",
       "aliases": [
         "cockroach labs"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Consensys",
       "aliases": [
         "consensys"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Aerospike",
       "aliases": [
         "aerospike"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Collectors",
       "aliases": [
         "collectors"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Versa Networks",
       "aliases": [
         "versa networks"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Freenome",
       "aliases": [
         "freenome"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Doximity",
       "aliases": [
         "doximity"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "New Relic",
       "aliases": [
         "new relic"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Peloton",
       "aliases": [
         "peloton"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Outreach",
       "aliases": [
         "outreach"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Offerup",
       "aliases": [
         "offerup"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Stellar Health",
       "aliases": [
         "stellar health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Strava",
       "aliases": [
         "strava"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Gopuff",
       "aliases": [
         "gopuff"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "GTS",
       "aliases": [
         "gts"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Niantic",
       "aliases": [
         "niantic"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sisu Data",
       "aliases": [
         "sisu data"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Ampere Computing",
       "aliases": [
         "ampere computing"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Coremont",
       "aliases": [
         "coremont"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Incredible Health",
       "aliases": [
         "incredible health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Arlo Smart Home",
       "aliases": [
         "arlo smart home"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Betterup",
       "aliases": [
         "betterup"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Electronic Arts",
       "aliases": [
         "electronic arts"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Cloudflare",
       "aliases": [
         "cloudflare"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Heartflow",
       "aliases": [
         "heartflow"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Metamap",
       "aliases": [
         "metamap"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Anyscale",
       "aliases": [
         "anyscale"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "X",
       "aliases": [
         "X",
         "twitter"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Butterfly Network",
       "aliases": [
         "butterfly network"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Solarwinds",
       "aliases": [
         "solarwinds"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Disney",
       "aliases": [
         "disney"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Indeed",
       "aliases": [
         "indeed"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Guild Education",
       "aliases": [
         "guild education"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Playstation",
       "aliases": [
         "playstation"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Servicetitan",
       "aliases": [
         "servicetitan"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Xilinx",
       "aliases": [
         "xilinx"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Glassdoor",
       "aliases": [
         "glassdoor"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Aspiration",
       "aliases": [
         "aspiration"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Brigit",
       "aliases": [
         "brigit"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Bread Financial",
       "aliases": [
         "bread financial"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Twin",
       "aliases": [
         "twin"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Invitae",
       "aliases": [
         "invitae"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Firework",
       "aliases": [
         "firework"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Ionq",
       "aliases": [
         "ionq"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Fivetran",
       "aliases": [
         "fivetran"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Juniper Square",
       "aliases": [
         "juniper square"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Labelbox",
       "aliases": [
         "labelbox"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Masterclass",
       "aliases": [
         "masterclass"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Pacbio",
       "aliases": [
         "pacbio"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Quora",
       "aliases": [
         "quora"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Tusimple",
       "aliases": [
         "tusimple"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Soundhound",
       "aliases": [
         "soundhound"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Aviatrix",
       "aliases": [
         "aviatrix"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Palantir",
       "aliases": [
         "palantir"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Retool",
       "aliases": [
         "retool"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Ares Management",
       "aliases": [
         "ares management"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Qualtrics",
       "aliases": [
         "qualtrics"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Auditboard",
       "aliases": [
         "auditboard"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Delphix",
       "aliases": [
         "delphix"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Hinge Health",
       "aliases": [
         "hinge health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Hive",
       "aliases": [
         "hive"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sada",
       "aliases": [
         "sada"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Ramp",
       "aliases": [
         "ramp"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Pocket Gems",
       "aliases": [
         "pocket gems"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Rivos",
       "aliases": [
         "rivos"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Voltus",
       "aliases": [
         "voltus"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Crunchbase",
       "aliases": [
         "crunchbase"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Hinge",
       "aliases": [
         "hinge"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Citrix",
       "aliases": [
         "citrix"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Covariant",
       "aliases": [
         "covariant"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Divvy",
       "aliases": [
         "divvy"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Divvy Homes",
       "aliases": [
         "divvy homes"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "McKinsey",
       "aliases": [
         "mckinsey"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Quantumscape",
       "aliases": [
         "quantumscape"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Dragos",
       "aliases": [
         "dragos"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Zapier",
       "aliases": [
         "zapier"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Spring Health",
       "aliases": [
         "spring health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Chainalysis",
       "aliases": [
         "chainalysis"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Five9",
       "aliases": [
         "five9"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Audible",
       "aliases": [
         "audible"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Equinix",
       "aliases": [
         "equinix"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Capsule",
       "aliases": [
         "capsule"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Chief",
       "aliases": [
         "chief"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Collibra",
       "aliases": [
         "collibra"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Datarobot",
       "aliases": [
         "datarobot"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Applied Intuition",
       "aliases": [
         "applied intuition"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Dolby Laboratories",
       "aliases": [
         "dolby laboratories"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Yahoo",
       "aliases": [
         "yahoo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Oppo",
       "aliases": [
         "oppo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Untapped",
       "aliases": [
         "untapped"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Malwarebytes",
       "aliases": [
         "malwarebytes"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Ziprecruiter",
       "aliases": [
         "ziprecruiter"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Pandora",
       "aliases": [
         "pandora"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Netskope",
       "aliases": [
         "netskope"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Weedmaps",
       "aliases": [
         "weedmaps"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Pando",
       "aliases": [
         "pando"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Moveworks",
       "aliases": [
         "moveworks"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Panther Labs",
       "aliases": [
         "panther labs"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "MSCI",
       "aliases": [
         "msci"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Saks Fifth Avenue",
       "aliases": [
         "saks fifth avenue"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Skydio",
       "aliases": [
         "skydio"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sigma Computing",
       "aliases": [
         "sigma computing"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Stavvy",
       "aliases": [
         "stavvy"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Wistia",
       "aliases": [
         "wistia"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Extrahop",
       "aliases": [
         "extrahop"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Vouch Insurance",
       "aliases": [
         "vouch insurance"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Workos",
       "aliases": [
         "workos"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Duo Security",
       "aliases": [
         "duo security"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Onfido",
       "aliases": [
         "Onfido",
         "onfido"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Alteryx",
       "aliases": [
         "alteryx"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Cribl",
       "aliases": [
         "cribl"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Stockx",
       "aliases": [
         "stockx"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Doubleverify",
       "aliases": [
         "doubleverify"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Vimeo",
       "aliases": [
         "vimeo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Mural",
       "aliases": [
         "mural"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Archer",
       "aliases": [
         "archer"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Calm",
       "aliases": [
         "calm"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Varo Bank",
       "aliases": [
         "varo bank"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Medallia",
       "aliases": [
         "medallia"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Scale AI",
       "aliases": [
         "scale ai"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Axon",
       "aliases": [
         "axon"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Density",
       "aliases": [
         "density"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Planning Center",
       "aliases": [
         "planning center"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Smartsheet",
       "aliases": [
         "smartsheet"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Wework",
       "aliases": [
         "wework"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Worldquant",
       "aliases": [
         "worldquant"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Aerovironment",
       "aliases": [
         "aerovironment"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "C3 AI",
       "aliases": [
         "C3 AI",
         "c3ai"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Godaddy",
       "aliases": [
         "godaddy"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Maven Clinic",
       "aliases": [
         "maven clinic"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Flatiron Health",
       "aliases": [
         "flatiron health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Nextroll",
       "aliases": [
         "nextroll"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "10x Genomics",
       "aliases": [
         "10x genomics"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Edelman Financial Engines",
       "aliases": [
         "edelman financial engines"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Humane",
       "aliases": [
         "humane"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Moloco",
       "aliases": [
         "moloco"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Schonfeld",
       "aliases": [
         "schonfeld"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Secureframe",
       "aliases": [
         "secureframe"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Wheels",
       "aliases": [
         "wheels"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Wheels Up",
       "aliases": [
         "wheels up"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Edelman",
       "aliases": [
         "edelman"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Thirty Madison",
       "aliases": [
         "thirty madison"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Yugabyte",
       "aliases": [
         "yugabyte"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Envoy",
       "aliases": [
         "envoy"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Zendesk",
       "aliases": [
         "zendesk"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sibros",
       "aliases": [
         "sibros"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Duolingo",
       "aliases": [
         "duolingo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Esper",
       "aliases": [
         "esper"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Honor",
       "aliases": [
         "honor"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "The New York Times",
@@ -3574,393 +4147,458 @@
         "The New York Times",
         "the new york times company",
         "the new york times"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Carerev",
       "aliases": [
         "carerev"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Justworks",
       "aliases": [
         "justworks"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Prosper Marketplace",
       "aliases": [
         "prosper marketplace"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Headway",
       "aliases": [
         "headway"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Ehealth",
       "aliases": [
         "ehealth"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Mission",
       "aliases": [
         "mission"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Mission Lane",
       "aliases": [
         "mission lane"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Wisk",
       "aliases": [
         "wisk"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Ecoatm",
       "aliases": [
         "ecoatm"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Bitgo",
       "aliases": [
         "bitgo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Domino Data Lab",
       "aliases": [
         "domino data lab"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Capital Group",
       "aliases": [
         "capital group"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Dave",
       "aliases": [
         "dave"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Solo.io",
       "aliases": [
         "Solo.io",
         "soloio"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Fieldwire",
       "aliases": [
         "fieldwire"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Salsify",
       "aliases": [
         "salsify"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sojern",
       "aliases": [
         "sojern"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Fullstory",
       "aliases": [
         "fullstory"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Capita",
       "aliases": [
         "capita"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Forgerock",
       "aliases": [
         "forgerock"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Notable Health",
       "aliases": [
         "notable health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Unit",
       "aliases": [
         "unit"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Unit21",
       "aliases": [
         "unit21"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Nota",
       "aliases": [
         "nota"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Nauto",
       "aliases": [
         "nauto"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Mntn",
       "aliases": [
         "mntn"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Zuora",
       "aliases": [
         "zuora"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Myvest",
       "aliases": [
         "myvest"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sentry",
       "aliases": [
         "sentry"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Split Software",
       "aliases": [
         "split software"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Sap Concur",
       "aliases": [
         "sap concur"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Zoominfo",
       "aliases": [
         "zoominfo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Webflow",
       "aliases": [
         "webflow"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Swirlds Labs",
       "aliases": [
         "swirlds labs"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Workrise",
       "aliases": [
         "workrise"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Magic Leap",
       "aliases": [
         "magic leap"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Olo",
       "aliases": [
         "olo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Roche",
       "aliases": [
         "roche"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Qualia",
       "aliases": [
         "qualia"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Rally Health",
       "aliases": [
         "rally health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Realtor.com",
       "aliases": [
         "Realtor.com",
         "realtorcom"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Snorkel AI",
       "aliases": [
         "snorkel ai"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Draftkings",
       "aliases": [
         "draftkings"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Flyr Labs",
       "aliases": [
         "flyr labs"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Overjet",
       "aliases": [
         "overjet"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Loom",
       "aliases": [
         "loom"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Addepar",
       "aliases": [
         "addepar"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Chegg",
       "aliases": [
         "chegg"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Goodrx",
       "aliases": [
         "goodrx"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Certik",
       "aliases": [
         "certik"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Evgo",
       "aliases": [
         "evgo"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Okcoin",
       "aliases": [
         "okcoin"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Wealthfront",
       "aliases": [
         "wealthfront"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Textnow",
       "aliases": [
         "textnow"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Quantum Metric",
       "aliases": [
         "quantum metric"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Zynga",
       "aliases": [
         "zynga"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Invision",
       "aliases": [
         "invision"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Highspot",
       "aliases": [
         "highspot"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Brightwheel",
       "aliases": [
         "brightwheel"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Illumio",
       "aliases": [
         "illumio"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Blink Health",
       "aliases": [
         "blink health"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Digitalocean",
       "aliases": [
         "digitalocean"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Propel",
       "aliases": [
         "propel"
-      ]
+      ],
+      "evidence_url": "https://github.com/miketromba/highest-paying-software-companies"
     },
     {
       "name": "Novartis",
       "aliases": [
         "Novartis"
-      ]
+      ],
+      "evidence_url": "https://www.novartis.com/careers/career-search/tag/LOC_IN"
     },
     {
       "name": "HashedIn by Deloitte",
@@ -3969,7 +4607,8 @@
         "HashedIn",
         "HashedIn",
         "HashedIn Technologies"
-      ]
+      ],
+      "evidence_url": "https://hashedin.com/careers/"
     },
     {
       "name": "Eli Lilly",
@@ -3978,49 +4617,57 @@
         "Eli Lilly and Company",
         "Lilly",
         "Eli Lilly Services India"
-      ]
+      ],
+      "evidence_url": "https://careers.lilly.com/us/en/search-results?keywords=India"
     },
     {
       "name": "Cornerstone OnDemand",
       "aliases": [
         "Cornerstone OnDemand"
-      ]
+      ],
+      "evidence_url": "https://cornerstone.csod.com/ux/ats/careersite/2/home?c=cornerstone"
     },
     {
       "name": "Uber",
       "aliases": [],
       "careers_url": "https://www.uber.com/global/en/careers/list/",
-      "source": "User-requested top tech employer expansion, 2026-10-31"
+      "source": "User-requested top tech employer expansion, 2026-10-31",
+      "evidence_url": "https://www.uber.com/global/en/careers/list/"
     },
     {
       "name": "Elastic",
       "aliases": [],
       "careers_url": "https://jobs.elastic.co/",
-      "source": "User-requested top tech employer expansion, 2026-10-31"
+      "source": "User-requested top tech employer expansion, 2026-10-31",
+      "evidence_url": "https://jobs.elastic.co/"
     },
     {
       "name": "GitLab",
       "aliases": [],
       "careers_url": "https://job-boards.greenhouse.io/gitlab",
-      "source": "User-requested top tech employer expansion, 2026-10-31"
+      "source": "User-requested top tech employer expansion, 2026-10-31",
+      "evidence_url": "https://job-boards.greenhouse.io/gitlab"
     },
     {
       "name": "Cohere",
       "aliases": [],
       "careers_url": "https://jobs.ashbyhq.com/cohere",
-      "source": "User-requested top tech employer expansion, 2026-10-31"
+      "source": "User-requested top tech employer expansion, 2026-10-31",
+      "evidence_url": "https://jobs.ashbyhq.com/cohere"
     },
     {
       "name": "Hugging Face",
       "aliases": [],
       "careers_url": "https://huggingface.co/join-us",
-      "source": "User-requested top tech employer expansion, 2026-10-31"
+      "source": "User-requested top tech employer expansion, 2026-10-31",
+      "evidence_url": "https://huggingface.co/join-us"
     },
     {
       "name": "Perplexity",
       "aliases": [],
       "careers_url": "https://www.perplexity.ai/hub/careers",
-      "source": "User-requested top tech employer expansion, 2026-10-31"
+      "source": "User-requested top tech employer expansion, 2026-10-31",
+      "evidence_url": "https://www.perplexity.ai/hub/careers"
     }
   ],
   "reviewed_on": "2026-10-31"
