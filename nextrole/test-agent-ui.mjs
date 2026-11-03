@@ -39,7 +39,7 @@ assert.equal(searchStarts,1,'Starting a resume search invalidates pending browse
 assert.equal(el('find-jobs').disabled,false);
 el('tailor-source').value=resume;app.showJobTools(job);
 const review=created.find(e=>e.textContent==='Review my fit');
-await review.onclick();assert.match(el('ai-fit-review').textContent,/temporarily unavailable/);assert.equal(el('ai-permission').open,false);
+await review.onclick();assert.match(el('ai-fit-review').textContent,/AI assistance is temporarily unavailable/);assert.equal(el('ai-permission').open,false);
 connected=true;
 let pending=review.onclick();await new Promise(resolve=>setImmediate(resolve));
 assert.equal(el('ai-permission').open,true);assert.equal(calls.length,1,'Permission precedes any resume transmission');

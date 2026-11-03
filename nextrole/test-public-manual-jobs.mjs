@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {createManualJob,saveManualJob,readManualJobs,manualExperienceRequirement} from './dist/platform-jobs.mjs';
+import {experienceFit} from './dist/experience-policy.mjs';
+const description='We are hiring a software engineer. Required qualifications: 2–4 years of experience. Build Python services and SQL data validation workflows with the team.';
+const input={url:'https://www.linkedin.com/jobs/view/123456',company:'Microsoft',title:'Software Engineer',location:'Bengaluru, Hybrid',description};
+const items=new Map(),storage={getItem:k=>items.get(k)??null,setItem:(k,v)=>items.set(k,v)};
+const job=await saveManualJob(storage,input);assert.equal(job.listed_on[0],'LinkedIn');assert.equal(job.style,'Hybrid');assert(experienceFit(job,2));assert.equal(experienceFit(job,1),null);assert.equal(experienceFit(job,5).status,'meets-minimum');
+assert.equal(readManualJobs(storage).length,1);await saveManualJob(storage,{...input,title:'Updated title'});assert.equal(readManualJobs(storage).length,1);assert.equal(readManualJobs(storage)[0].title,'Updated title');
+const indeed=await createManualJob({...input,url:'https://in.indeed.com/viewjob?jk=example'});assert.equal(indeed.listed_on[0],'Indeed');
+await assert.rejects(()=>createManualJob({...input,url:'javascript:alert(1)'}));await assert.rejects(()=>createManualJob({...input,url:'https://linkedin.com.evil.test/jobs/view/123'}));await assert.rejects(()=>createManualJob({...input,description:'Too short'}));
+await assert.rejects(()=>saveManualJob({...storage,setItem(){throw Error('Quota');}},input),/could not save/);
+assert.equal(manualExperienceRequirement('Python and SQL are required.'),null);
+assert.equal(manualExperienceRequirement('Preferred qualifications: 5 years of experience.'),null);
+const multiple=manualExperienceRequirement('Requires 2 years of experience. Requires 5 years of experience.');assert.equal(multiple.minimum,5);
+assert.equal(manualExperienceRequirement('2–3 years of experience. 5–6 years of experience.'),null);
+items.set('nextrole-manual-jobs-v1',JSON.stringify([{...job,last_checked:1}]));assert.equal(readManualJobs(storage).length,0);
+console.log('Public manual jobs: persistence, duplicate updates, direct platform URLs, quota failures, minimum source-backed experience and expiry passed.');

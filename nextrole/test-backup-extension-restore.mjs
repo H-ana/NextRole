@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import {backupExtensionDocuments,restoreBackupToExtension} from './dist/backup-extension-restore.mjs';
+const text='Alex Example\nBuilt Python reports.',years='2';
+const revision=await NextRoleResumeProfile.revision(text,years);
+const data={entries:{'nextrole-retained-resume-v1':JSON.stringify({version:1,text}),'nextrole-profile':JSON.stringify({experience:years}),'nextrole-autofill-profile-v1':JSON.stringify({revision,profile:{firstName:'Alex',email:'alex@example.com'}})},file:{name:'resume.pdf',bytes:btoa('%PDF-example')}};
+const prepared=await backupExtensionDocuments(data);assert.equal(prepared.payload.reviewed,true);assert.equal(prepared.file.name,'resume.pdf');assert.equal(await prepared.file.text(),'%PDF-example');
+let calls=[],confirmations=0;
+const dependencies={request:async(type)=>{calls.push(type);return {ok:true};},transfer:async(payload,file)=>{calls.push('TRANSFER');assert.equal(payload.profile.firstName,'Alex');assert.equal(file.name,'resume.pdf');return {requestId:'test-request'};},wait:async id=>{calls.push('WAIT');assert.equal(id,'test-request');return 'saved';},onConfirm:()=>{confirmations++;}};
+let result=await restoreBackupToExtension(data,dependencies);assert.equal(result.state,'saved');assert.equal(result.fingerprint.length,64);assert.deepEqual(calls,['PING','TRANSFER','WAIT']);assert.equal(confirmations,1);
+result=await restoreBackupToExtension(data,{...dependencies,wait:async()=> 'cancelled'});assert.equal(result.state,'cancelled');assert.equal(result.fingerprint,null,'Cancellation must not be reported as saved');
+await assert.rejects(()=>restoreBackupToExtension(data,{...dependencies,request:async()=>{throw Error('Not connected');}}),/Not connected/);
+await assert.rejects(()=>restoreBackupToExtension(data,{...dependencies,wait:async()=>{throw Error('Timed out');}}),/Timed out/);
+await assert.rejects(()=>backupExtensionDocuments({...data,file:null}),/needs a reviewed/);
+await assert.rejects(()=>backupExtensionDocuments({...data,entries:{...data.entries,'nextrole-autofill-profile-v1':JSON.stringify({revision:'old',profile:{firstName:'Alex'}})}}),/needs review/);
+await assert.rejects(()=>backupExtensionDocuments({...data,file:{name:'resume.pdf',bytes:btoa('invalid')}}),/not a valid/);
+await assert.rejects(()=>backupExtensionDocuments({...data,file:{name:'resume.docx',bytes:''}}),/not a valid/);
+calls=[];const controller=new AbortController();controller.abort();assert.equal((await restoreBackupToExtension(data,{...dependencies,signal:controller.signal})).state,'cancelled');assert.deepEqual(calls,[]);
+console.log('Backup-to-extension restore: original reviewed documents, stale-profile rejection, missing/corrupt files, explicit confirmation, cancellation, disconnection, timeout, retry and abort passed.');
+// Exercise the actual backup dialog handler with browser storage and messaging doubles.
+import {encryptBackup,setupPortableBackup} from './dist/portable-backup.mjs';
+const fixture={...data,format:'nextrole-portable',version:1,entries:{...data.entries,'nextrole-profile':JSON.stringify({experience:years,cities:[],workstyle:'any'})}};
+const encrypted=await encryptBackup(fixture,'synthetic-backup-password');
+const values=new Map();globalThis.localStorage={getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v),removeItem:k=>values.delete(k)};
+let record=null;
+globalThis.indexedDB={open(){const r={result:{close(){},transaction(){const tx={objectStore(){return {get(){const req={result:record};queueMicrotask(()=>tx.oncomplete());return req;},put(value){const req={};record=value;queueMicrotask(()=>tx.oncomplete());return req;},delete(){record=null;const req={};queueMicrotask(()=>tx.oncomplete());return req;}};}};return tx;}}};queueMicrotask(()=>r.onsuccess());return r;}};
+class Element{constructor(){this.checked=false;this.disabled=false;this.hidden=false;this.value='';this.textContent='';this.children=new Map();this.classList={contains:()=>false};}querySelector(key){if(!this.children.has(key))this.children.set(key,new Element());return this.children.get(key);}querySelectorAll(){return [...this.children.values()];}append(){}addEventListener(){}showModal(){}close(){}after(){} }
+const dialogs=[];globalThis.document={createElement:()=>new Element(),getElementById:()=>new Element(),body:{append:node=>dialogs.push(node)}};
+let inboxListener=null,sent=[],finalState='saved';globalThis.location={origin:'https://nextrole-job-match.blueowl129.chatgpt.site'};
+globalThis.window={addEventListener:(name,handler)=>{inboxListener=handler;},removeEventListener:()=>{},postMessage:message=>{sent.push(message.type);let response={ok:true};if(message.type==='PREPARE'){assert.equal(message.documents.payload.profile.firstName,'Alex');response.requestId='restore-test';}if(message.type==='STATUS')response.state=finalState;queueMicrotask(()=>inboxListener({source:window,origin:location.origin,data:{channel:'nextrole-from-extension',id:message.id,response}}));}};
+setupPortableBackup();const dialog=dialogs[0],q=selector=>dialog.querySelector(selector);
+q('[data-approve]').checked=true;q('[data-extension]').checked=true;q('[data-password]').value='synthetic-backup-password';q('[data-file]').files=[{size:2000,text:async()=>JSON.stringify(encrypted)}];
+await q('[data-import]').onclick();assert.match(q('[data-status]').textContent,/Website and extension restored/);assert(record?.blob);assert(values.has('nextrole-autofill-profile-v1'));assert(values.has('nextrole-autofill-save-receipt-v1'));assert.equal(q('[data-password]').value,'');assert.equal(q('[data-reload]').hidden,false);
+finalState='cancelled';q('[data-password]').value='synthetic-backup-password';await q('[data-import]').onclick();assert.match(q('[data-status]').textContent,/Website restored.*cancelled/);assert.equal(q('[data-extension-retry]').hidden,false);assert(!values.has('nextrole-autofill-save-receipt-v1'));
+finalState='saved';await q('[data-extension-retry]').onclick();assert.match(q('[data-status]').textContent,/Website and extension restored/);
+sent=[];q('[data-extension]').checked=false;q('[data-password]').value='synthetic-backup-password';await q('[data-import]').onclick();assert.match(q('[data-status]').textContent,/Website restored/);assert.deepEqual(sent,[],'Website-only restore must not contact the extension');
+console.log('Backup dialog integration: both copies restored, cancellation keeps website restore, retry succeeds, saved receipt reflects confirmation, and website-only opt-out sends nothing.');

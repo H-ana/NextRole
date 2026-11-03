@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {pdfPageText,extractionIssues,applyExtractionCorrections} from './dist/extraction-review.mjs';
+import {pdfPageText,extractionIssues,proposedExtractionCorrections,setupExtractionReview,applyExtractionCorrections} from './dist/extraction-review.mjs';
 const item=(str,x,y,width)=>({str,transform:[1,0,0,1,x,y],width,height:10});
 assert.equal(pdfPageText([item('SQL',45,80,18),item('Alex',0,100,20),item('Python',0,80,30)]),'Alex\nPython SQL');
 assert.equal(pdfPageText([item('Fast',0,100,20),item('API',20,100,15)]),'FastAPI');
@@ -15,3 +15,14 @@ assert(extractionIssues('UnrecognizedSQLThing').some(i=>i.replacement===null&&i.
 console.log('Passed: geometry-aware extraction, joined-word/date warnings, explicit correction selection and stale-source protection.');
 
 assert(extractionIssues('PostgresSQLData analysisSQL').some(i=>i.replacement==='PostgresSQL, Data analysis, SQL'));
+
+const unchanged = 'Contributed to an AI agent for first-line ServiceNow ticket triage, integrating UKG REST APIs and the Claude API to support ticket investigation.\nOrchestrated the workflow as a LangGraph state machine with SQLite checkpointing so sessions could be resumed.';
+assert.deepEqual(proposedExtractionCorrections(unchanged),[]);
+assert.deepEqual(proposedExtractionCorrections('UnrecognizedSQLThing\n03/04/2024'),[]);
+assert.equal(proposedExtractionCorrections('PythonSQL')[0].replacement,'Python, SQL');
+assert.deepEqual(proposedExtractionCorrections('Python, SQL'),[]);
+const panel={hidden:false},form={after() {}};
+globalThis.document={createElement(){return panel;},getElementById(){return form;}};
+const review=setupExtractionReview({getResume:()=>unchanged,onCorrected(){throw Error('Unchanged source must not be edited');}});
+review.render();assert.equal(panel.hidden,true);assert.equal(review.ready(unchanged),true);
+console.log('Passed: unchanged text and warning-only lines produce no correction cards or tailoring block.');

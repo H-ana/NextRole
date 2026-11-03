@@ -1,0 +1,12 @@
+// Mammoth's semantic HTML retains list structure that extractRawText discards.
+let parserPromise;
+export async function loadMammoth(){if(globalThis.mammoth)return globalThis.mammoth;if(!parserPromise)parserPromise=new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=new URL('./vendor/mammoth.browser.min.js',import.meta.url).href;script.onload=()=>resolve(globalThis.mammoth);script.onerror=()=>{parserPromise=null;reject(Error('The Word resume reader could not load.'));};document.head.append(script);});return parserPromise;}
+export function restoreOriginalLists(draft,formatted){const markers=/^\s*(?:[-*•●▪◦‣–—]|\d{1,2}[.)])\s+/gm;const plain=value=>String(value).normalize('NFKC').replace(markers,'').replace(/\s/g,'');if(!/^\s*(?:[•●▪◦‣]|\d{1,2}[.)])\s+/m.test(formatted)||plain(draft)!==plain(formatted))return draft;return formatted;}
+export function docxHtmlText(html){
+ const template=document.createElement('template');template.innerHTML=String(html||'');const lines=[];
+ function inline(node){if(node.nodeType===3)return node.textContent;if(node.nodeType!==1)return '';if(['UL','OL','SCRIPT','STYLE','IMG'].includes(node.tagName))return '';if(node.tagName==='BR')return '\n';const text=[...node.childNodes].map(inline).join('');return node.tagName==='P'?'\n'+text+'\n':text;}
+ function list(node,level){let number=Number(node.getAttribute('start'))||1;for(const li of node.children){if(li.tagName!=='LI')continue;const marker=node.tagName==='OL'?String(Number(li.getAttribute('value'))||number)+'.':'•';const text=inline(li).replace(/\s+/g,' ').trim();if(text)lines.push('  '.repeat(level)+marker+' '+text);for(const child of li.children)if(['UL','OL'].includes(child.tagName))list(child,level+1);number++;}}
+ function walk(node){for(const child of node.childNodes){if(child.nodeType===3){if(child.textContent.trim())lines.push(child.textContent.trim());continue;}if(child.nodeType!==1)continue;if(['UL','OL'].includes(child.tagName)){list(child,0);continue;}if(/^(P|H[1-6]|TD)$/.test(child.tagName)){const text=inline(child).replace(/[ \t]+/g,' ').trim();if(text)lines.push(text);for(const nested of child.children)if(['UL','OL'].includes(nested.tagName))list(nested,0);}else if(!['SCRIPT','STYLE','IMG'].includes(child.tagName))walk(child);}}
+ walk(template.content);return lines.join('\n');
+}
+export async function extractDocxResume(mammoth,arrayBuffer){const result=await mammoth.convertToHtml({arrayBuffer});return docxHtmlText(result.value);}

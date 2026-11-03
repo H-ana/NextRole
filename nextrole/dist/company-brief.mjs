@@ -1,4 +1,4 @@
-import {findBackend,apiRequest} from './api-client.mjs?v=91';
+import {findBackend,apiRequest} from './api-client.mjs?v=116';
 
 const safe=value=>{try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password?u.href:null;}catch{return null;}};
 const node=(tag,text,className)=>{const e=document.createElement(tag);if(text)e.textContent=text;if(className)e.className=className;return e;};
@@ -66,7 +66,7 @@ export function mountCompanyBrief(root,job){
   if(loaded||loading)return;loading=true;page.replaceChildren(node('p','Preparing company brief…'));
   try{
    const backend=await findBackend();
-   if(!(backend.status.capabilities||[]).includes('company-brief'))throw new Error('Restart the backend to load company briefs.');
+   if(!(backend.status.capabilities||[]).includes('company-brief'))throw new Error('Company information is unavailable right now.');
    const data=await apiRequest(backend.origin,'/api/company/brief',{job_id:job.id},30000);
    if(!root.isConnected)return;
    const overview=data.about||listingOverview(job);

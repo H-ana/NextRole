@@ -1,13 +1,13 @@
-import {findBackend,apiRequest} from './api-client.mjs?v=91';
-import {formatSkillSections} from './skill-format.mjs?v=91';
-import {assertResumeHeader} from './resume-header.mjs?v=91';
+import {findBackend,apiRequest} from './api-client.mjs?v=116';
+import {formatSkillSections} from './skill-format.mjs?v=113';
+import {assertResumeHeader} from './resume-header.mjs?v=113';
 
 export async function downloadOnePageResume(text,filename,isCurrent=()=>true){
  text=formatSkillSections(text);
  assertResumeHeader(text);
  const backend=await findBackend();
- if(!(backend.status.capabilities||[]).includes('one-page-resume-export'))throw new Error('Restart the backend with python start_agent.py to load verified one-page Word export.');
- if(!(backend.status.capabilities||[]).includes('resume-export-v2'))throw new Error('Restart the backend with python start_agent.py to load Calibri and document validation.');
+ if(!(backend.status.capabilities||[]).includes('one-page-resume-export'))throw new Error('Word downloads are unavailable right now. Your draft is unchanged.');
+ if(!(backend.status.capabilities||[]).includes('resume-export-v2'))throw new Error('Word downloads are unavailable right now. Your draft is unchanged.');
  const result=await apiRequest(backend.origin,'/api/resume/export',{text},110000);
  if(!isCurrent())throw new Error('The draft changed during formatting. Download the updated draft again.');
  if(result.pages!==1||result.font_size<10||result.font!=='Calibri'||!['content_preserved','reading_order_preserved','contact_preserved','sections_preserved'].every(k=>result.checks?.[k]===true)||!result.base64)throw new Error('A readable one-page Calibri layout and document checks could not be verified. Your draft is unchanged.');

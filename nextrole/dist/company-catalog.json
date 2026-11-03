@@ -1,0 +1,1211 @@
+{
+  "id": "thomson-reuters-tech-2018",
+  "title": "Thomson Reuters Top 100 Global Tech Leaders (2018)",
+  "source_url": "https://www.thomsonreuters.com/en/products-services/technology/top-100",
+  "list_year": 2018,
+  "checked_on": "2026-10-26",
+  "coverage_note": "All 100 listed companies are represented. Configured careers sources are not a guarantee of readable listings, India openings, or exhaustive collection. Source failures remain distinct from empty results. Existing MNC employers remain included.",
+  "companies": [
+    {
+      "listed_name": "Accenture",
+      "company": "Accenture",
+      "headquarters_in_2018": "Ireland",
+      "source_ids": [
+        "tr2018-accenture"
+      ],
+      "careers_url": "https://www.accenture.com/in-en/careers/jobsearch",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Acer",
+      "company": "Acer",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-acer"
+      ],
+      "careers_url": "https://careers.acer.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Adobe",
+      "company": "Adobe",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-adobe"
+      ],
+      "careers_url": "https://careers.adobe.com/us/en",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Advanced Micro Devices (AMD)",
+      "company": "AMD",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-advanced-micro-devices-amd"
+      ],
+      "careers_url": "https://careers.amd.com/careers-home/jobs",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Advantest",
+      "company": "Advantest",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-advantest"
+      ],
+      "careers_url": "https://www.advantest.com/en/about/career-se-asia/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Akamai Technologies",
+      "company": "Akamai Technologies",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-akamai-technologies"
+      ],
+      "careers_url": "https://www.akamai.com/careers",
+      "page_check_status": 403,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Alphabet",
+      "company": "Google",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-alphabet"
+      ],
+      "careers_url": "https://www.google.com/about/careers/applications/jobs/results/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "Alphabet coverage starts with Google careers; not all Alphabet subsidiaries."
+    },
+    {
+      "listed_name": "Amazon",
+      "company": "Amazon",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-amazon"
+      ],
+      "careers_url": "https://www.amazon.jobs/en/search?base_query=&loc_query=India",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Amdocs",
+      "company": "Amdocs",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-amdocs"
+      ],
+      "careers_url": "https://jobs.amdocs.com/careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Analog Devices",
+      "company": "Analog Devices",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-analog-devices"
+      ],
+      "careers_url": "https://analogdevices.wd1.myworkdayjobs.com/External",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Apple",
+      "company": "Apple",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-apple"
+      ],
+      "careers_url": "https://jobs.apple.com/en-in/search?location=india-INDC",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Applied Materials",
+      "company": "Applied Materials",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-applied-materials"
+      ],
+      "careers_url": "https://amat.wd1.myworkdayjobs.com/External",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "ARRIS International",
+      "company": "ARRIS (Vistance Networks)",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-arris-international"
+      ],
+      "careers_url": "https://jobs.vistancenetworks.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "Legacy ARRIS brand: parent-portal results require ARRIS evidence."
+    },
+    {
+      "listed_name": "ASE Group",
+      "company": "ASE Group",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-ase-group"
+      ],
+      "careers_url": "https://ase.aseglobal.com/about-ase/careers/",
+      "page_check_status": 403,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "ASM Pacific Technology",
+      "company": "ASMPT",
+      "headquarters_in_2018": "Hong Kong",
+      "source_ids": [
+        "tr2018-asm-pacific-technology"
+      ],
+      "careers_url": "https://www.asmpt.com/en/career/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "ASUS",
+      "company": "ASUS",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-asus"
+      ],
+      "careers_url": "https://careers.asus.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Atos",
+      "company": "Atos",
+      "headquarters_in_2018": "France",
+      "source_ids": [
+        "tr2018-atos"
+      ],
+      "careers_url": "https://jobs.atos.net/",
+      "page_check_status": null,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Autodesk",
+      "company": "Autodesk",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-autodesk"
+      ],
+      "careers_url": "https://autodesk.wd1.myworkdayjobs.com/Ext",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "CA Technologies",
+      "company": "CA Technologies (Broadcom)",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-ca-technologies"
+      ],
+      "careers_url": "https://broadcom.wd1.myworkdayjobs.com/External_Career",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "Acquired business; only CA-branded parent-portal roles are collected."
+    },
+    {
+      "listed_name": "Canon",
+      "company": "Canon",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-canon"
+      ],
+      "careers_url": "https://in.canon/en/pro-imaging/web/career",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Capgemini",
+      "company": "Capgemini",
+      "headquarters_in_2018": "France",
+      "source_ids": [
+        "tr2018-capgemini"
+      ],
+      "careers_url": "https://careers.capgemini.com/jobs",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Celestica",
+      "company": "Celestica",
+      "headquarters_in_2018": "Canada",
+      "source_ids": [
+        "tr2018-celestica"
+      ],
+      "careers_url": "https://careers.celestica.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "CGI",
+      "company": "CGI",
+      "headquarters_in_2018": "Canada",
+      "source_ids": [
+        "tr2018-cgi"
+      ],
+      "careers_url": "https://cgi.njoyn.com/corp/xweb/xweb.asp?CLID=21001&page=joblisting&lang=1",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Cisco",
+      "company": "Cisco",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-cisco"
+      ],
+      "careers_url": "https://careers.cisco.com/global/en/search-results",
+      "page_check_status": null,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Cognizant",
+      "company": "Cognizant",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-cognizant"
+      ],
+      "careers_url": "https://careers.cognizant.com/global-en/jobs/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "CommScope",
+      "company": "CommScope",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-commscope"
+      ],
+      "careers_url": "https://jobs.commscope.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Computacenter",
+      "company": "Computacenter",
+      "headquarters_in_2018": "United Kingdom",
+      "source_ids": [
+        "tr2018-computacenter"
+      ],
+      "careers_url": "https://jobs.computacenter.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Computershare",
+      "company": "Computershare",
+      "headquarters_in_2018": "Australia",
+      "source_ids": [
+        "tr2018-computershare"
+      ],
+      "careers_url": "https://fa-evdq-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001/jobs",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "dormakaba",
+      "company": "dormakaba",
+      "headquarters_in_2018": "Switzerland",
+      "source_ids": [
+        "tr2018-dormakaba"
+      ],
+      "careers_url": "https://jobs.dormakaba.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "DXC Technology",
+      "company": "DXC Technology",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-dxc-technology"
+      ],
+      "careers_url": "https://dxctechnology.wd1.myworkdayjobs.com/DXCJobs",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "eBay Inc.",
+      "company": "eBay",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-ebay-inc"
+      ],
+      "careers_url": "https://careers.ebayinc.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Ericsson",
+      "company": "Ericsson",
+      "headquarters_in_2018": "Sweden",
+      "source_ids": [
+        "tr2018-ericsson"
+      ],
+      "careers_url": "https://jobs.ericsson.com/careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Facebook",
+      "company": "Meta",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-facebook"
+      ],
+      "careers_url": "https://www.metacareers.com/jobsearch/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "Facebook is now Meta; use current Meta careers."
+    },
+    {
+      "listed_name": "FUJIFILM",
+      "company": "FUJIFILM",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-fujifilm"
+      ],
+      "careers_url": "https://careers.fujifilm.com/",
+      "page_check_status": null,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Fujikura Ltd.",
+      "company": "Fujikura",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-fujikura-ltd"
+      ],
+      "careers_url": "https://www.fujikura.co.jp/recruit/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Fujitsu Ltd.",
+      "company": "Fujitsu",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-fujitsu-ltd"
+      ],
+      "careers_url": "https://www.jobs.global.fujitsu.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Gemalto",
+      "company": "Gemalto (Thales)",
+      "headquarters_in_2018": "Netherlands",
+      "source_ids": [
+        "tr2018-gemalto"
+      ],
+      "careers_url": "https://careers.thalesgroup.com/global/en",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "Acquired business; only relevant Gemalto/DIS-branded Thales roles are collected."
+    },
+    {
+      "listed_name": "HCL Technologies Ltd.",
+      "company": "HCLTech",
+      "headquarters_in_2018": "India",
+      "source_ids": [
+        "tr2018-hcl-technologies-ltd"
+      ],
+      "careers_url": "https://careers.hcltech.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Hewlett Packard Enterprise",
+      "company": "Hewlett Packard Enterprise",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-hewlett-packard-enterprise"
+      ],
+      "careers_url": "https://careers.hpe.com/us/en",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "HP",
+      "company": "HP",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-hp"
+      ],
+      "careers_url": "https://hp.wd5.myworkdayjobs.com/ExternalCareerSite",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "IBM",
+      "company": "IBM",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-ibm"
+      ],
+      "careers_url": "https://careers.ibm.com/en_US/careers/SearchJobs/",
+      "page_check_status": 202,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Infineon Technologies",
+      "company": "Infineon Technologies",
+      "headquarters_in_2018": "Germany",
+      "source_ids": [
+        "tr2018-infineon-technologies"
+      ],
+      "careers_url": "https://jobs.infineon.com/careers",
+      "page_check_status": null,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Infosys",
+      "company": "Infosys",
+      "headquarters_in_2018": "India",
+      "source_ids": [
+        "tr2018-infosys"
+      ],
+      "careers_url": "https://career.infosys.com/",
+      "page_check_status": 403,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Intel",
+      "company": "Intel",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-intel"
+      ],
+      "careers_url": "https://intel.wd1.myworkdayjobs.com/External",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Intuit",
+      "company": "Intuit",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-intuit"
+      ],
+      "careers_url": "https://jobs.intuit.com/search-jobs",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Lam Research",
+      "company": "Lam Research",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-lam-research"
+      ],
+      "careers_url": "https://careers.lamresearch.com/careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Leidos",
+      "company": "Leidos",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-leidos"
+      ],
+      "careers_url": "https://careers.leidos.com/search/jobs",
+      "page_check_status": 403,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Lenovo",
+      "company": "Lenovo",
+      "headquarters_in_2018": "China",
+      "source_ids": [
+        "tr2018-lenovo"
+      ],
+      "careers_url": "https://jobs.lenovo.com/en_US/careers/SearchJobs",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "LG Electronics",
+      "company": "LG Electronics",
+      "headquarters_in_2018": "Korea; Republic (S. Korea)",
+      "source_ids": [
+        "tr2018-lg-electronics"
+      ],
+      "careers_url": "https://careers.lg.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "LITE-ON Technology",
+      "company": "LITEON",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-lite-on-technology"
+      ],
+      "careers_url": "https://www.liteon.com/en/hroverview/careers",
+      "page_check_status": null,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "ManTech International Corporation",
+      "company": "ManTech",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-mantech-international-corporation"
+      ],
+      "careers_url": "https://mantech.wd1.myworkdayjobs.com/External",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Mastercard",
+      "company": "Mastercard",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-mastercard"
+      ],
+      "careers_url": "https://mastercard.wd1.myworkdayjobs.com/CorporateCareers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Micron Technology",
+      "company": "Micron Technology",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-micron-technology"
+      ],
+      "careers_url": "https://micron.wd1.myworkdayjobs.com/External",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Microsoft",
+      "company": "Microsoft",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-microsoft"
+      ],
+      "careers_url": "https://apply.careers.microsoft.com/careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Motorola Solutions",
+      "company": "Motorola Solutions",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-motorola-solutions"
+      ],
+      "careers_url": "https://motorolasolutions.wd5.myworkdayjobs.com/Careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Nanya Technology",
+      "company": "Nanya Technology",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-nanya-technology"
+      ],
+      "careers_url": "https://www.nanya.com/en/Jobs",
+      "page_check_status": null,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "National Instruments",
+      "company": "National Instruments (Emerson)",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-national-instruments"
+      ],
+      "careers_url": "https://hdjq.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1/jobs?keyword=National%20Instruments",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "NI is part of Emerson; only NI-branded roles are collected."
+    },
+    {
+      "listed_name": "NCR Corporation",
+      "company": "NCR Voyix",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-ncr-corporation",
+        "tr2018-ncr-atleos"
+      ],
+      "careers_url": "https://ncr.wd1.myworkdayjobs.com/ext_us",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "NCR split into NCR Voyix and NCR Atleos; both have separate sources."
+    },
+    {
+      "listed_name": "NEC",
+      "company": "NEC",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-nec"
+      ],
+      "careers_url": "https://www.nec.com/en/global/careers/",
+      "page_check_status": 403,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Nokia",
+      "company": "Nokia",
+      "headquarters_in_2018": "Finland",
+      "source_ids": [
+        "tr2018-nokia"
+      ],
+      "careers_url": "https://jobs.nokia.com/en/sites/CX_1",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Nvidia",
+      "company": "NVIDIA",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-nvidia"
+      ],
+      "careers_url": "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "NXP Semiconductors",
+      "company": "NXP Semiconductors",
+      "headquarters_in_2018": "Netherlands",
+      "source_ids": [
+        "tr2018-nxp-semiconductors"
+      ],
+      "careers_url": "https://nxp.wd3.myworkdayjobs.com/careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "OKI Electric Industry Co., Ltd.",
+      "company": "OKI",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-oki-electric-industry-co-ltd"
+      ],
+      "careers_url": "https://www.oki.com/jp/recruit/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "ON Semiconductor",
+      "company": "onsemi",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-on-semiconductor"
+      ],
+      "careers_url": "https://hctz.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/jobs",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Oracle",
+      "company": "Oracle",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-oracle"
+      ],
+      "careers_url": "https://careers.oracle.com/en/sites/jobsearch/jobs",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "PEGATRON Corporation",
+      "company": "Pegatron",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-pegatron-corporation"
+      ],
+      "careers_url": "https://pegatrontechnologiesllc.applytojob.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "Regional employer careers portal; India coverage may be absent."
+    },
+    {
+      "listed_name": "Powertech Technology Inc.",
+      "company": "Powertech Technology",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-powertech-technology-inc"
+      ],
+      "careers_url": "https://www.pti.com.tw/en/hr/job",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Qisda Corporation",
+      "company": "Qisda",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-qisda-corporation"
+      ],
+      "careers_url": "https://www.qisda.com/en/careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Qualcomm",
+      "company": "Qualcomm",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-qualcomm"
+      ],
+      "careers_url": "https://careers.qualcomm.com/careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Quanta Computer",
+      "company": "Quanta Computer",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-quanta-computer"
+      ],
+      "careers_url": "https://hr.quantatw.com/webrecruit/hr_msg.html",
+      "page_check_status": null,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Renesas Electronics Corporation",
+      "company": "Renesas Electronics",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-renesas-electronics-corporation"
+      ],
+      "careers_url": "https://jobs.renesas.com/",
+      "page_check_status": null,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "ROHM",
+      "company": "ROHM",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-rohm"
+      ],
+      "careers_url": "https://www.rohm.com/careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Salesforce",
+      "company": "Salesforce",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-salesforce"
+      ],
+      "careers_url": "https://salesforce.wd12.myworkdayjobs.com/External_Career_Site",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Samsung Electronics",
+      "company": "Samsung Electronics",
+      "headquarters_in_2018": "Korea; Republic (S. Korea)",
+      "source_ids": [
+        "tr2018-samsung-electronics"
+      ],
+      "careers_url": "https://sec.wd3.myworkdayjobs.com/Samsung_Careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "SAP",
+      "company": "SAP",
+      "headquarters_in_2018": "Germany",
+      "source_ids": [
+        "tr2018-sap"
+      ],
+      "careers_url": "https://jobs.sap.com/en/jobs/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Seiko Epson Corporation",
+      "company": "Epson",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-seiko-epson-corporation"
+      ],
+      "careers_url": "https://global.epson.com/en/careers/",
+      "page_check_status": 403,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Sharp Corporation",
+      "company": "Sharp",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-sharp-corporation"
+      ],
+      "careers_url": "https://job-boards.greenhouse.io/sharpelectronics",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Siliconware Precision Industries Ltd. (SPIL)",
+      "company": "SPIL",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-siliconware-precision-industries-ltd-spil"
+      ],
+      "careers_url": "https://www.spilglobal.com/Careers/JobApply",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "SK Hynix Inc.",
+      "company": "SK hynix",
+      "headquarters_in_2018": "Korea; Republic (S. Korea)",
+      "source_ids": [
+        "tr2018-sk-hynix-inc"
+      ],
+      "careers_url": "https://talent.skhynix.com/hub/en/apply/job",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "SONY",
+      "company": "Sony",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-sony"
+      ],
+      "careers_url": "https://sonyglobal.wd1.myworkdayjobs.com/SonyGlobalCareers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Sopra Steria",
+      "company": "Sopra Steria",
+      "headquarters_in_2018": "France",
+      "source_ids": [
+        "tr2018-sopra-steria"
+      ],
+      "careers_url": "https://careers.soprasteria.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "STMicroelectronics",
+      "company": "STMicroelectronics",
+      "headquarters_in_2018": "Switzerland",
+      "source_ids": [
+        "tr2018-stmicroelectronics"
+      ],
+      "careers_url": "https://stmicroelectronics.eightfold.ai/careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Symantec Corporation",
+      "company": "Symantec (Broadcom)",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-symantec-corporation"
+      ],
+      "careers_url": "https://broadcom.wd1.myworkdayjobs.com/External_Career",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "Enterprise Symantec careers are on Broadcom; parent roles require brand evidence."
+    },
+    {
+      "listed_name": "Taiwan Semiconductor Manufacturing Co., Ltd. (TSMC)",
+      "company": "TSMC",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-taiwan-semiconductor-manufacturing-co-ltd-tsmc"
+      ],
+      "careers_url": "https://careers.tsmc.com/en_US/careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Tata Consultancy Services",
+      "company": "Tata Consultancy Services",
+      "headquarters_in_2018": "India",
+      "source_ids": [
+        "tr2018-tata-consultancy-services"
+      ],
+      "careers_url": "https://www.tcs.com/careers/india",
+      "page_check_status": 403,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Tech Mahindra",
+      "company": "Tech Mahindra",
+      "headquarters_in_2018": "India",
+      "source_ids": [
+        "tr2018-tech-mahindra"
+      ],
+      "careers_url": "https://careers.techmahindra.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Tencent",
+      "company": "Tencent",
+      "headquarters_in_2018": "China",
+      "source_ids": [
+        "tr2018-tencent"
+      ],
+      "careers_url": "https://careers.tencent.com/en-us/search.html",
+      "page_check_status": null,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Teradata",
+      "company": "Teradata",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-teradata"
+      ],
+      "careers_url": "https://careers.teradata.com/jobs",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Texas Instruments",
+      "company": "Texas Instruments",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-texas-instruments"
+      ],
+      "careers_url": "https://careers.ti.com/en/sites/CX",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Tieto",
+      "company": "Tieto",
+      "headquarters_in_2018": "Finland",
+      "source_ids": [
+        "tr2018-tieto"
+      ],
+      "careers_url": "https://careers.tieto.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "Use current Tieto careers; historical list name retained."
+    },
+    {
+      "listed_name": "Tokyo Electron",
+      "company": "Tokyo Electron",
+      "headquarters_in_2018": "Japan",
+      "source_ids": [
+        "tr2018-tokyo-electron"
+      ],
+      "careers_url": "https://tel.wd3.myworkdayjobs.com/TEL-Careers",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Total System Services (TSYS)",
+      "company": "TSYS (FIS)",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-total-system-services-tsys"
+      ],
+      "careers_url": "https://careers.fisglobal.com/us/en/search-results?keywords=TSYS",
+      "page_check_status": null,
+      "page_checked_on": "2026-10-26",
+      "notes": "TSYS is now part of FIS; only TSYS-branded FIS roles are collected."
+    },
+    {
+      "listed_name": "Unisys",
+      "company": "Unisys",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-unisys"
+      ],
+      "careers_url": "https://unisys.wd5.myworkdayjobs.com/External",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "United Microelectronics Corporation",
+      "company": "UMC",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-united-microelectronics-corporation"
+      ],
+      "careers_url": "https://www.umc.com/en/Careers/careers",
+      "page_check_status": 403,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "VMware",
+      "company": "VMware (Broadcom)",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-vmware"
+      ],
+      "careers_url": "https://broadcom.wd1.myworkdayjobs.com/External_Career",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": "VMware is part of Broadcom; parent roles require VMware evidence."
+    },
+    {
+      "listed_name": "Wipro",
+      "company": "Wipro",
+      "headquarters_in_2018": "India",
+      "source_ids": [
+        "tr2018-wipro"
+      ],
+      "careers_url": "https://careers.wipro.com/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Wistron Corporation",
+      "company": "Wistron",
+      "headquarters_in_2018": "Taiwan",
+      "source_ids": [
+        "tr2018-wistron-corporation"
+      ],
+      "careers_url": "https://www.wistron.com/en/career/",
+      "page_check_status": 403,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Workday",
+      "company": "Workday",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-workday"
+      ],
+      "careers_url": "https://workday.wd5.myworkdayjobs.com/Workday",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "Xerox Corporation",
+      "company": "Xerox",
+      "headquarters_in_2018": "United States of America",
+      "source_ids": [
+        "tr2018-xerox-corporation"
+      ],
+      "careers_url": "https://xerox.avature.net/en_US/careers/SearchJobs",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    },
+    {
+      "listed_name": "ZTE Corporation",
+      "company": "ZTE",
+      "headquarters_in_2018": "China",
+      "source_ids": [
+        "tr2018-zte-corporation"
+      ],
+      "careers_url": "https://job.zte.com.cn/cn/",
+      "page_check_status": 200,
+      "page_checked_on": "2026-10-26",
+      "notes": ""
+    }
+  ]
+}

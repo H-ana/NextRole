@@ -69,7 +69,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         route=urlsplit(self.path).path
-        if route in ('/api/gmail/callback','/api/notifications','/api/interviews') and not self.inbox_request_allowed():return self.json_response({'error':'Local app access required.'},403)
+        if route in ('/api/gmail/callback','/api/notifications','/api/interviews','/api/applications/lifecycle') and not self.inbox_request_allowed():return self.json_response({'error':'Local app access required.'},403)
         if route=='/api/gmail/callback':
             try:
                 get_recruiter_inbox().finish(parse_qs(urlsplit(self.path).query))
@@ -81,6 +81,9 @@ class Handler(SimpleHTTPRequestHandler):
             self.send_response(200);self.send_header('Content-Type','text/html; charset=utf-8');self.send_header('Content-Length',str(len(page)));self.send_header('Referrer-Policy','no-referrer');self.send_header('Content-Security-Policy',"default-src 'none'; base-uri 'none'");self.end_headers();self.wfile.write(page);return
         if route=='/api/interviews':
             inbox=get_recruiter_inbox();return self.json_response({'connected':inbox.status()['connected'],'email':inbox.status().get('email',''),'invitations':inbox.interview_invitations()})
+        if route=='/api/applications/lifecycle':
+            try:return self.json_response(get_recruiter_inbox().lifecycle())
+            except MailError as error:return self.json_response({'error':str(error)},422)
         if route=='/api/notifications':
             inbox=get_recruiter_inbox();return self.json_response({**inbox.status(),'notifications':inbox.notifications()})
         if urlsplit(self.path).path == '/api/status':
@@ -121,6 +124,7 @@ class Handler(SimpleHTTPRequestHandler):
                     elif route=='/api/gmail/disconnect':result=inbox.disconnect()
                     elif route=='/api/gmail/check':result=inbox.sync()
                     elif route=='/api/notifications/seen':inbox.mark_seen();result={'seen':True}
+                    elif route=='/api/applications/details':result=inbox.update_lifecycle(body)
                     elif route=='/api/applications/untrack':inbox.untrack(body.get('job_id',''));result={'untracked':True}
                     elif route=='/api/applications/track':
                         job=next((j for j in get_job_store().snapshot()['jobs'] if j['id']==body.get('job_id')),None)

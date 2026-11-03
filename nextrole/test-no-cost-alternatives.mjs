@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import {safeLocalWording,bulletChoices,supportedWordingVariants} from './dist/local-tailoring.mjs';
+import {encryptBackup,decryptBackup,validateBackup,restoreEntries} from './dist/portable-backup.mjs';
+import {filterPublicJobs,validatePublicFeed,lexicalScore} from './dist/public-search.mjs';
+assert(safeLocalWording('- Built SQL reports for 12 teams.','- Developed SQL reports for 12 teams.'));
+assert(!safeLocalWording('- Built SQL reports for 12 teams.','- Developed SQL reports for 20 teams.'));
+assert(!safeLocalWording('- Built SQL reports for 12 teams.','- Built Python reports for 12 teams.'));
+assert(!safeLocalWording('- Helped build SQL reports.','- Led SQL reports.'));
+assert(!safeLocalWording('Analyst | Example | 2024','Analyst | Other | 2024'));
+assert.equal(bulletChoices('NAME\n- Built SQL reports for 12 teams.').length,1);
+const data={format:'nextrole-portable',version:1,entries:{'nextrole-retained-resume-v1':JSON.stringify({version:1,text:'Alex Example\nSQL'})}};
+const encrypted=await encryptBackup(data,'test-only-long-password');assert(!JSON.stringify(encrypted).includes('Alex Example'));assert.deepEqual(await decryptBackup(encrypted,'test-only-long-password'),data);await assert.rejects(()=>decryptBackup(encrypted,'different-password'));
+assert.throws(()=>validateBackup({...data,entries:{'gmail-token':'{}'}}),/Unsupported/);
+const items=new Map([['nextrole-retained-resume-v1','old']]);let calls=0;const storage={getItem:k=>items.get(k)??null,setItem:(k,v)=>{if(++calls===2)throw Error('Full');items.set(k,v);},removeItem:k=>items.delete(k)};const restored={...data,entries:{...data.entries,'nextrole-profile':JSON.stringify({cities:[],workstyle:'any',experience:'2'})}};assert.throws(()=>restoreEntries(restored,storage));assert.equal(items.get('nextrole-retained-resume-v1'),'old');
+const description='Requires 2–4 years of experience.',band={status:'known',minimum:2,maximum:4,quote:description,quotes:[description],policy_version:'strict-experience-v2'};const j={id:'one',company:'Example',title:'Analyst',url:'https://example.com/jobs/1',location:'Bengaluru',style:'Hybrid',description,experience_requirement:band,last_checked:Date.now()/1000};
+assert.equal(filterPublicJobs([j],{experience:2,cities:['Bengaluru'],workstyle:'Hybrid'}).length,1);assert.equal(filterPublicJobs([j],{experience:1,cities:[],workstyle:'any'}).length,0);assert.equal(filterPublicJobs([j],{experience:5,cities:[],workstyle:'any'}).length,1);assert.equal(filterPublicJobs([{...j,experience_requirement:null}],{experience:2,cities:[],workstyle:'any'}).length,0);assert.equal(filterPublicJobs([j],{experience:2,cities:['Chennai'],workstyle:'Hybrid'}).length,0);assert.equal(filterPublicJobs([{...j,style:'Remote'}],{experience:2,cities:['Chennai'],workstyle:'Remote'}).length,1);
+assert.equal(validatePublicFeed({format:'nextrole-public-jobs',version:1,jobs:[{...j,last_checked:1}]}).length,0);assert(lexicalScore('SQL Python','SQL reports Python')>lexicalScore('SQL Python','Marketing'));
+console.log('Local wording fact gates, encrypted backups, wrong-password and quota rollback, source-backed experience, location/work-style and feed expiry passed.');
+
+assert.deepEqual(supportedWordingVariants('- Used SQL for reporting.'),['- Utilized SQL for reporting.']);assert.equal(supportedWordingVariants('- Helped build reports.').length,0);

@@ -15,6 +15,6 @@ fontSize=10.5;await downloadOnePageResume('Synthetic resume','resume.docx');asse
 expectedText='Alex Example\nSkills\nPython, SQL';await downloadOnePageResume('Alex Example\nSkills\nPythonSQL','resume.docx');assert.equal(clicks,2,'Downloaded text uses the same comma-separated skills as the preview');
 await assert.rejects(()=>downloadOnePageResume('Alex Example\nSkills\nPythonSQL','resume.docx',()=>false),/draft changed/);assert.equal(clicks,2,'A changed layout must not download an obsolete resume');
 await assert.rejects(()=>downloadOnePageResume('RELEVANT SKILLS\nPython, Alex Example, alex@example.com','resume.docx'),/name must come before/);assert.equal(clicks,2);
-available=false;await assert.rejects(()=>downloadOnePageResume('Synthetic resume','resume.docx'),/Restart the backend/);
-console.log('Passed: only a verified one-page Word export at a readable font size can download; restart requirement is explicit.');
+available=false;await assert.rejects(()=>downloadOnePageResume('Synthetic resume','resume.docx'),/Word downloads are unavailable/);
+console.log('Passed: only a verified one-page Word export at a readable font size can download; service unavailability leaves the draft unchanged.');
 

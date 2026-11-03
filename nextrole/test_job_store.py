@@ -11,7 +11,7 @@ from test_agent import HttpTests, RESUME
 
 SOURCE={'company':'Example','provider':'greenhouse','board':'example'}
 def job(identity='one',description='Required: 2 years of experience. Build process automation.',location='Bengaluru',style='Hybrid'):
-    return {'id':identity,'company':'Example','title':'Automation Engineer','description':description,'location':location,'style':style,'url':'https://careers.example.com/'+identity,'years':2,'experience_quote':'Required: 2 years of experience.','skills':[],'source':source_key(SOURCE)}
+    return {'id':identity,'company':'Microsoft','title':'Automation Engineer','description':description,'location':location,'style':style,'url':'https://careers.example.com/'+identity,'years':2,'experience_quote':'Required: 2 years of experience.','skills':[],'source':source_key(SOURCE)}
 
 
 class FakeEncoder:
@@ -44,11 +44,11 @@ class CacheTests(unittest.TestCase):
         self.store.update_source(SOURCE,[{**first,'description':'Changed responsibility.'}]);self.store.build_index();self.assertEqual(len(self.encoder.calls),2)
 
     def test_search_never_calls_gemini_or_stores_resume(self):
-        unknown={**job('unknown'),'years':None,'style':'unknown'}
-        self.store.update_source(SOURCE,[job(),{**job('senior'),'years':8},unknown,job('other',location='Mumbai')]);self.store.build_index()
+        unknown={**job('unknown'),'years':None,'style':'unknown','description':'Build software services and automated reconciliation workflows.'}
+        self.store.update_source(SOURCE,[job(),{**job('senior'),'years':8,'description':'Required: 8 years of experience. Build automation.'},unknown,job('other',location='Mumbai')]);self.store.build_index()
         with patch('agent_service.call_model',side_effect=AssertionError('Gemini must not run for search')):
             result=self.store.search({'resume':RESUME,'preferences':{'experience':2,'cities':['Bengaluru'],'workstyle':'Hybrid'}})
-        self.assertEqual(result['eligible'],2);self.assertEqual(result['experience_gaps'],1);self.assertEqual(result['ranking_mode'],'semantic')
+        self.assertEqual(result['eligible'],1);self.assertEqual(result['experience_gaps'],1);self.assertEqual(result['excluded_experience_unknown'],1);self.assertEqual(result['ranking_mode'],'semantic')
         self.assertTrue(all(j['qualification_status']=='Not reviewed' for j in result['jobs']))
         self.assertNotIn(RESUME,self.store.path.read_bytes().decode('utf-8',errors='ignore'))
 

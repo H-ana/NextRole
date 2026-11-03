@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {retainResumeFile,retainedResumeFile,retainedResumeMetadata,clearResumeFile} from './dist/resume-file-store.mjs';
+let record=null,failPut=false,failDelete=false;
+globalThis.indexedDB={open(){const request={result:{close(){},transaction(){const tx={objectStore(){return {put(value){const r={};queueMicrotask(()=>{if(failPut)tx.onerror();else {record=value;tx.oncomplete();}});return r;},get(){const r={result:record};queueMicrotask(()=>tx.oncomplete());return r;},delete(){const r={};queueMicrotask(()=>{if(failDelete)tx.onerror();else{record=null;tx.oncomplete();}});return r;}};}};return tx;}}};queueMicrotask(()=>request.onsuccess());return request;}};
+const file=new File(['%PDF-example'],'example.pdf',{type:'application/pdf'});
+assert(await retainResumeFile(file,'Original resume'));let status=await retainedResumeMetadata('Original resume');assert.equal(status.name,'example.pdf');assert(status.savedAt>0);assert(status.matchesSource);
+assert.equal((await retainedResumeFile('Original resume')).name,'example.pdf');
+assert.equal(await retainedResumeFile('Edited resume'),null);assert.equal((await retainedResumeMetadata('Edited resume')).matchesSource,false);
+record.savedAt=undefined;assert.equal((await retainedResumeMetadata('Original resume')).savedAt,null,'Old records do not invent timestamps');
+failPut=true;assert.equal(await retainResumeFile(file,'Replacement'),false);assert.equal(await retainedResumeMetadata('Replacement'),null,'Failed replacement cannot reuse an older file');failPut=false;
+await retainResumeFile(file,'Original resume');failDelete=true;assert.equal(await clearResumeFile(),false);assert(await retainedResumeFile('Original resume'));failDelete=false;
+assert(await clearResumeFile());assert.equal(await retainedResumeMetadata('Original resume'),null);
+console.log('Retained file: metadata, matching-text reuse, stale file rejection, legacy timestamps, write failures and honest deletion status passed.');

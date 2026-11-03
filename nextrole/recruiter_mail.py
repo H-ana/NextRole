@@ -44,6 +44,7 @@ def message_text(payload):
 
 REJECTION=re.compile(r"\b(?:reject(?:ed|ion)|not (?:able|going) to (?:proceed|progress|move forward)|decided against|not (?:been )?selected|not (?:be )?moving forward|not to (?:proceed|progress|move forward)|will not (?:be )?(?:proceed\w*|progress\w*|mov\w*)|won[’']?t (?:be )?(?:proceed\w*|progress\w*|mov\w*)|unsuccessful|regret to inform|(?:proceeding|moving forward|going) with other candidates?|(?:role|position) (?:is |has become )?no longer available|position (?:has been |is )?(?:filled|closed|withdrawn)|unable to (?:offer|proceed|move forward)|no longer (?:considering|proceeding)|not shortlisted|not successful|declin(?:e|ed|ing) your application)\b",re.I)
 POSITIVE=[
+ ('Referral confirmed',re.compile(r"\b(?:you (?:have been|were) referred|you['’]ve been referred|your (?:employee |job )?referral (?:for [^\n.!?]{1,120}? )?(?:has been|was) (?:submitted|received|confirmed)|(?:i|we) (?:have )?referred you|your (?:profile|resume|application) (?:has been|was) referred|[A-Z][A-Za-z]+ has referred you)\b",re.I)),
  ('Recruiter outreach',re.compile(r'\b(?:came across your profile|impressed (?:by|with) your (?:profile|experience)|(?:are you|would you be) (?:open to|interested in) (?:a |an |the |discussing |exploring )?(?:new |job |career )?(?:opportunity|role|position)|like to (?:discuss|speak with you about) (?:a |an |the |our )?(?:job |career )?(?:opportunity|role|position))\b',re.I)),
  ('Offer',re.compile(r'\b(?:offer of employment|employment offer|offer letter|pleased to offer you|formal job offer)\b',re.I)),
  ('Interview invitation',re.compile(r'\b(?:interview invitation|invite you (?:to|for) (?:an? |the |a technical )?interview|invited (?:to|for) (?:an? |the )?interview|schedule (?:an? |the |your )?(?:technical |next )?interview|confirm your (?:interview|availability)|availability for (?:an? |the )?(?:call|interview)|interview (?:has been |is )?scheduled)\b',re.I)),
@@ -52,10 +53,10 @@ POSITIVE=[
 POSITIVE.insert(0,('Interview invitation',re.compile(r'\b(?:your (?:technical |virtual |onsite |on-site )?interview (?:is confirmed|has been confirmed|will (?:be|take place))|(?:you (?:have been|are) )?shortlisted for (?:an? |the )?(?:technical )?interview|interview (?:details|confirmation) for (?:the |your )?(?:role|position))\b',re.I)))
 POSITIVE.insert(0,('Interview invitation',re.compile(r"\b(?:(?:invite|inviting) you (?:to attend|to participate in|to|for) (?:an? |the |your )?(?:(?:technical|virtual|video|phone|onsite|on-site|hr|final|first|second|panel|coding) )*interview|(?:you (?:have been|are) )?selected for (?:an? |the |your )?(?:(?:technical|virtual|video|phone|onsite|on-site|hr|final|panel) )*interview|(?:we have |we've )scheduled (?:an? |the |your )?(?:technical )?interview|reschedule (?:the |your )?(?:technical )?interview|your (?:technical )?interview (?:has been |is )?rescheduled)\b",re.I)))
 # Prefer a concrete next step over a general introduction in the same message.
-POSITIVE.sort(key=lambda item:item[0]=='Recruiter outreach')
+POSITIVE.sort(key=lambda item:{'Offer':0,'Interview invitation':1,'Assessment / next step':2,'Referral confirmed':3,'Recruiter outreach':4}.get(item[0],5))
 POSITIVE.append(('Recruiter outreach',re.compile(r'\b(?:please (?:share|send)(?: (?:with )?(?:me|us))? (?:your |an? )?(?:updated |latest )?(?:resume|cv)|(?:would you be|are you) (?:open to|interested in) [^\n.!?]{0,100}\b(?:role|position|job opportunity))\b',re.I)))
 
-HIRING_CONTEXT=re.compile(r'\b(?:job|role|position|application|hiring|recruit(?:er|ing|ment)|candidate|career|employment|resume|cv|coding (?:test|challenge)|technical interview)\b',re.I)
+HIRING_CONTEXT=re.compile(r'\b(?:job|role|position|application|hiring|recruit(?:er|ing|ment)|candidate|career|employment|employee referral|job referral|requisition|resume|cv|coding (?:test|challenge)|technical interview)\b',re.I)
 
 def current_action_text(value):
     """Exclude hypothetical outcome clauses, rather than rejecting the whole mail."""
@@ -63,7 +64,8 @@ def current_action_text(value):
     # Preserve actual decisions after a conditional preface: "If you have questions,
     # contact us. Your application was rejected" still contains a real rejection.
     hypothetical=re.compile(r"\b(?:if (?:(?:you|your application) (?:are |have been |were |is |has been )?|you['’]re |you['’]ve been )?(?:not )?(?:selected|shortlisted|successful)|should you (?:be |have been )?(?:selected|shortlisted|successful)|(?:(?:you|your application) )?(?:may|might) be (?:selected|shortlisted|invited))\b[^.!?;]*[.!?;]?",re.I)
-    return hypothetical.sub(' ',text)
+    text=hypothetical.sub(' ',text)
+    return re.sub(r'\bif (?:you (?:have been|are|were) referred|your (?:employee |job )?referral (?:is|has been|was))\b[^.!?;]*[.!?;]?',' ',text,flags=re.I)
 
 def classify_message(message,applications=(),own_email=''):
     headers={h.get('name','').lower():h.get('value','') for h in message.get('payload',{}).get('headers',[])}

@@ -1,0 +1,48 @@
+{
+  "jspdf_version": "4.2.1",
+  "assets": [
+    {
+      "file": "dist\\vendor\\jspdf.umd.min.js",
+      "source": "https://cdn.jsdelivr.net/npm/jspdf@4.2.1/dist/jspdf.umd.min.js",
+      "sha256": "e6551fcdc32f09d6853b2c5126d18d01d9447e0da618a41a11ebeee0f6c20d54",
+      "bytes": 420165
+    },
+    {
+      "file": "dist\\vendor\\jspdf-LICENSE.txt",
+      "source": "https://cdn.jsdelivr.net/npm/jspdf@4.2.1/LICENSE",
+      "sha256": "dc388ec35ff463288cdde3588a36fd4ed12a45deff053243b37309acc9ef583b",
+      "bytes": 1142
+    },
+    {
+      "file": "dist\\fonts\\Carlito-Regular.ttf",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/carlito/Carlito-Regular.ttf",
+      "sha256": "f6418f708baede9789daef5d458c0f53d2a888af9820e8062934e504fedc6595",
+      "bytes": 628032
+    },
+    {
+      "file": "dist\\fonts\\Carlito-Bold.ttf",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/carlito/Carlito-Bold.ttf",
+      "sha256": "bb5d20f79b82599ec72983597437373a80f2d2085fa91fc144fd74e876a594db",
+      "bytes": 682468
+    },
+    {
+      "file": "dist\\fonts\\Carlito-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/main/ofl/carlito/OFL.txt",
+      "sha256": "58402f82a7c332a700294988fe7554fbb0a63a8d27ccc1ee3bbc640311990a00",
+      "bytes": 4424
+    },
+    {
+      "file": "dist\\vendor\\mammoth.browser.min.js",
+      "source": "https://cdn.jsdelivr.net/npm/mammoth@1.13.0/mammoth.browser.min.js",
+      "sha256": "92914a3708cfdf1e62cb553d1856a7fedab21da83d8ee82845de2f897b368cab",
+      "bytes": 405060
+    },
+    {
+      "file": "dist\\vendor\\mammoth-LICENSE.txt",
+      "source": "https://cdn.jsdelivr.net/npm/mammoth@1.13.0/LICENSE",
+      "sha256": "6663bbd049205d38a496ccacb412a151980b444627d38de218b3b809aef330f1",
+      "bytes": 1307
+    }
+  ],
+  "mammoth_version": "1.13.0"
+}

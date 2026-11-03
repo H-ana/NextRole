@@ -10,7 +10,7 @@ assert.equal(deduplicateJobs([company,{...company,id:'track',url:company.url+'?u
 assert.match(matchExplanation(company,'Built Python APIs and SQL reports.',2),/Experience gap/);assert.match(matchExplanation(company,'Built Python APIs and SQL reports.',4),/domain experience/);assert.doesNotMatch(matchExplanation(company,'Built Python APIs.',4),/mentions.*AWS/);
 assert(feedbackPenalty(company,[{reason:'Wrong role',title:company.title}])>0);assert.equal(feedbackPenalty(company,[{reason:'Wrong role',title:'Graphic Designer'}]),0);
 let state={contexts:{},notifications:[]};state=collectNewMatches(state,[company],'profile',true,1);assert.equal(state.notifications.length,0);
-const fresh={...company,id:'new',title:'Data Engineer',date_posted:'2026-10-24'};state=collectNewMatches(state,[company,fresh],'profile',true,2);assert.equal(state.notifications.length,1);assert.equal(state.notifications[0].posted,'2026-10-24');assert.equal(state.notifications[0].discovered,2);
+const fresh={...company,agent:{qualification_fit:{version:'qualifications-v1',score:80}},id:'new',title:'Data Engineer',date_posted:'2026-10-24'};state=collectNewMatches(state,[company,fresh],'profile',true,2);assert.equal(state.notifications.length,1);assert.equal(state.notifications[0].posted,'2026-10-24');assert.equal(state.notifications[0].discovered,2);
 state=collectNewMatches(state,[company,fresh],'profile',true,3);assert.equal(state.notifications.length,1);
 assert.equal(collectNewMatches(state,[{...fresh,title:'Other',relevance_score:20}],'profile',true,4).notifications.length,1);
 assert.equal(collectNewMatches(state,[{...fresh,title:'Other'}],'changed-profile',true,4).notifications.length,1);
@@ -20,3 +20,5 @@ console.log('Dedupe safety, employer links, evidence explanations, feedback and 
 
 assert.deepEqual(additionalApplicationLinks({...linkedin,application_links:[{url:linkedin.url,platform:'LinkedIn'},{url:linkedin.url+'?utm_source=app',platform:'LinkedIn'}]}),[]);
 const extras=additionalApplicationLinks({...linkedin,application_links:[{url:linkedin.url},{url:'https://in.indeed.com/viewjob?jk=abc'},{url:'https://in.indeed.com/viewjob?jk=abc&utm_source=app'},{url:company.url}]});assert.equal(extras.length,2);assert.equal(extras[0].platform,'Indeed');assert.equal(extras[1].platform,'Company careers');
+
+assert.equal(collectNewMatches({contexts:{x:[]},notifications:[]},[{...fresh,agent:undefined,relevance_score:100}],'x',true).notifications.length,1,'New-match alerts use restored local relevance');

@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import {browserWordResume} from './dist/browser-documents.mjs';
+import {compareLocally} from './dist/free-resume-tools.mjs';
+import {cleanApplication,readApplicationBackup} from './dist/local-applications.mjs';
+const resume='Alex Example\nalex@example.com\nSUMMARY\nAnalyst using Python & SQL.\nEXPERIENCE\nExample Ltd | Analyst | 2024–Present\n- Built a <safe> report for 12 teams.\nSKILLS\nPython, SQL';
+const rows=compareLocally(resume,'Requirements: Python, SQL and Java experience.');
+assert.equal(rows.find(r=>r.skill==='Python').resume,'Analyst using Python & SQL.');assert.equal(rows.find(r=>r.skill==='Java').resume,'');
+const original=resume;browserWordResume(resume);assert.equal(resume,original);assert.throws(()=>browserWordResume('SKILLS\nPython'),/name/);assert.throws(()=>browserWordResume(resume,9),/readable/);assert.throws(()=>browserWordResume(resume+'\x01'),/control/);
+await fs.mkdir('extension-release',{recursive:true});await fs.writeFile('extension-release/browser-resume-test.docx',browserWordResume(resume,10.5));await fs.writeFile('extension-release/browser-resume-test.txt',resume);
+const row={id:'one',company:'Example',role:'Analyst',status:'Interview',reference:'JOB-12',referrer:'Alex',events:[{status:'Applied',at:1}]};
+assert.equal(cleanApplication(row).referrer,'Alex');assert.throws(()=>cleanApplication({...row,url:'javascript:alert(1)'}));assert.throws(()=>cleanApplication({...row,status:'Invented'}));
+assert.equal(readApplicationBackup(JSON.stringify({format:'nextrole-applications',version:1,applications:[row]}))[0].reference,'JOB-12');assert.throws(()=>readApplicationBackup(JSON.stringify({format:'nextrole-applications',version:1,applications:[row,row]})),/duplicate/);
+for(const name of ['browser-documents.mjs','free-resume-tools.mjs','local-applications.mjs'])assert.doesNotMatch(await fs.readFile('dist/'+name,'utf8'),/\bfetch\s*\(|apiRequest\s*\(|findBackend\s*\(/,'No service requests in free tools');
+console.log('Local keyword evidence, factual preservation, DOCX safety, readable font limits, private backup validation and no-service boundaries passed.');

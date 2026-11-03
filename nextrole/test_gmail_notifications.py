@@ -110,6 +110,19 @@ class MemoryVault:
     def save(self,data):self.data=copy.deepcopy(data)
 
 class InboxTests(unittest.TestCase):
+    def test_lifecycle_sync_referral_to_offer_without_tracked_application(self):
+        with self.inbox.db() as db:db.execute('DELETE FROM applications')
+        details='Company: Acme Labs\nRole: Software Engineer\nJob ID: R-123\n'
+        self.messages=[message(details+body,subject='Application update',id=f'{n:012x}',threadId='aabbccddeeff',internalDate=str(int((time.time()-100+n)*1000))) for n,body in enumerate(['I have referred you for this job.','Thank you for applying.','We invite you to an interview.','Your offer of employment is attached.'],1)]
+        self.connect();state=self.inbox.lifecycle();apps=state['applications']
+        self.assertEqual(len(apps),1);self.assertEqual(apps[0]['status'],'Offer');self.assertTrue(apps[0]['referred']);self.assertEqual(len(apps[0]['events']),4)
+        self.assertIn('Referral confirmed',{n['category'] for n in self.inbox.notifications()})
+        self.assertNotIn('Application received',{n['category'] for n in self.inbox.notifications()})
+        self.assertFalse(self.inbox.error)
+        auth=self.vault.load();auth['email']='another@example.com';self.vault.save(auth)
+        # A real account switch clears notification metadata in finish().
+        with self.inbox.db() as db:db.execute('DELETE FROM notifications')
+        self.assertEqual(self.inbox.lifecycle()['applications'],[])
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.vault=MemoryVault();self.calls=[];self.messages=[message()]
         self.inbox=RecruiterInbox(Path(self.tmp.name)/'private.sqlite3',self.vault,self.request)
@@ -235,6 +248,13 @@ class HttpInboxTests(unittest.TestCase):
         self.assertEqual(self.get('/api/notifications')[0],200)
         self.assertEqual(self.get('/api/notifications',{'Origin':'https://evil.example'})[0],403)
         self.assertEqual(self.get('/api/notifications',{'Host':'evil.example:'+str(self.server.server_port)})[0],403)
+        self.assertEqual(self.get('/api/applications/lifecycle')[0],200)
+        self.assertEqual(self.get('/api/applications/lifecycle',{'Origin':'https://evil.example'})[0],403)
+        self.assertEqual(self.get('/api/applications/lifecycle',{'Host':'evil.example:'+str(self.server.server_port)})[0],403)
+    def test_lifecycle_details_endpoint_does_not_modify_other_accounts(self):
+        req=urllib.request.Request(self.origin+'/api/applications/details',data=b'{"id":"unknown","company":"Acme","role":"Engineer"}',headers={'Content-Type':'application/json'})
+        with self.assertRaises(urllib.error.HTTPError) as error:urllib.request.urlopen(req)
+        self.assertEqual(error.exception.code,422)
     def test_interview_endpoints_are_private_and_require_real_invitation(self):
         self.assertEqual(self.get('/api/interviews')[0],200)
         self.assertEqual(self.get('/api/interviews',{'Origin':'https://evil.example'})[0],403)

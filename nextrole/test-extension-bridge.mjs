@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+const origin='https://nextrole-job-match.blueowl129.chatgpt.site';let listener,sent=[],replies=[];
+const window={addEventListener:(_,handler)=>{listener=handler;},postMessage:(message,destination)=>replies.push({message,destination})};window.top=window;
+const sandbox={window,location:{origin},NextRoleExtensionConfig:{allowedOrigins:[origin]},chrome:{runtime:{sendMessage:(message,callback)=>{sent.push(message);callback({ok:true,version:'1.3.0'});}}}};
+vm.runInNewContext(fs.readFileSync(new URL('./browser-extension/site-bridge.js',import.meta.url),'utf8'),sandbox);
+const data={channel:'nextrole-to-extension',id:'request-1',type:'PING'};
+listener({source:window,origin:'https://other.example',data});listener({source:{},origin,data});listener({source:window,origin,data:{...data,type:'READ_DOCUMENTS'}});assert.equal(sent.length,0);
+listener({source:window,origin,data});assert.equal(sent[0].type,'SITE_PING');assert.equal(replies[0].destination,origin);assert.equal(replies[0].message.id,data.id);
+sandbox.chrome.runtime.sendMessage=()=>{throw Error('Context invalidated');};listener({source:window,origin,data});assert.equal(replies.at(-1).message.response.ok,false);assert.match(replies.at(-1).message.response.error,/Reload/);
+let registered=false;vm.runInNewContext(fs.readFileSync(new URL('./browser-extension/site-bridge.js',import.meta.url),'utf8'),{...sandbox,window:{top:{},addEventListener:()=>{registered=true;}}});assert.equal(registered,false);
+console.log('Website bridge rejects other origins/frames/unknown commands, correlates replies and handles extension updates.');

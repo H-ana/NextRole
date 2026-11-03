@@ -18,6 +18,7 @@ import urllib.request
 from urllib.parse import urlencode,quote,urlsplit
 from recruiter_mail import classify_message,message_text
 from interview_prep import email_context,CATEGORIES
+import application_lifecycle as lifecycle
 
 SCOPE='https://www.googleapis.com/auth/gmail.readonly'
 ROOT=Path(__file__).parent
@@ -85,6 +86,7 @@ applied_at REAL NOT NULL,active INTEGER NOT NULL DEFAULT 1);
 CREATE TABLE IF NOT EXISTS notifications(id INTEGER PRIMARY KEY AUTOINCREMENT,application_id TEXT NOT NULL,
 message_id TEXT NOT NULL,thread_id TEXT NOT NULL,subject TEXT NOT NULL,sender TEXT NOT NULL,
 received_at REAL NOT NULL,category TEXT NOT NULL,seen INTEGER NOT NULL DEFAULT 0,UNIQUE(application_id,message_id));''')
+        with self.db() as db:lifecycle.initialize(db)
     @contextmanager
     def db(self):
         db=sqlite3.connect(self.path,timeout=10);db.row_factory=sqlite3.Row
@@ -169,6 +171,25 @@ received_at REAL NOT NULL,category TEXT NOT NULL,seen INTEGER NOT NULL DEFAULT 0
         return {'configured':bool(auth.get('client_id')),'connected':bool(auth.get('token')),'email':auth.get('email',''),'checking':self.syncing,'unread':count,'last_checked':self.last_checked,'error':storage_error or self.error,'applications':self.applications()}
     def notifications(self):
         with self.db() as db:return [dict(r) for r in db.execute('SELECT n.*,a.company,a.role,a.url AS job_url FROM notifications n LEFT JOIN applications a ON a.id=n.application_id ORDER BY n.received_at DESC LIMIT 100')]
+    def lifecycle(self):
+        auth=self.vault.load();email=auth.get('email','')
+        if not email:return {'applications':[],'connected':False,'checking':self.syncing,'last_checked':self.last_checked}
+        # Backfill already saved positive metadata; subsequent full sync enriches it.
+        with self.auth_lock,self.db() as db:
+            for item in self.notifications():
+                if item['category'] not in lifecycle.STAGES:continue
+                if db.execute('SELECT 1 FROM lifecycle_events WHERE account=? AND message_id=?',(lifecycle.account_key(email),item['message_id'])).fetchone():continue
+                info=lifecycle.context(item['subject'])
+                lifecycle.ingest(db,email,{**info,**{k:item[k] for k in ('message_id','thread_id','subject','sender','received_at','category')},'company':item.get('company') or info['company'],'role':item.get('role') or info['role'],'url':item.get('job_url') or ''})
+            items=lifecycle.records(db,email)
+        return {'applications':items,'connected':bool(auth.get('token')),'email':email,'checking':self.syncing,'last_checked':self.last_checked,'error':self.error}
+    def update_lifecycle(self,body):
+        email=self.vault.load().get('email','')
+        if not email:raise MailError('Connect Gmail to update application details.')
+        try:
+            with self.auth_lock,self.db() as db:lifecycle.update_details(db,email,body)
+        except ValueError as error:raise MailError(str(error)) from None
+        return {'updated':True}
     def interview_invitations(self):
         items=[]
         for item in self.notifications():
@@ -211,7 +232,7 @@ received_at REAL NOT NULL,category TEXT NOT NULL,seen INTEGER NOT NULL DEFAULT 0
                     apps=self.applications()
                     generation=self.generation;token,email=self.access()
                 # Find recruitment messages independently of application tracking.
-                query='after:'+str(int(time.time()//86400)*86400-90*86400)+' -in:sent -in:drafts -in:spam -in:trash {interview recruiter recruitment hiring assessment shortlisted "offer of employment" "offer letter" "your application" "your profile" "career opportunity" "job opportunity" "role" "position" "resume" "cv" "screening" "selection process" "online test" "invitation"}'
+                query='after:'+str(int(time.time()//86400)*86400-90*86400)+' -in:sent -in:drafts -in:spam -in:trash {interview recruiter recruitment hiring assessment shortlisted referral referred application onboarding "offer of employment" "offer letter" "your application" "your profile" "career opportunity" "job opportunity" "role" "position" "resume" "cv" "screening" "selection process" "online test" "invitation"}'
                 signature=(query,generation)
                 if signature!=self.signature:self.signature=signature;self.queue=[];self.cursor=None;self.seen.clear()
                 # Always revisit the newest page before continuing historical pages.
@@ -228,12 +249,14 @@ received_at REAL NOT NULL,category TEXT NOT NULL,seen INTEGER NOT NULL DEFAULT 0
                 batch=self.queue[:20];self.queue=self.queue[20:]
                 def read(identity):
                     message=self.request('https://gmail.googleapis.com/gmail/v1/users/me/messages/'+quote(identity)+'?format=full',token=token)
-                    return identity,classify_message(message,apps,email)
+                    return identity,classify_message(message,apps,email),lifecycle.lifecycle_event(message,apps,email)
                 with ThreadPoolExecutor(max_workers=4) as pool:
-                    for identity,positive in pool.map(read,batch):
+                    for identity,positive,event in pool.map(read,batch):
                         with self.auth_lock:
                             if generation!=self.generation:return
                             self.seen.add(identity)
+                            if event:
+                                with self.db() as db:lifecycle.ingest(db,email,event)
                             if positive:
                                 with self.db() as db:db.execute('INSERT OR IGNORE INTO notifications(application_id,message_id,thread_id,subject,sender,received_at,category) SELECT :application_id,:message_id,:thread_id,:subject,:sender,:received_at,:category WHERE NOT EXISTS (SELECT 1 FROM notifications WHERE message_id=:message_id)',positive)
                 self.last_checked=time.time();self.error=''

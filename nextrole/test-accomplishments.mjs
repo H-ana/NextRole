@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {bulletChoices,safeLocalWording,supportedWordingVariants} from './dist/local-tailoring.mjs';
+const source='Alex Example\nPROFILE\nDeveloped broad experience in engineering.\nEXPERIENCE\nExample Ltd | Analyst | Jan 2024–Present\nDeveloped an automated reconciliation tool\nusing Python and SQL across payroll datasets.\n●Built REST APIs.\n▪ Improved report processing for 12 teams.\n1. Created validation reports for 3 clients.\n– Supported migration analysis.\nEDUCATION\n● Bachelor of Engineering in Computer Science\nSKILLS\n● Python, SQL, Java';
+const choices=bulletChoices(source);
+assert.equal(choices.length,5);assert.equal(choices[0].index,5);assert.equal(choices[0].endIndex,6);assert.match(choices[0].line,/\nusing Python/);
+assert(choices.some(r=>r.line==='●Built REST APIs.'));assert(choices.some(r=>r.line.startsWith('1.')));assert(!choices.some(r=>/Bachelor|broad experience|Python, SQL, Java|Example Ltd/.test(r.line)));
+assert(safeLocalWording(choices[0].line,'Built an automated reconciliation tool using Python and SQL across payroll datasets.'));
+assert(!safeLocalWording(choices[0].line,'Built an automated reconciliation tool using Java and SQL across payroll datasets.'));
+assert.deepEqual(supportedWordingVariants('Used SQL for reporting.'),['Utilized SQL for reporting.']);
+assert(safeLocalWording('● Built SQL reports for 12 teams.','● Developed SQL reports for 12 teams.'));
+assert(!safeLocalWording('1. Built SQL reports for 12 teams.','2. Developed SQL reports for 12 teams.'));
+assert.equal(bulletChoices('').length,0);assert.equal(bulletChoices('Alex Example\nEDUCATION\nBachelor of Technology').length,0);
+assert.equal(bulletChoices('EXPERIENCE\nBuilt APIs.').length,1);
+const lines=source.split('\n'),r=choices[0],after='Built an automated reconciliation tool using Python and SQL across payroll datasets.';
+lines.splice(r.index,r.endIndex-r.index+1,after);assert(lines.includes('●Built REST APIs.'));assert(lines.includes('Example Ltd | Analyst | Jan 2024–Present'));assert(!lines.includes('using Python and SQL across payroll datasets.'));
+console.log('Plain paragraphs, PDF bullet symbols, short and wrapped accomplishments, section protection, exact span replacement and fact gates passed.');

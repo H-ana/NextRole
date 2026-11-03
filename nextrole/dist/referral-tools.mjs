@@ -1,4 +1,4 @@
-import {HIRING_CITIES,matchesLocation} from './locations.mjs?v=91';
+import {HIRING_CITIES,matchesLocation} from './locations.mjs?v=113';
 const clean=value=>String(value??'').replace(/[\r\n\t]+/g,' ').trim().slice(0,300);
 const companyQuery=value=>'"'+clean(value).replace(/["\\]/g,'')+'"';
 // Verified from Figma's own LinkedIn "See all employees" link:
@@ -55,11 +55,10 @@ export function referralDraft(job,tone='friendly'){
 
 export function mountReferralTools(root,job,{onExplore}={}){
  root.id='referral-tools';root.className='referral-tools';root.tabIndex=-1;
- root.innerHTML='<h3>Find a referral on LinkedIn</h3><p class="referral-context"></p><div class="referral-links"><a data-referral-link="people" target="_blank" rel="noopener noreferrer">Find people at the company ↗</a><a data-referral-link="recruiters" target="_blank" rel="noopener noreferrer">Find recruiters ↗</a><a data-referral-link="similar" target="_blank" rel="noopener noreferrer">Find people in similar roles ↗</a></div><p class="referral-hint">Searches open directly on LinkedIn and may require sign-in. LinkedIn determines the result order using your search and network; a strict first-degree, second-degree, then others order cannot be guaranteed. Confirm each person’s current company.</p><details><summary>Draft a referral request</summary><fieldset class="referral-tone-picker"><legend>Pick a tone</legend><div data-referral-tones></div></fieldset><label for="referral-message">Edit before sharing</label><textarea id="referral-message" rows="6"></textarea><button id="copy-referral-message" type="button" class="secondary">Copy request</button><button id="reset-referral-message" type="button" class="secondary" title="Replaces edits in all three tone variants">Reset drafts</button><span id="referral-copy-status" role="status"></span></details>';
+ root.innerHTML='<h3>Find a referral on LinkedIn</h3><p class="referral-context"></p><div class="referral-links"><a data-referral-link="people" target="_blank" rel="noopener noreferrer">Find people at the company ↗</a><a data-referral-link="recruiters" target="_blank" rel="noopener noreferrer">Find recruiters ↗</a><a data-referral-link="similar" target="_blank" rel="noopener noreferrer">Find people in similar roles ↗</a></div><details><summary>Draft a referral request</summary><fieldset class="referral-tone-picker"><legend>Pick a tone</legend><div data-referral-tones></div></fieldset><label for="referral-message">Edit before sharing</label><textarea id="referral-message" rows="6"></textarea><button id="copy-referral-message" type="button" class="secondary">Copy request</button><button id="reset-referral-message" type="button" class="secondary" title="Replaces edits in all three tone variants">Reset drafts</button><span id="referral-copy-status" role="status"></span></details>';
  root.querySelector('.referral-context').textContent=`Explore contacts for ${clean(job.title)} at ${clean(job.company)}.`;
  const urls=referralSearches(job);
  const identity=employerIdentity(job);
- root.querySelector('.referral-hint').textContent=identity?.id?'Searches use LinkedIn’s Current company filter for this employer. LinkedIn may require sign-in.':'Opens LinkedIn people results using the company name. Confirm each person’s current employer; use Current company to refine results if needed.';
  for(const key of ['people','recruiters','similar']){const link=root.querySelector(`[data-referral-link="${key}"]`);link.href=urls[key];link.onclick=()=>onExplore?.(job);link.onauxclick=event=>{if(event.button===1)onExplore?.(job);};}
  const locations=recruiterLocations(job);
  if(locations.length){
@@ -68,7 +67,6 @@ export function mountReferralTools(root,job,{onExplore}={}){
    const link=root.querySelector(`[data-referral-link="${key}"]`);link.textContent=labels[key]+' · '+locations.join(' / ')+' ↗';
    link.title=identity?.id?'Search this employer using the posted job cities. Confirm the current company and location on LinkedIn.':'Search people using the company name and posted cities. Refine with LinkedIn’s Current company and Locations filters if needed.';
   }
-  root.querySelector('.referral-hint').textContent+=' All three searches include '+locations.join(', ')+'. Confirm the person’s location or refine with LinkedIn’s Locations filter.';
  }
  const message=root.querySelector('#referral-message'),status=root.querySelector('#referral-copy-status');
  let tone='friendly',drafts=Object.fromEntries(['formal','friendly','concise'].map(value=>[value,referralDraft(job,value)]));

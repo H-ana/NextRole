@@ -12,3 +12,9 @@
 *.pdf
 # Development screenshots may contain applicant names and contact details
 /nextrole/*.png
+
+# Generated release archives and local QA captures/fixtures
+/extension-release/
+/nextrole/qa/
+/nextrole/dist/qa-*.html
+*.tar.gz

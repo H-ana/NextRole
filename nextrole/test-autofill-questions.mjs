@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {partitionAutofillFields,AUTOFILL_FIELDS,suggestedAutofillProfile,mergeAutofillProfile,autofillPayload} from './dist/autofill-profile.mjs';
+const resume='Alex Example\nalex@example.com\nStreet address: 12 Example Road\nCurrent city: Bengaluru\nEXPERIENCE\nSoftware Engineer\nExample Company | January 2023 - Present\nBuilt Python automation.\nSKILLS\nPython, SQL';
+const derived=suggestedAutofillProfile(resume,'2');const parts=partitionAutofillFields(AUTOFILL_FIELDS,derived);
+for(const key of ['firstName','lastName','email','address','city','experience','skills','currentCompany','currentTitle'])assert(parts.known.some(([name])=>name===key),key+' is prefilled, not asked again');
+assert(parts.missing.some(([name])=>name==='postalCode'));assert(parts.missing.some(([name])=>name==='noticePeriod'));
+const revision=await NextRoleResumeProfile.revision(resume,'2'),profile=mergeAutofillProfile(derived,{revision,profile:{...derived,noticePeriod:'30 days'}},revision);
+assert(!partitionAutofillFields(AUTOFILL_FIELDS,profile).missing.some(([key])=>key==='noticePeriod'),'Saved answers are not asked again');
+const reconstructed=Object.fromEntries([...partitionAutofillFields(AUTOFILL_FIELDS,profile).missing,...partitionAutofillFields(AUTOFILL_FIELDS,profile).known].map(([key])=>[key,profile[key]||'']));reconstructed.employmentHistory=profile.employmentHistory;
+assert.equal(autofillPayload(reconstructed).profile.address,'12 Example Road');assert.equal(autofillPayload(reconstructed).profile.employmentHistory[0].company,'Example Company');
+assert.equal(partitionAutofillFields([['experience','Experience']],{experience:0}).known.length,1,'Zero is a known value');
+assert.equal(partitionAutofillFields([['x','Example']],{x:'  '}).missing.length,1);
+console.log('Missing-only profile questions: extracted facts, saved answers, blanks, zero experience and complete reviewed payload passed.');

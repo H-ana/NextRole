@@ -1,4 +1,4 @@
-import {findBackend,apiRequest} from './api-client.mjs?v=91';
+import {findBackend,apiRequest} from './api-client.mjs?v=116';
 const el=(tag,text='',className='')=>{const node=document.createElement(tag);node.textContent=text;if(className)node.className=className;return node;};
 export function gmailInterviewUrl(email,item){return `https://mail.google.com/mail/?authuser=${encodeURIComponent(email||'')}#all/${encodeURIComponent(item.message_id||item.thread_id)}`;}
 export function questionGroups(source){
@@ -8,22 +8,19 @@ export function questionGroups(source){
  const dsa=/\b(?:arrays?|strings?|hash ?maps?|hash ?tables?|linked lists?|binary|trees?|graphs?|sorting|sliding window|two.sum|dynamic programming|recursion|complexity|\bdsa\b)\b/i;
  return [[reported?'Reported patterns':'Published interview patterns',patterns],[reported?'Reported DSA questions':'Published DSA practice questions',questions.filter(line=>dsa.test(line))],[reported?'Other reported questions / source excerpts':'Published practice questions / source excerpts',questions.filter(line=>!dsa.test(line))]];
 }
-export function setupInterviewPrep(){
- const button=el('button','Interview prep','interview-prep-tab');button.type='button';button.id='interview-prep-tab';button.setAttribute('aria-pressed','false');
- const header=document.querySelector('header');header.insertBefore(button,document.querySelector('#notifications-button'));
- const root=el('section','','content interview-prep-page');root.id='interview-prep-view';root.hidden=true;
- root.innerHTML='<div class="prep-heading"><div><div class="eyebrow">YOUR NEXT CONVERSATION</div><h1>Interview preparation</h1><p>Company and role guides for interview invitations and assessments in Gmail.</p></div><button type="button" class="secondary" id="prep-refresh">Refresh invitations</button></div><p id="prep-status" role="status"></p><div class="prep-layout"><div id="prep-invitations" aria-label="Interview invitations"></div><div id="prep-guide" aria-live="polite"></div></div>';
- document.querySelector('main').append(root);
- const $=id=>root.querySelector('#'+id),status=$('prep-status'),list=$('prep-invitations'),content=$('prep-guide');
- let backend=null,items=[],email='',selection=null,generation=0,pollTimer=null,open=false;
- async function api(path,body){backend=await findBackend();if(!backend.status.capabilities?.includes('interview-prep-v1'))throw Error('Restart the backend to load Interview prep. Your saved Gmail connection will be reused.');return apiRequest(backend.origin,path,body,35000);}
- function close(){open=false;generation++;clearTimeout(pollTimer);root.hidden=true;button.setAttribute('aria-pressed','false');}
- document.querySelectorAll('[data-view],#profile-link').forEach(node=>node.addEventListener('click',close));
- function show(){open=true;root.hidden=false;document.querySelector('main > .content').hidden=true;const referrals=document.querySelector('#referrals-view');if(referrals)referrals.hidden=true;button.setAttribute('aria-pressed','true');document.querySelector('#breadcrumb').textContent='Interview prep';root.scrollIntoView({block:'start'});}
- function drawInvitations(){
-  list.replaceChildren();
-  for(const item of items){const card=el('button','','prep-invitation');card.type='button';card.setAttribute('aria-pressed',String(selection===item.id));card.append(el('strong',item.company&&item.role?item.company+' · '+item.role:item.subject),el('small',item.category+' · '+new Date(item.received_at*1000).toLocaleDateString()));card.onclick=()=>select(item);list.append(card);}
- }
+export function canPrepareApplication(application){return application.origin!=='local'&&['Interview','Assessment / next step'].includes(application.status);}
+export function invitationForApplication(application,invitations){
+ if(!canPrepareApplication(application))return null;
+ const ids=new Set((application.events||[]).filter(e=>['Interview invitation','Assessment / next step'].includes(e.category)).map(e=>e.message_id));
+ return [...invitations].filter(i=>ids.has(i.message_id)&&['Interview invitation','Assessment / next step'].includes(i.category)).sort((a,b)=>b.received_at-a.received_at)[0]||null;
+}
+export function createApplicationPrep(){
+ const root=el('section','','application-preparation');root.hidden=true;
+ root.innerHTML='<h3>Interview preparation</h3><p id="prep-status" role="status"></p><div id="prep-guide" aria-live="polite"></div>';
+ const status=root.querySelector('#prep-status'),content=root.querySelector('#prep-guide');
+ let generation=0,pollTimer=null,open=false,email='';
+ async function api(path,body){const backend=await findBackend();if(!backend.status.capabilities?.includes('interview-prep-v1'))throw Error('Interview preparation is unavailable.');return apiRequest(backend.origin,path,body,35000);}
+ function close(){open=false;generation++;clearTimeout(pollTimer);root.hidden=true;}
  function drawGuide(result,mail){
   content.replaceChildren();const heading=el('h2',result.company+' · '+result.role);content.append(heading);
   const retry=el('button','Refresh research','secondary');retry.type='button';retry.onclick=()=>{clearTimeout(pollTimer);const token=++generation;retry.disabled=true;research(mail,result.company,result.role,token,true).finally(()=>{retry.disabled=false;});};content.append(retry);
@@ -62,19 +59,19 @@ export function setupInterviewPrep(){
   const submit=el('button','Prepare my guide','primary');submit.type='submit';form.append(submit);
   form.onsubmit=e=>{e.preventDefault();submit.disabled=true;research(item,company.value.trim(),role.value.trim(),token).finally(()=>{submit.disabled=false;});};content.append(form);
  }
- async function select(item){
-  clearTimeout(pollTimer);const token=++generation;selection=item.id;drawInvitations();content.replaceChildren();status.textContent='Reading the company and role from your invitation…';
-  try{const context=await api('/api/interviews/context',{invitation_id:item.id});if(token!==generation||!open)return;status.textContent='';if(context.company&&context.role)await research(context,context.company,context.role,token);else confirmContext(context,token);}
-  catch(error){if(token===generation)status.textContent=error.message;}
+ async function show(application,accountEmail){
+  close();open=true;root.hidden=false;email=accountEmail;const token=++generation;
+  content.replaceChildren();status.textContent='Loading preparation for this application…';
+  try{
+   if(!canPrepareApplication(application))throw Error('Preparation is available for interview and assessment applications.');
+   const state=await api('/api/interviews');if(!open||token!==generation)return;
+   if(state.email&&state.email!==accountEmail)throw Error('Your Gmail account changed. Refresh Applications before preparing.');
+   const item=invitationForApplication(application,state.invitations||[]);
+   if(!item)throw Error('No matching interview or assessment message is available for this application. Check Gmail updates and try again.');
+   if(application.company&&application.role&&!application.needs_details){await research(item,application.company,application.role,token);return;}
+   const context=await api('/api/interviews/context',{invitation_id:item.id});if(!open||token!==generation)return;
+   status.textContent='';if(context.company&&context.role)await research(context,context.company,context.role,token);else confirmContext(context,token);
+  }catch(error){if(open&&token===generation)status.textContent=error.message;}
  }
- async function refresh(preferred){
-  clearTimeout(pollTimer);const token=++generation;status.textContent='Loading interview invitations…';
-  try{const result=await api('/api/interviews');if(!open||token!==generation)return;items=result.invitations||[];email=result.email||'';drawInvitations();status.textContent='';
-   if(!items.length){content.replaceChildren(el('h2',result.connected?'No interview invitations yet':'Connect Gmail to get started'),el('p',result.connected?'Interview invitations and assessments will appear here after the next Gmail check.':'Open Notifications to complete the one-time Gmail connection.'));return;}
-   await select(items.find(i=>i.id===preferred)||items.find(i=>i.id===selection)||items[0]);
-  }catch(error){status.textContent=error.message;}
- }
- button.onclick=()=>{show();refresh();};$('prep-refresh').onclick=()=>refresh();
- document.addEventListener('nextrole:interview-prep',event=>{show();refresh(event.detail?.id);});
- return {root,refresh};
+ return {root,show,close};
 }

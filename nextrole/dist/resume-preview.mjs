@@ -1,8 +1,8 @@
 const headings=/^(profile|career objective|objective|relevant skills|professional summary|summary|experience|work experience|professional experience|employment history|education|skills|technical skills|soft skills|additional skills|projects|certifications|certificates|achievements|publications|languages)\s*:?$/i;
 const escape=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-import {formatSkillSections} from './skill-format.mjs?v=91';
-import {personalContact} from './resume-header.mjs?v=91';
+import {formatSkillSections} from './skill-format.mjs?v=113';
+import {personalContact} from './resume-header.mjs?v=113';
 // Formatting only: preserve skill names and never infer qualifications.
 export function resumePreview(text){
  text=formatSkillSections(text);
@@ -19,6 +19,6 @@ export function resumePreview(text){
   first=false;
   return `<p class="resume-${role}">${escape(line)}</p>`;
  });
- return `<div class="resume-paper" aria-label="Formatted resume preview">${paragraphs.join('')}</div><p class="resume-preview-note">Layout preview. The Word download checks the final one-page fit. All resume text is preserved.</p>`;
+ return `<div class="resume-paper" aria-label="Formatted resume preview">${paragraphs.join('')}</div><p class="resume-preview-note">Layout preview. Check final pagination in the exported document. All resume text is preserved.</p>`;
 }
 

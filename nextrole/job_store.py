@@ -12,6 +12,8 @@ import time
 import urllib.request
 from pathlib import Path
 from urllib.parse import urlsplit
+from mnc_employers import mnc_employer
+from experience_policy import requirement as experience_band, assess as assess_experience, VERSION as EXPERIENCE_POLICY
 from semantic_search import ENCODER, MODEL_VERSION, chunks, lexical_scores, semantic_score
 
 ROOT = Path(__file__).parent
@@ -44,15 +46,8 @@ def plain_text(value):
 
 
 def experience_requirement(description):
-    """Only filter on clearly required years; preferred or ambiguous years remain unknown."""
-    lines=description.splitlines(); required=False;found=[]
-    for line in lines:
-        if re.search(r'preferred|nice.to.have|bonus|desirable',line,re.I):required=False;continue
-        if re.search(r'^(?:minimum |basic )?(?:requirements|qualifications)\s*:?$',line.strip(),re.I):required=True;continue
-        if required or re.search(r'\b(?:required|requires?|minimum|at least|must have)\b',line,re.I):
-            match=re.search(r'\b(\d{1,2})(?:\s*[-–—]\s*\d{1,2})?\+?\s*(?:years|yrs)\s+(?:of\s+)?(?:[\w/-]+\s+){0,8}experience\b',line,re.I)
-            if match:found.append((int(match.group(1)),line.strip()))
-    return max(found,key=lambda item:item[0]) if found else (None,'')
+    band=experience_band(description)
+    return (band['minimum'],band['quote']) if band['status']=='known' else (None,'')
 
 
 def source_key(source):
@@ -129,6 +124,7 @@ class JobStore:
             db.executescript('''CREATE TABLE IF NOT EXISTS jobs (id TEXT PRIMARY KEY,source TEXT NOT NULL,payload TEXT NOT NULL,content_hash TEXT NOT NULL,last_seen REAL NOT NULL,active INTEGER NOT NULL,vector TEXT,vector_version TEXT);
 CREATE TABLE IF NOT EXISTS sources (id TEXT PRIMARY KEY,last_attempt REAL,last_success REAL,error TEXT);''')
             if 'note' not in [r['name'] for r in db.execute('PRAGMA table_info(sources)')]:db.execute('ALTER TABLE sources ADD COLUMN note TEXT')
+            if 'cursor' not in [r['name'] for r in db.execute('PRAGMA table_info(sources)')]:db.execute('ALTER TABLE sources ADD COLUMN cursor INTEGER NOT NULL DEFAULT 0')
             from posting_history import initialize
             initialize(db)
         self.repair_cached_locations()
@@ -156,7 +152,7 @@ CREATE TABLE IF NOT EXISTS sources (id TEXT PRIMARY KEY,last_attempt REAL,last_s
             with db:yield db
         finally:db.close()
 
-    def update_source(self,source,jobs,now=None,complete=True,note=None):
+    def update_source(self,source,jobs,now=None,complete=True,note=None,next_cursor=None):
         jobs=list(jobs)
         now=time.time() if now is None else now;key=source_key(source)
         with self.connect() as db:
@@ -172,20 +168,34 @@ vector_version=CASE WHEN jobs.content_hash=excluded.content_hash THEN jobs.vecto
             record(db,jobs,now)
             db.execute('DELETE FROM posting_history WHERE last_observed<?',(now-WINDOW,))
             db.execute('INSERT INTO sources(id,last_attempt,last_success,error,note) VALUES(?,?,?,NULL,?) ON CONFLICT(id) DO UPDATE SET last_attempt=excluded.last_attempt,last_success=excluded.last_success,error=NULL,note=excluded.note',(key,now,now,note))
+            if next_cursor is not None:db.execute('UPDATE sources SET cursor=? WHERE id=?',(max(0,int(next_cursor)),key))
 
-    def refresh(self,fetcher=fetch_source):
+    def refresh(self,fetcher=fetch_source,max_sources=None,force=False):
         if not self.refresh_lock.acquire(blocking=False):return
         self.refreshing=True
         try:
-            with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
-                futures={pool.submit(fetcher,source):source for source in self.sources}
+            with self.connect() as db:states={r['id']:dict(r) for r in db.execute('SELECT id,cursor,last_attempt FROM sources')}
+            selected=self.sources
+            if max_sources is not None:
+                now=time.time();due=[]
+                for source in self.sources:
+                    if source['provider'] in ('manual','platform'):continue
+                    last=states.get(source_key(source),{}).get('last_attempt') or 0
+                    interval=6*3600 if source.get('catalog') else REFRESH_SECONDS
+                    if force or now-last>=interval:due.append(source)
+                due.sort(key=lambda s:(states.get(source_key(s),{}).get('last_attempt') or 0,-s.get('priority',0)))
+                ordinary=[s for s in due if not s.get('catalog')][:min(3,max_sources)]
+                selected=ordinary+[s for s in due if s not in ordinary][:max(0,max_sources-len(ordinary))]
+            from careers_scraper import scraping_mode
+            with concurrent.futures.ThreadPoolExecutor(max_workers=3 if scraping_mode()=='browser' else 6) as pool:
+                futures={pool.submit(fetcher,{**source,'scan_offset':states.get(source_key(source),{}).get('cursor',0)} if source.get('provider')=='careers' else source):source for source in selected}
                 for future in concurrent.futures.as_completed(futures):
                     source=futures[future];key=source_key(source)
                     try:
                         result=future.result()
                         if result is None and source['provider'] in ('manual','platform'):continue
                         from careers_scraper import CrawlResult
-                        if isinstance(result,CrawlResult):self.update_source(source,result.jobs,complete=result.complete,note=result.note)
+                        if isinstance(result,CrawlResult):self.update_source(source,result.jobs,complete=result.complete,note=result.note,next_cursor=result.next_cursor)
                         else:self.update_source(source,result)
                     except Exception as error:
                         from careers_scraper import CrawlError
@@ -199,7 +209,7 @@ vector_version=CASE WHEN jobs.content_hash=excluded.content_hash THEN jobs.vecto
     def request_refresh(self):
         if self.refreshing:return
         def work():
-            self.refresh();self.build_index()
+            self.refresh(max_sources=18,force=True);self.build_index()
         threading.Thread(target=work,daemon=True,name='public-job-refresh').start()
 
     def import_platform_job(self,body):
@@ -253,7 +263,7 @@ vector_version=CASE WHEN jobs.content_hash=excluded.content_hash THEN jobs.vecto
         with self.connect() as db:annotate(db,jobs)
         sources=[{**s,**states.get(source_key(s),{'last_success':None,'error':None})} for s in self.sources]
         success=[s['last_success'] for s in sources if s.get('last_success')]
-        return {'jobs':jobs,'last_updated':max(success,default=None),'refreshing':self.refreshing,'refresh_interval_seconds':REFRESH_SECONDS,'stale':not success or time.time()-min(success)>REFRESH_SECONDS*2,'sources':sources,'semantic':{**self.encoder.status(),'indexed':indexed,'indexing':self.indexing}}
+        return {'jobs':jobs,'last_updated':max(success,default=None),'refreshing':self.refreshing,'refresh_interval_seconds':REFRESH_SECONDS,'collection_scheduler_seconds':60,'catalog_refresh_seconds':6*3600,'stale':not success or time.time()-min(success)>REFRESH_SECONDS*2,'sources':sources,'semantic':{**self.encoder.status(),'indexed':indexed,'indexing':self.indexing}}
 
     def search(self,body):
         resume=body.get('resume','');preferences=body.get('preferences',{})
@@ -262,14 +272,20 @@ vector_version=CASE WHEN jobs.content_hash=excluded.content_hash THEN jobs.vecto
         if not isinstance(cities,list) or any(not isinstance(c,str) for c in cities) or not 0<=years<=80 or style not in ('any','Remote','Hybrid','On-site'):raise ValueError('Invalid preferences')
         limit=int(body.get('limit',50))
         if not 1<=limit<=200:raise ValueError('Use a result limit from 1 to 200')
-        snapshot=self.snapshot();eligible=[];gaps=[];excluded_location=0;excluded_style=0;unknown_location=0
+        snapshot=self.snapshot();eligible=[];gaps=[];excluded_location=0;excluded_style=0;unknown_location=0;excluded_employer=0;unknown_experience=0
         for job in snapshot['jobs']:
+            if not mnc_employer(job):excluded_employer+=1;continue
             if style!='Remote' and not location_matches(job['location'],cities):
                 excluded_location+=1
                 if job['location'] in ('','Location not specified'):unknown_location+=1
                 continue
             if style!='any' and job['style'] not in (style,'unknown'):excluded_style+=1;continue
-            if job['years'] is not None and job['years']>years:gaps.append(job);continue
+            band=experience_band(job.get('description',''));fit=assess_experience(band,years)
+            if fit is None:
+                if band['status']=='unknown':unknown_experience+=1
+                else:gaps.append(job)
+                continue
+            job={**job,'years':band['minimum'],'experience_quote':band['quote'],'experience_requirement':band,'experience_match':fit}
             eligible.append(job)
         # Original resume supplies the evidence. An untrusted client summary cannot add qualifications.
         query=resume+'\n'+str(preferences.get('target_roles',''))
@@ -292,10 +308,17 @@ vector_version=CASE WHEN jobs.content_hash=excluded.content_hash THEN jobs.vecto
             rank=.8*semantic+.2*lexical_score if semantic is not None else lexical_score
             ranked.append({**job,'relevance_score':round(rank*100) if query.strip() else None,'semantic_score':round(semantic*100) if semantic is not None else None,'ranking_method':('semantic + full-text' if semantic is not None else 'full-text') if query.strip() else None,'qualification_status':'Not reviewed','preference_notes':(['Work style not confirmed by listing'] if job['style']=='unknown' else [])+(['Experience requirement not confirmed'] if job['years'] is None else [])})
         ranked.sort(key=lambda j:j['relevance_score'] if j['relevance_score'] is not None else -1,reverse=True)
-        return {**snapshot,'jobs':ranked[:limit],'eligible':len(eligible),'experience_gaps':len(gaps),'excluded_location':excluded_location,'unknown_location':unknown_location,'excluded_workstyle':excluded_style,'total':len(snapshot['jobs']),'ranking_mode':('semantic' if query_vectors is not None else 'full-text') if query.strip() else 'browse','method':'Relevance ranking only; qualifications require review. No Gemini calls were made for this search.','semantic':{**self.encoder.status(),'indexed':snapshot['semantic']['indexed'],'indexing':self.indexing}}
+        return {**snapshot,'jobs':ranked[:limit],'employer_policy':'mnc-only','excluded_employer':excluded_employer,'eligible':len(eligible),'experience_gaps':len(gaps),'excluded_experience_unknown':unknown_experience,'experience_policy':EXPERIENCE_POLICY,'stretch_count':sum(j['experience_match']['status']=='stretch' for j in eligible),'excluded_location':excluded_location,'unknown_location':unknown_location,'excluded_workstyle':excluded_style,'total':len(snapshot['jobs']),'ranking_mode':('semantic' if query_vectors is not None else 'full-text') if query.strip() else 'browse','method':'Relevance ranking only; qualifications require review. No Gemini calls were made for this search.','semantic':{**self.encoder.status(),'indexed':snapshot['semantic']['indexed'],'indexing':self.indexing}}
 
     def start(self):
+        def index_loop():
+            # Index cached/new arrivals without waiting for every company scan to finish.
+            while True:
+                try:self.build_index()
+                except Exception:pass  # Search retains its local full-text fallback.
+                time.sleep(30)
         def loop():
             while True:
-                self.refresh();self.build_index();time.sleep(REFRESH_SECONDS)
+                self.refresh(max_sources=18);self.build_index();time.sleep(60)
+        threading.Thread(target=index_loop,daemon=True,name='job-index-scheduler').start()
         threading.Thread(target=loop,daemon=True,name='job-cache-scheduler').start()

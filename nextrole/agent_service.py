@@ -7,6 +7,7 @@ import hashlib
 import copy
 import json
 import math
+from qualification_scoring import statements as qualification_statements
 import os
 import re
 import random
@@ -166,7 +167,7 @@ def call_model(schema, name, prompt):
     model = selected_model()
     if not re.fullmatch(r'[A-Za-z0-9._-]+', model):
         raise AgentError('Use a Gemini model ID such as '+DEFAULT_MODEL+'.')
-    output_limits = {'connection_test': 1024, 'resume_profile': 2200, 'job_comparison': 3000, 'resume_suggestions': 5000, 'factual_verification': 2500}
+    output_limits = {'connection_test': 1024, 'resume_profile': 2200, 'job_comparison': 7000, 'resume_suggestions': 5000, 'factual_verification': 2500}
     generation = {'maxOutputTokens': output_limits.get(name, 7000), 'responseFormat': {'text': {'mimeType': 'APPLICATION_JSON', 'schema': schema}}}
     if model.startswith(('gemini-3', 'gemini-4')):
         level = os.getenv('GEMINI_THINKING_LEVEL', 'LOW').upper()
@@ -258,6 +259,8 @@ def validate_assessment(item, job, resume, preferences):
         raise AgentError('AI returned an unexpected job assessment.')
     if not isinstance(item.get('score'), int) or not 0 <= item['score'] <= 100:
         raise AgentError('AI returned an invalid fit score.')
+    from qualification_scoring import METADATA
+    item['requirements']=[r for r in item.get('requirements',[]) if not METADATA.match(r.get('job_quote','').strip())]
     questions = list(item.get('questions', []))
     for requirement in item.get('requirements', []):
         if not quoted(requirement.get('job_quote', ''), job['description']):
@@ -273,6 +276,19 @@ def validate_assessment(item, job, resume, preferences):
     if not quoted(item.get('work_style_quote', ''), job['description'] + ' ' + job['location']):
         item['work_style'] = 'unknown'
         item['work_style_quote'] = ''
+    from experience_policy import requirement as experience_band
+    band=experience_band(job['description'])
+    if band['status']=='known' and 'experience' in preferences:
+        try:
+            actual=float(preferences['experience'])
+            if not math.isfinite(actual):item['experience']='unknown'
+            elif actual<band['minimum'] or band['maximum'] is not None and actual>band['maximum']:item['experience']='gap'
+        except (TypeError,ValueError):item['experience']='unknown'
+    from qualification_scoring import complete_inventory,calculate
+    complete_inventory(item,job['description'])
+    # The model's free-form score is not used as a qualification percentage.
+    item['qualification_fit']=calculate(item)
+    item['score']=item['qualification_fit']['score'] or 0
     required = [r for r in item.get('requirements', []) if r.get('importance') == 'required']
     gap = item['experience'] == 'gap' or any(r.get('status') == 'missing' for r in required)
     style = preferences.get('workstyle', 'any')
@@ -340,14 +356,31 @@ def prepare(body):
     return prepare_review(body)
 
 
+def verify_qualification_support(item,job,resume,preferences,model):
+    """An independent pass may remove support, never manufacture qualifications."""
+    claims=[{'line_index':i,'status':r['status'],'requirement':r['requirement'],'job_quote':r.get('job_quote',''),'resume_quote':r.get('resume_quote','')} for i,r in enumerate(item.get('requirements',[])) if r.get('status') in ('supported','missing')]
+    if item.get('experience') in ('meets','gap'):
+        claims.append({'line_index':-1,'status':item['experience'],'requirement':'All stated total and domain-specific years of experience','job_quote':item.get('experience_quote',''),'resume_quote':resume})
+    if not claims:return
+    checked=model(VERIFICATION,'qualification_verification',{'task':'Independently verify each STATUS claim against the COMPLETE job_quote and original resume. For supported/meets, faithful is true only if the entire requirement is entailed; merely finding a quoted string is insufficient. For missing/gap, faithful is true only for an explicit contradiction, not absent or unclear evidence. For line_index -1 verify the experience status using confirmed total years plus resume evidence for domain-specific years. An employment date does not establish the start of a particular project. Evaluate every mandatory part of AND/comma lists; one matching tool cannot stand in for the list. Explicit alternatives/examples or explicitly optional items may be handled as such; ambiguous lists are not assumed optional. Employment at a company does not prove proficiency or a work arrangement. A skill mention does not prove expertise, production responsibility, scale or domain-specific years. Unreadable numbers and ambiguous date/experience statements cannot be established; mark false. Do not invent missing credentials or rewrite sources. Return every supplied line_index exactly once with a short reason.', 'resume':resume,'job':job,'preferences':preferences,'edits':claims})
+    validate_json(checked,VERIFICATION)
+    counts=collections.Counter(c['line_index'] for c in checked['checks'])
+    safe={c['line_index'] for c in checked['checks'] if c['faithful'] is True and counts[c['line_index']]==1}
+    for claim in claims:
+        if claim['line_index'] not in safe:
+            if claim['line_index']==-1:item['experience']='unknown'
+            else:item['requirements'][claim['line_index']]['status']='unknown'
+    item['evidence_verification']='independent-support-check'
+
+
 @bounded_workflow
-def shortlist(body, model=call_model):
+def shortlist(body, model=call_model, verifier=None):
     prepared = prepare_review(body, model)
     resume, preferences = body['resume'], body.get('preferences', {})
     profile, candidates = prepared['profile'], prepared['jobs']
     def compare(batch):
-        response = model(MATCHES, 'job_comparison', {'task': 'Compare every job with the full resume, not keyword overlap. Assess core responsibilities, demonstrated achievements, domain, seniority, education and certifications, technical requirements, stated years and work arrangement. Separate required from preferred criteria. Evaluate total years against user-confirmed experience; also assess required domain-specific years from resume evidence. Do not infer proficiency from mentions or negate missing requirements. Treat protected traits as irrelevant. Give required evidence first. An unknown required criterion must yield review, an explicit required gap must yield exclude. Return each job once. No missing items. Shortlist only clear documented fits. Copy job and resume quotes exactly. Be concise: at most 4 decisive requirements and 2 questions per job; reason under 40 words; evidence quotes under 160 characters. Include explicit disqualifying requirements even if that requires fewer supporting examples.',
-            'today': datetime.date.today().isoformat(), 'resume': resume, 'profile': profile, 'preferences': preferences, 'jobs': batch})
+        response = model(MATCHES, 'job_comparison', {'task': 'Compare every job with the full resume, not keyword overlap. Assess core responsibilities, demonstrated achievements, domain, seniority, education and certifications, technical requirements, stated years and work arrangement. Separate required from preferred criteria. Evaluate total years against user-confirmed experience; also assess required domain-specific years from resume evidence. Do not infer proficiency from mentions or negate missing requirements. Treat protected traits as irrelevant. Give required evidence first. An unknown required criterion must yield review, an explicit required gap must yield exclude. Return each job once. No missing items. Shortlist only clear documented fits. Copy job and resume quotes exactly. Review EVERY stated qualification and eligibility requirement throughout the complete job description, including skills, domain experience, education, certifications, responsibilities and seniority. There is no four-requirement cutoff. Use the supplied qualification inventory as a minimum checklist and include additional requirements the inventory missed. Assess all parts of compound statements; mark the statement supported only if all mandatory parts are supported. Quote each complete inventory statement exactly in job_quote; do not cover an entire bullet with a short keyword fragment. Separate preferred criteria from mandatory criteria. Partial, absent or ambiguous evidence never means fully met. The server computes qualification coverage from validated evidence, so do not invent a percentage. Keep the reason under 40 words and resume quotes concise. Return an unknown status for any requirement you cannot finish reviewing.',
+            'today': datetime.date.today().isoformat(), 'resume': resume, 'profile': profile, 'preferences': preferences, 'jobs': batch, 'qualification_inventory': {j['id']: qualification_statements(j['description']) for j in batch}})
         by_id = {j['id']: j for j in batch}
         assessments, seen = [], set()
         for item in response['assessments']:
@@ -355,6 +388,8 @@ def shortlist(body, model=call_model):
             if not job or job['id'] in seen:
                 raise AgentError('AI returned duplicate or unknown jobs.')
             seen.add(job['id'])
+            if verifier is not None or model is call_model:
+                verify_qualification_support(item,job,resume,preferences,verifier or model)
             assessments.append(validate_assessment(item, job, resume, preferences))
         if len(seen) != len(batch):
             raise AgentError('AI did not finish assessing every job. Please retry.')

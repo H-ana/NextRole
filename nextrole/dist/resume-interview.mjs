@@ -1,4 +1,4 @@
-import {html,publicLink} from './opportunity-tools.mjs?v=91';
+import {html,publicLink} from './opportunity-tools.mjs?v=113';
 export function interviewAnchors(source){
  let section='';return source.split('\n').flatMap((line,index)=>{
   if(/^(profile|summary|professional summary|experience|work experience|professional experience|employment history|projects|education|skills|technical skills|certifications)\s*:?$/i.test(line.trim())){section=line.trim().replace(/:$/,'').toLowerCase();return [];}

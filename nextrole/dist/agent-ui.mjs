@@ -1,9 +1,10 @@
-import {clarifyResume,draftChanges} from './resume-interview.mjs?v=91';
-import {downloadOnePageResume} from './one-page-export.mjs?v=91';
-import {buildReviewedDraft} from './tailoring-draft.mjs?v=91';
-import {mountResumeBuilder} from './resume-builder.mjs?v=91';
-import {allCorrectionChoices,mergeCorrectionBatch} from './correction-selection.mjs?v=91';
-import {findBackend,apiRequest} from './api-client.mjs?v=91';
+import {openJobResume} from './free-resume-tools.mjs?v=146';
+import {clarifyResume,draftChanges} from './resume-interview.mjs?v=113';
+import {downloadOnePageResume} from './one-page-export.mjs?v=116';
+import {buildReviewedDraft} from './tailoring-draft.mjs?v=113';
+import {mountResumeBuilder} from './resume-builder.mjs?v=113';
+import {allCorrectionChoices,mergeCorrectionBatch} from './correction-selection.mjs?v=113';
+import {findBackend,apiRequest} from './api-client.mjs?v=116';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function withConfirmedExperience(assessment,years){
@@ -14,10 +15,10 @@ export function friendlyAiError(error){
  const message=String(error?.message||'');
  if(/quota|billing|rate.limit|credits|usage limit/i.test(message))return 'The AI service has reached its usage limit. Try again later; you can still search and apply for jobs.';
  if(/consent|permission declined/i.test(message))return 'AI assistance was not enabled. You can still browse and apply for jobs.';
- if(/changed|complete.*resume|upload|paste|acknowledge|warnings|Restart the backend/i.test(message))return message;
+ if(/changed|complete.*resume|upload|paste|acknowledge|warnings/i.test(message))return message;
  return 'AI assistance is temporarily unavailable. Please try again later. Job search and applications are still available.';
 }
-export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssessment,onSearchStart=()=>{},canTailor=()=>true,filterJobs=jobs=>jobs,interview=clarifyResume}){
+export function setupAgentUI({publicSearch=null,getResume,getPreferences,acceptSearch,acceptAssessment,onSearchStart=()=>{},canTailor=()=>true,filterJobs=jobs=>jobs,interview=clarifyResume}){
  let running=false,consented=false,permissionPromise=null,consentResolver=null,revision=0;
  const completedReviews=new Map();
  try{consented=sessionStorage.getItem('nextrole-ai-consent')==='allowed';}catch{}
@@ -25,7 +26,7 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
  $('find-jobs').textContent='Find jobs';
  $('job-search-form').onsubmit=e=>{e.preventDefault();run();};
  const consentDialog=document.createElement('dialog');consentDialog.id='ai-permission';consentDialog.setAttribute('aria-labelledby','ai-permission-title');consentDialog.setAttribute('aria-describedby','ai-permission-description');
- consentDialog.innerHTML='<h2 id="ai-permission-title">Use AI-assisted resume help?</h2><p id="ai-permission-description">To review your fit or suggest resume edits, we send your resume, preferences and the selected job description to Google Gemini. Your original resume stays unchanged. API usage limits and charges may apply.</p><p>You can search and apply for jobs without enabling AI assistance.</p><div class="permission-actions"><button id="ai-permission-decline" type="button" class="secondary" autofocus>Not now</button><button id="ai-permission-allow" type="button" class="find-jobs">Allow for this session</button></div>';
+ consentDialog.innerHTML='<h2 id="ai-permission-title">Use AI-assisted resume help?</h2><p id="ai-permission-description">To review your fit or suggest resume edits, we send your resume, preferences and the selected job description to Google Gemini. Your original resume stays unchanged. You choose which suggestions to apply.</p><p>You can search and apply for jobs without enabling AI assistance.</p><div class="permission-actions"><button id="ai-permission-decline" type="button" class="secondary" autofocus>Not now</button><button id="ai-permission-allow" type="button" class="find-jobs">Allow for this session</button></div>';
  document.body.append(consentDialog);
  function finishPermission(allowed){
   if(!allowed)invalidate();
@@ -46,7 +47,8 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
  }
  async function requireAI(){
   const context=await findBackend();
-  if(!context.status.connected||!(context.status.capabilities||[]).includes('resume-profile'))throw new Error('AI service unavailable.');
+  if(!context.status.connected)throw new Error('AI resume review is unavailable right now. Please try again later.');
+  if(!(context.status.capabilities||[]).includes('resume-profile'))throw new Error('Qualification review is unavailable right now.');
   if(!await permission())throw new Error('Permission declined.');
   return {...context,model:context.status.model};
  }
@@ -78,6 +80,7 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
    const resume=getResume(),hasResume=resume.trim().length>=40;
    if(resume.trim()&&!hasResume){searchStatus.textContent='The resume text is too short to rank reliably. Paste your full resume, or clear it to search by preferences.';return;}
    onSearchStart();
+   if(publicSearch){const result=await publicSearch();if(snapshot!==fingerprint())throw Error("Your resume or preferences changed. Search again.");const visible={...result,jobs:filterJobs(result.jobs)};acceptSearch({...visible,resume_ranked:hasResume});searchStatus.textContent=visible.feed_note||"Company jobs loaded. Review your results below.";return;}
    const context=await findBackend();
    if(!(context.status.capabilities||[]).includes('cached-job-search'))throw new Error('Search service unavailable.');
    const body={resume:hasResume?resume:'',preferences:getPreferences(),limit:100};
@@ -89,14 +92,16 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
    const visible={...result,jobs:filterJobs(result.jobs)};visible.filtered_count=result.jobs.length-visible.jobs.length;
    acceptSearch({...visible,resume_ranked:hasResume});searchStatus.textContent=searchMessage(visible,hasResume);
    if(result.platform_search?.refreshing)pollPlatform(body,snapshot,sequence,hasResume);
-  }catch(e){searchStatus.textContent=/changed/.test(e.message)?e.message:'Job search is temporarily unavailable. Please try again shortly.';}
+  }catch(e){searchStatus.textContent=publicSearch||/changed/.test(e.message)?e.message:'Job search is temporarily unavailable. Please try again shortly.';}
   finally{running=false;$('find-jobs').disabled=false;}
  }
  function assessmentHtml(a){
   if(!a)return '';
-  return `<section class="agent-assessment"><h3>${a.decision==='shortlist'?'AI shortlist':a.decision==='exclude'?'Requirements gap':'Needs your review'} · ${a.score}/100 documented fit</h3><p>${esc(a.reason)}</p>${a.requirements.map(r=>`<div class="requirement ${esc(r.status)}"><strong>${esc(r.requirement)}</strong><span>${esc(r.importance)} · ${esc(r.status)}</span><p><b>Job:</b> ${esc(r.job_quote||'Evidence unavailable')}</p><p><b>Resume:</b> ${esc(r.resume_quote||'Not evidenced in the resume')}</p></div>`).join('')}<p><strong>Experience:</strong> ${esc(a.experience)} · ${esc(a.experience_quote||'Not established by the listing')}</p><p><strong>Work style:</strong> ${esc(a.work_style)} · ${esc(a.work_style_quote||'Ask the employer to confirm')}</p>${a.questions.length?`<h4>Check before applying</h4><p>${a.questions.map(esc).join('<br>')}</p>`:''}</section>`;
+  return `<section class="agent-assessment"><h3>${a.decision==='shortlist'?'AI shortlist':a.decision==='exclude'?'Requirements gap':'Needs your review'} · ${a.qualification_fit?.version==='qualifications-v1'&&Number.isFinite(a.qualification_fit.score)?`${a.qualification_fit.score}% qualifications supported`:'Qualification review needs updating'}</h3><p>${esc(a.reason)}</p>${a.qualification_fit?`<p>${a.qualification_fit.required.supported}/${a.qualification_fit.required.total} mandatory checks fully supported (including experience). Partial, missing and unclear evidence earn no full-match credit. Preferred: ${a.qualification_fit.preferred.supported}/${a.qualification_fit.preferred.total}. This is an automated evidence review, not a hiring prediction.</p>`:''}${a.requirements.map(r=>`<div class="requirement ${esc(r.status)}"><strong>${esc(r.requirement)}</strong><span>${esc(r.importance)} · ${esc(r.status)}</span><p><b>Job:</b> ${esc(r.job_quote||'Evidence unavailable')}</p><p><b>Resume:</b> ${esc(r.resume_quote||'Not evidenced in the resume')}</p></div>`).join('')}<p><strong>Experience:</strong> ${esc(a.experience)} · ${esc(a.experience_quote||'Not established by the listing')}</p><p><strong>Work style:</strong> ${esc(a.work_style)} · ${esc(a.work_style_quote||'Ask the employer to confirm')}</p>${a.questions.length?`<h4>Check before applying</h4><p>${a.questions.map(esc).join('<br>')}</p>`:''}</section>`;
  }
  function showJobTools(job){
+  if(publicSearch){const legacy=$('detail-content').querySelector('.tailoring');if(legacy)legacy.hidden=true;const button=document.createElement('button');button.id='review-fit-button';button.type='button';button.className='secondary';button.textContent='Tailor resume with Gemini';$('detail-content').querySelector('.job-description').after(button);button.onclick=()=>{$('detail').close();openJobResume({description:job.description,title:job.title,company:job.company});};return;}
+
   const description=$('detail-content').querySelector('.job-description');
   const reviewArea=document.createElement('div');reviewArea.id='ai-fit-review';description.after(reviewArea);reviewArea.innerHTML=assessmentHtml(job.agent);
   const reviewButton=document.createElement('button');reviewButton.id='review-fit-button';reviewButton.className='secondary';reviewButton.type='button';reviewButton.textContent='Review my fit';reviewArea.before(reviewButton);
@@ -134,8 +139,8 @@ export function setupAgentUI({getResume,getPreferences,acceptSearch,acceptAssess
     const answers=await interview(matchingSource,job);if(!answers)return;source=answers.source;confirmedFacts=answers.facts||[];
     if(!container.isConnected||startedRevision!==revision||getResume().replace(/\r\n?/g,'\n')!==matchingSource)throw new Error('Your resume changed. Start a fresh review.');
     const context=await requireAI();
-    if(!(context.status.capabilities||[]).includes('tailoring-evidence-v2'))throw new Error('Restart the backend with python start_agent.py to load evidence-based tailoring.');
-    if(!(context.status.capabilities||[]).includes('bulk-resume-corrections'))throw new Error('Restart the backend with python start_agent.py to load full resume review and bulk corrections.');
+    if(!(context.status.capabilities||[]).includes('tailoring-evidence-v2'))throw new Error('Resume tailoring is unavailable right now.');
+    if(!(context.status.capabilities||[]).includes('bulk-resume-corrections'))throw new Error('Resume suggestions are unavailable right now.');
     if(!container.isConnected||$('tailor-source').value.replace(/\r\n?/g,'\n')!==matchingSource)throw new Error('Your resume changed. Request fresh suggestions.');
     if(matchingSource!==getResume().replace(/\r\n?/g,'\n'))throw new Error('Your resume changed here. Update the matching resume using Use this resume before AI tailoring.');
     if(!canTailor(matchingSource))throw new Error('Review your imported resume warnings above the job results and acknowledge them before AI tailoring.');

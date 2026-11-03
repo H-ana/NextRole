@@ -1,24 +1,34 @@
-import {setupInterviewPrep} from './interview-prep.mjs?v=91';
-import {postingFreshness,matchesPostingFreshness} from './posting-freshness.mjs?v=91';
-import {mountJobContacts,publishedJobContacts} from './job-contacts.mjs?v=91';
-import {readRetainedResume,retainResume} from './resume-storage.mjs?v=91';
-import {setupOpportunityTools,deduplicateJobs,matchExplanation,preferenceKey,additionalApplicationLinks} from './opportunity-tools.mjs?v=91';
-import {jobCardDetails} from './job-card-details.mjs?v=91';
-import {setupReferralTracker} from './referral-tracker.mjs?v=91';
-import {mountApplicationWriting} from './application-writing.mjs?v=91';
-import {eligibleListings} from './listing-checks.mjs?v=91';
-import {setupRecruiterInbox} from './recruiter-inbox.mjs?v=91';
-import {mountReferralTools} from './referral-tools.mjs?v=91';
-import {findBackend,apiRequest} from './api-client.mjs?v=91';
-import {setupAgentUI} from './agent-ui.mjs?v=91';
-import {setupPlatformJobs,applicationLabel,matchesJobSite} from './platform-jobs.mjs?v=91';
-import {displayedScore,strongMatch,fitReviewContext} from './job-ranking.mjs?v=91';
-import {downloadOnePageResume} from './one-page-export.mjs?v=91';
-import {formatSkillSections} from './skill-format.mjs?v=91';
-import {mountResumeBuilder} from './resume-builder.mjs?v=91';
-import {pdfPageText,setupExtractionReview} from './extraction-review.mjs?v=91';
-import {HIRING_CITIES, canonicalCity, matchesCities} from './locations.mjs?v=91';
-import {extract, safeUrl, evidenceFor, tailorResume, hasSkillOverlap, requiredYears, meetsKnownExperience} from './resume-tools.mjs?v=91';
+import {extractDocxResume,loadMammoth} from './docx-text.mjs?v=159';
+import {filterRoleAlignedJobs} from './role-alignment.mjs?v=153';
+import {openJobResume} from './free-resume-tools.mjs?v=162';
+import {searchPublicJobs} from './public-search.mjs?v=153';
+import {setupPublicExperience} from './public-experience.mjs?v=153';
+import {retainResumeFile,retainedResumeFile,retainedResumeMetadata,clearResumeFile} from './resume-file-store.mjs?v=126';
+import {setupAutofillProfile} from './autofill-profile.mjs?v=133';
+import {experienceFit,recommendationExperience} from './experience-policy.mjs?v=153';
+import {employerIndex,isMncEmployer,mncListings} from './mnc-employers.mjs?v=113';
+import {postingFreshness,matchesPostingFreshness} from './posting-freshness.mjs?v=113';
+import {mountJobContacts,publishedJobContacts} from './job-contacts.mjs?v=113';
+import {readRetainedResume,retainResume} from './resume-storage.mjs?v=126';
+import {setupOpportunityTools,deduplicateJobs,matchExplanation,preferenceKey,additionalApplicationLinks} from './opportunity-tools.mjs?v=153';
+import {jobCardDetails} from './job-card-details.mjs?v=113';
+import {setupApplicationTracker} from './application-tracker.mjs?v=136';
+import {mountApplicationWriting} from './application-writing.mjs?v=113';
+import {eligibleListings} from './listing-checks.mjs?v=113';
+import {setupRecruiterInbox} from './recruiter-inbox.mjs?v=134';
+import {mountReferralTools} from './referral-tools.mjs?v=155';
+import {findBackend,apiRequest} from './api-client.mjs?v=116';
+import {setupAgentUI} from './agent-ui.mjs?v=153';
+import {setupPlatformJobs,applicationLabel,matchesJobSite} from './platform-jobs.mjs?v=137';
+import {displayedScore,strongMatch,fitReviewContext} from './job-ranking.mjs?v=113';
+import {downloadOnePageResume} from './one-page-export.mjs?v=116';
+import {formatSkillSections} from './skill-format.mjs?v=113';
+import {mountResumeBuilder} from './resume-builder.mjs?v=113';
+import {pdfPageText,setupExtractionReview} from './extraction-review.mjs?v=124';
+import {HIRING_CITIES, canonicalCity, matchesPreferredCities} from './locations.mjs?v=153';
+import {extract, safeUrl, evidenceFor, tailorResume, hasSkillOverlap, requiredYears, meetsKnownExperience} from './resume-tools.mjs?v=113';
+const mncIndex=employerIndex(await fetch(new URL('./mnc-employers.json?v=152',import.meta.url)).then(r=>{if(!r.ok)throw new Error('Employer policy unavailable');return r.json();}).catch(()=>({companies:[]})));
+const recommendedListings=items=>filterRoleAlignedJobs(mncListings(eligibleListings(items),mncIndex).filter(job=>recommendationExperience(job,$('experience').value)),$('resume-text').value,{target_roles:$('search').value.trim()});
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function score(job,skills,years){if(!skills.length)return null;const hits=job.skills.filter(s=>skills.some(x=>x.toLowerCase()===s.toLowerCase()));const skillScore=job.skills.length?hits.length/job.skills.length:0;return Math.round(skillScore*80+(years>=job.years?20:20*years/Math.max(1,job.years)));}
@@ -27,27 +37,28 @@ let relevantOnly=false, loadedOnce=false,resultsRanked=false;
 const fitReviews=new Map();
 let jobs=[],tab='all',view='all',saved=new Set();try{saved=new Set(JSON.parse(localStorage.getItem('nextrole-saved')||'[]'));}catch{}
 const isSaved=job=>saved.has(job.id)||(job.alias_ids||[]).some(id=>saved.has(id));
-const opportunity=setupOpportunityTools({onChange:()=>render()});
-let profile={skills:'',experience:'2',cities:[],workstyle:'any'};try{profile={...profile,...JSON.parse(localStorage.getItem('nextrole-profile')||'{}')};}catch{}
+let profile={experience:'',cities:[],workstyle:'any',include_nearby:false};try{profile={...profile,...JSON.parse(localStorage.getItem('nextrole-profile')||'{}')};}catch{}
 let selectedCities=(Array.isArray(profile.cities)?profile.cities:[]).map(canonicalCity).filter(Boolean);
 // Keep an old city preference; removed state/country preferences become Any city.
 if(!selectedCities.length&&profile.location&&canonicalCity(profile.location))selectedCities=[canonicalCity(profile.location)];
 selectedCities=[...new Set(selectedCities)];
 $('city-options').innerHTML=HIRING_CITIES.map(city=>`<label class="city-option"><input type="checkbox" name="cities" value="${esc(city)}" aria-label="${esc(city)}" ${selectedCities.includes(city)?'checked':''}><span>${esc(city)}</span></label>`).join('');
-for(const key of ['skills','experience','workstyle'])$(key).value=profile[key];
+for(const key of ['experience','workstyle'])$(key).value=profile[key];
+$('include-nearby').checked=!!profile.include_nearby;$('include-nearby').onchange=saveProfile;
+const opportunity=setupOpportunityTools({onChange:()=>render(),allowJob:job=>isMncEmployer(job,mncIndex)&&!!recommendationExperience(job,$('experience').value)&&filterRoleAlignedJobs([job],$('resume-text').value,{target_roles:$('search').value.trim()}).length>0});
 $('upload-status').textContent='Resume not loaded. Upload or paste your full resume to rank jobs.';
 const remoteMode=()=>$('workstyle').value==='Remote';
 function updateCityPicker(){
  const remote=remoteMode();
- $('city-field').hidden=remote;$('remote-location-note').hidden=!remote;
+ $('city-field').hidden=remote;$('nearby-option').hidden=remote;$('remote-location-note').hidden=!remote;
  $('city-options').disabled=remote;
  if(remote)$('city-picker').open=false;
  $('city-summary').textContent=selectedCities.length?selectedCities.length<=2?selectedCities.join(', '):`${selectedCities.length} cities selected`:'Any city';
 }
 function saveProfile(){
- profile={skills:$('skills').value,experience:$('experience').value,cities:selectedCities,workstyle:$('workstyle').value};
+ profile={experience:$('experience').value,cities:selectedCities,workstyle:$('workstyle').value,include_nearby:!!$('include-nearby').checked};
  try{localStorage.setItem('nextrole-profile',JSON.stringify(profile));}catch{}
- updateCityPicker();invalidateAgentResults();render();
+ updateCityPicker();invalidateAgentResults();opportunity.refresh();render();
 }
 function invalidateAgentResults(){
  if($('detail').open)$('detail').close();
@@ -61,25 +72,28 @@ function invalidateAgentResults(){
 }
 const resumeStorage=(()=>{try{return window.localStorage;}catch{return null;}})();
 let resumeRetained=false;
-function persistResume(){originalResume=$('resume-text').value;resumeRetained=retainResume(resumeStorage,originalResume);$('remove-resume').hidden=!originalResume.trim();if(originalResume.trim())$('upload-status').textContent=resumeRetained?'Resume saved in this browser. Find jobs to update matches after editing.':'Resume is loaded for this visit, but browser storage is unavailable or full. It could not be retained.';else $('upload-status').textContent='Resume removed. Upload or paste another resume to rank jobs.';}
+const resumeSavedStatus=document.createElement('p');resumeSavedStatus.id='resume-saved-status';resumeSavedStatus.setAttribute('role','status');$('upload-status').after(resumeSavedStatus);let resumeStatusGeneration=0;
+async function updateResumeSavedStatus(){const generation=++resumeStatusGeneration,source=$('resume-text').value;if(!source.trim()){resumeSavedStatus.textContent='';return;}const metadata=await retainedResumeMetadata(source);if(generation!==resumeStatusGeneration)return;let record;try{record=JSON.parse(resumeStorage?.getItem('nextrole-retained-resume-v1')||'null');}catch{}const time=metadata?.savedAt||record?.savedAt,when=time?' · '+new Date(time).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'}):'';resumeSavedStatus.textContent=metadata?.matchesSource?'Resume saved: '+metadata.name+when:metadata?'Resume text saved on this device'+when+'. The stored file differs from the edited text; choose the matching PDF/Word file in autofill setup.':record?.text===source?'Resume text saved on this device'+when+'. Choose a PDF/Word file in autofill setup if you want to attach it.':'Resume loaded for this visit only. Browser storage could not retain it.';}
+window.addEventListener('nextrole-resume-file-changed',updateResumeSavedStatus);
+function persistResume(){updateResumeSavedStatus();originalResume=$('resume-text').value;resumeRetained=retainResume(resumeStorage,originalResume);$('remove-resume').hidden=!originalResume.trim();if(originalResume.trim())$('upload-status').textContent=resumeRetained?'Resume saved in this browser. Find jobs to update matches after editing.':'Resume is loaded for this visit, but browser storage is unavailable or full. It could not be retained.';else $('upload-status').textContent='Resume removed. Upload or paste another resume to rank jobs.';}
 const removeResume=document.createElement('button');removeResume.id='remove-resume';removeResume.type='button';removeResume.className='secondary';removeResume.textContent='Remove resume';removeResume.hidden=true;$('upload-status').after(removeResume);
-removeResume.onclick=()=>{$('resume-text').value='';$('resume-text').dispatchEvent(new Event('input'));$('skills').value='';$('skills').dispatchEvent(new Event('input'));browseGeneration++;clearTimeout(cachePoll);loadJobs(false);};
+removeResume.onclick=async()=>{if(!await clearResumeFile()){$('upload-status').textContent='The saved resume file could not be removed. Try again or clear this website’s browser data.';return false;}$('resume-text').value='';$('resume-text').dispatchEvent(new Event('input'));browseGeneration++;clearTimeout(cachePoll);loadJobs(false);return true;};
 $('resume-text').addEventListener('input',()=>{persistResume();invalidateAgentResults();extractionReview.render();render();});
 $('city-options').onchange=()=>{selectedCities=[...$('city-options').querySelectorAll('input:checked')].map(input=>input.value);saveProfile();};
 $('clear-cities').onclick=()=>{selectedCities=[];$('city-options').querySelectorAll('input').forEach(input=>input.checked=false);saveProfile();};
 document.addEventListener('click',event=>{if(!$('city-picker').contains(event.target))$('city-picker').open=false;});
 $('city-picker').addEventListener('keydown',event=>{if(event.key==='Escape'){$('city-picker').open=false;$('city-summary').focus();}});
 updateCityPicker();
-const skills=()=> $('skills').value.split(',').map(s=>s.trim()).filter(Boolean);
-function render(){const skillList=skills(),years=Number($('experience').value),q=$('search').value.trim().toLowerCase();let list=jobs.map(j=>({...j,score:displayedScore(j,resultsRanked)})).filter(j=>matchesPostingFreshness(j,$('posting-age').value)&&matchesJobSite(j,$('job-site').value)&&(view!=='saved'||isSaved(j))&&!opportunity.hidden(j)&&($('workstyle').value==='any'||j.style===$('workstyle').value||j.style==='unknown'||j.agent?.work_style==='unknown')&&matchesCities(j.location,selectedCities,remoteMode())&&(!relevantOnly||((!skillList.length||hasSkillOverlap(j.skills,skillList))&&meetsKnownExperience(j.years,years)))&&(!q||j.ranking_method||(j.title+' '+j.company+' '+j.skills.join(' ')).toLowerCase().includes(q)));list.sort($('sort').value==='title'?(a,b)=>a.title.localeCompare(b.title):(a,b)=>((b.score??0)-opportunity.penalty(b))-((a.score??0)-opportunity.penalty(a)));const reviewCandidate=list.find(j=>!j.agent);if(tab==='strong')list=list.filter(j=>strongMatch(j,$('resume-text').value,currentFitPreferences()).strong);$('count').textContent=list.length;$('saved-count').textContent=saved.size;$('jobs').innerHTML=list.map(j=>`<article class="job${postingFreshness(j)?' recently-posted':''}"><div class="job-top"><div class="company-icon" style="--brand-bg:${j.color||'#eff4ea'}">${esc(j.logo||j.company[0])}</div><div class="company-name">${esc(j.company)}<small>${j.last_checked?(j.collection_method==='Added by you'?'Added by you · ':'Checked ')+new Date(j.last_checked*1000).toLocaleString():j.demo?'Illustrative company role':'Company listing'}</small></div><button class="save ${isSaved(j)?'saved':''}" data-save="${esc(j.id)}" aria-label="${isSaved(j)?'Unsave':'Save'} ${esc(j.title)}" aria-pressed="${isSaved(j)}">${isSaved(j)?'▣':'▱'}</button></div>${postingFreshness(j)?`<div class="posting-freshness"><span class="posted-badge posted-${postingFreshness(j).band}" title="${esc(postingFreshness(j).detail)}">${esc(postingFreshness(j).label)}</span></div>`:''}<h3>${safeUrl(j.url)?`<a class="job-title-link" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener noreferrer">${esc(j.title)} ↗</a>`:esc(j.title)}</h3><div class="meta"><span>⌖ ${esc(j.location)}</span><span>${esc(jobCardDetails(j).workStyle)}</span><span>${esc(jobCardDetails(j).experience)}</span></div>${$('resume-text').value.trim().length>=40?`<p class="match-explanation">${esc(matchExplanation(j,$('resume-text').value,$('experience').value))}</p>`:''}<div class="chips">${j.listed_on?.length?`<span>${esc(j.listed_on.join(' · '))}</span>`:''}${strongMatch(j,$('resume-text').value,currentFitPreferences()).strong?'<span class="agent-badge">Evidence-supported strong match</span>':j.agent?`<span class="agent-badge">${j.agent.decision==='shortlist'?'AI shortlist':j.agent.decision==='exclude'?'Reviewed: gap':'Needs review'}</span>`:''}${j.skills.map(s=>`<span class="${skillList.some(x=>x.toLowerCase()===s.toLowerCase())?'matched':''}">${esc(s)}</span>`).join('')||'<span>Review listing for required skills</span>'}</div>${j.agent?`<p class="agent-card-reason">${esc(j.agent.reason)}</p>`:''}<div class="job-bottom"><span class="match">${j.score===null?'✦ Not ranked yet':`✦ <strong>${j.score}/100</strong> ${j.agent?'documented fit':'relevance'}`}</span><div class="job-actions"><button class="view" data-dismiss="${esc(j.id)}">Not a fit</button><button class="view" data-detail="${esc(j.id)}">Details & ATS resume</button>${publishedJobContacts(j).length?`<button class="view" data-contacts="${esc(j.id)}">Recruiter details</button>`:''}<button class="view" data-referral="${esc(j.id)}">Find a referral</button><button class="view" data-writing="${esc(j.id)}">Cover letter & message</button>${safeUrl(j.url)?`<a class="apply-link" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener noreferrer">${esc(applicationLabel(j))}</a>`:""}</div></div></article>`).join('')||`<div class="empty">${loadedOnce?(tab==='strong'?`No reviewed strong matches yet. A strong match needs evidence for the reviewed mandatory requirements and confirmed experience fit.${reviewCandidate&&$('resume-text').value.trim().length>=40?`<p><button class="secondary" data-review-fit="${esc(reviewCandidate.id)}">Review best unreviewed match · ${esc(reviewCandidate.company)}</button></p>`:'<p>Review my fit on a promising job in All matches.</p>'}`:$('posting-age').value!=='all'?'No jobs with a known recent posting date match these filters. Choose Any time or update your search.':$('job-site').value!=='all'?'No jobs from this site match the current results and filters. Choose All sites or update your search.':'No jobs match your current search and filters. Try another search or refresh jobs.'):'Add your skills or upload a resume, then click Find jobs to search live company openings.'}</div>`;}
-for(const key of ['skills','experience','workstyle'])$(key).addEventListener('input',saveProfile);
+const skills=()=>extract($('resume-text').value).skills;
+function render(){const skillList=skills(),years=Number($('experience').value),q=$('search').value.trim().toLowerCase();let list=jobs.map(j=>({...j,score:displayedScore(j,resultsRanked)})).filter(j=>recommendationExperience(j,$('experience').value)&&matchesPostingFreshness(j,$('posting-age').value)&&matchesJobSite(j,$('job-site').value)&&(view!=='saved'||isSaved(j))&&!opportunity.hidden(j)&&($('workstyle').value==='any'||j.style===$('workstyle').value||j.style==='unknown'||j.agent?.work_style==='unknown')&&matchesPreferredCities(j.location,selectedCities,remoteMode(),!!$('include-nearby').checked)&&(!relevantOnly||((!skillList.length||hasSkillOverlap(j.skills,skillList))&&meetsKnownExperience(j.years,years)))&&(!q||j.ranking_method||(j.title+' '+j.company+' '+j.skills.join(' ')).toLowerCase().includes(q)));list.sort($('sort').value==='title'?(a,b)=>a.title.localeCompare(b.title):(a,b)=>((b.score??0)-opportunity.penalty(b))-((a.score??0)-opportunity.penalty(a)));list.sort((a,b)=>Number(!experienceFit(a,$('experience').value))-Number(!experienceFit(b,$('experience').value)));const reviewCandidate=list.find(j=>j.score===null);if(tab==='strong')list=list.filter(j=>strongMatch(j,$('resume-text').value,currentFitPreferences()).strong);$('count').textContent=list.length;$('saved-count').textContent=saved.size;$('jobs').innerHTML=list.map((j,i)=>`${i===0||!!experienceFit(j,$('experience').value)!==!!experienceFit(list[i-1],$('experience').value)?`<h3 class="job-group-heading">${experienceFit(j,$('experience').value)?'Experience matched':'Experience not specified'}</h3>`:''}<article class="job${postingFreshness(j)?' recently-posted':''}"><div class="job-top"><div class="company-icon" style="--brand-bg:${j.color||'#eff4ea'}">${esc(j.logo||j.company[0])}</div><div class="company-name">${esc(j.company)}<small>${j.last_checked?(j.collection_method==='Added by you'?'Added by you · ':'Checked ')+new Date(j.last_checked*1000).toLocaleString():j.demo?'Illustrative company role':'Company listing'}</small></div><button class="save ${isSaved(j)?'saved':''}" data-save="${esc(j.id)}" aria-label="${isSaved(j)?'Unsave':'Save'} ${esc(j.title)}" aria-pressed="${isSaved(j)}">${isSaved(j)?'▣':'▱'}</button></div>${postingFreshness(j)?`<div class="posting-freshness"><span class="posted-badge posted-${postingFreshness(j).band}" title="${esc(postingFreshness(j).detail)}">${esc(postingFreshness(j).label)}</span></div>`:''}<h3>${safeUrl(j.url)?`<a class="job-title-link" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener noreferrer">${esc(j.title)} ↗</a>`:esc(j.title)}</h3><div class="meta"><span>⌖ ${esc(j.location)}</span><span>${esc(jobCardDetails(j).workStyle)}</span><span>${esc(jobCardDetails(j).experience)}</span></div><div class="chips">${j.listed_on?.length?`<span>${esc(j.listed_on.join(' · '))}</span>`:''}${strongMatch(j,$('resume-text').value,currentFitPreferences()).strong?'<span class="agent-badge">Evidence-supported strong match</span>':j.agent?`<span class="agent-badge">${j.agent.decision==='shortlist'?'AI shortlist':j.agent.decision==='exclude'?'Reviewed: gap':'Needs review'}</span>`:''}${j.skills.map(s=>`<span class="${skillList.some(x=>x.toLowerCase()===s.toLowerCase())?'matched':''}">${esc(s)}</span>`).join('')||'<span>Review listing for required skills</span>'}</div>${j.agent?`<p class="agent-card-reason">${esc(j.agent.reason)}</p>`:''}<div class="job-bottom"><span class="match">${j.score===null?'✦ Not ranked yet':`✦ <strong>${j.score}/100</strong> relevance`}</span><div class="job-actions"><button class="view" data-dismiss="${esc(j.id)}">Not a fit</button><button class="view" data-detail="${esc(j.id)}">Details & ATS resume</button>${publishedJobContacts(j).length?`<button class="view" data-contacts="${esc(j.id)}">Recruiter details</button>`:''}<button class="view" data-referral="${esc(j.id)}">Find a referral</button><button class="view" data-writing="${esc(j.id)}">Cover letter & message</button>${safeUrl(j.url)?`<a class="apply-link" href="${esc(safeUrl(j.url))}" target="_blank" rel="noopener noreferrer">${esc(applicationLabel(j))}</a>`:""}</div></div></article>`).join('')||`<div class="empty">${loadedOnce?(tab==='strong'?`No reviewed strong matches yet. A strong match needs evidence for the reviewed mandatory requirements and confirmed experience fit.${reviewCandidate&&$('resume-text').value.trim().length>=40?`<p><button class="secondary" data-review-fit="${esc(reviewCandidate.id)}">Review best unreviewed match · ${esc(reviewCandidate.company)}</button></p>`:''}`:$('posting-age').value!=='all'?'No jobs with a known recent posting date match these filters. Choose Any time or update your search.':$('job-site').value!=='all'?'No jobs from this site match the current results and filters. Choose All sites or update your search.':'No jobs match your current preferences. Try more cities or a broader search.'):'Start by uploading your resume. You can also explore job sites below or set up application autofill.'}</div>`;}
+for(const key of ['experience','workstyle'])$(key).addEventListener('input',saveProfile);
 $('search').addEventListener('input',()=>{invalidateAgentResults();render();});$('sort').addEventListener('input',render);$('job-site').addEventListener('change',render);$('posting-age').addEventListener('change',render);
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;updateCityPicker();document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('selected',x===b));render();});
 const jobsContent=document.querySelector('main > .content');
-const referralNav=document.createElement('button');referralNav.dataset.view='referrals';referralNav.textContent='↗ Referrals';$('profile-link').before(referralNav);
-const tracker=setupReferralTracker({onOpen:()=>referralNav.click()});
-document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{view=b.dataset.view;jobsContent.hidden=view==='referrals';tracker.root.hidden=view!=='referrals';$('results-heading').firstChild.textContent=view==='saved'?'Your saved roles ':'Explore your possibilities ';$('breadcrumb').textContent=view==='referrals'?'Referrals':view==='saved'?'Saved jobs':'Discover jobs';document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===b));render();});
-$('profile-link').onclick=()=>{document.querySelector('[data-view=all]').click();$('skills').scrollIntoView({behavior:'smooth',block:'center'});$('skills').focus();};
+const referralNav=document.createElement('button');referralNav.dataset.view='applications';referralNav.textContent='▤ Applications';$('profile-link').before(referralNav);
+const tracker=setupApplicationTracker({onOpen:()=>referralNav.click()});
+document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{view=b.dataset.view;jobsContent.hidden=view==='applications';tracker.root.hidden=view!=='applications';$('results-heading').firstChild.textContent=view==='saved'?'Your saved roles ':'Explore your possibilities ';$('breadcrumb').textContent=view==='applications'?'Applications':view==='saved'?'Saved jobs':'Discover jobs';document.querySelectorAll('[data-view]').forEach(x=>x.classList.toggle('active',x===b));if(view==='applications')tracker.refresh();else tracker.hidePreparation();render();});
+$('profile-link').onclick=()=>{document.querySelector('[data-view=all]').click();$('experience').scrollIntoView({behavior:'smooth',block:'center'});$('experience').focus();};
 function openDetail(j){
  activeJob=j;
  const otherLinks=additionalApplicationLinks(j);
@@ -115,7 +129,9 @@ function analyzeResume(){
    const builderRoot=$('draft-builder');
    const builder=mountResumeBuilder(builderRoot,{text:tailored.text,job:activeJob,onChange:text=>{$('draft-preview').value=text;$('download-status').textContent='Layout updated. Download again to verify the current draft.';}});
    $('draft-preview').value=tailored.text;
+   if(!['localhost','127.0.0.1'].includes(location.hostname))$('download-word').textContent='Review & export locally';
    $('download-word').onclick=async()=>{
+    if(!['localhost','127.0.0.1'].includes(location.hostname)){$('detail').close();openJobResume({description:activeJob.description,draft:builder.getText(),title:activeJob.title,company:activeJob.company});return;}
     const button=$('download-word'),status=$('download-status'),exportText=builder.getText();
     button.disabled=true;status.textContent='Fitting the resume and checking that it is one page...';
     try{
@@ -129,35 +145,37 @@ function analyzeResume(){
  }catch(e){results.textContent=e.message;}
 }
 $('close').onclick=()=>$('detail').close();
-function importText(text){if(!text.trim())throw new Error('No readable text found. Paste your resume text instead.');originalResume=text;$('resume-text').value=text;$('resume-text').dispatchEvent(new Event('input'));const p=extract(text);$('skills').value=p.skills.join(', ');if(p.years!==null){$('experience').value=String(p.years);}$('skills').dispatchEvent(new Event('input'));$('upload-status').textContent=(resumeRetained?'Resume loaded and saved in this browser. ':'Resume loaded for this visit; browser storage is unavailable or full. ')+'Ranking jobs locally using your current preferences. Review the imported text and confirm your total years of experience.';agentUI.search();}
+function importText(text){if(!text.trim())throw new Error('No readable text found. Paste your resume text instead.');originalResume=text;$('resume-text').value=text;$('resume-text').dispatchEvent(new Event('input'));const p=extract(text);if(p.years!==null){$('experience').value=String(p.years);}$('experience').dispatchEvent(new Event('input'));$('upload-status').textContent=(resumeRetained?'Resume loaded and saved in this browser. ':'Resume loaded for this visit; browser storage is unavailable or full. ')+'Review your extracted resume and confirm your total years of experience. Your application autofill profile is ready to review.';agentUI.search();}
 $('extract').onclick=()=>{try{importText($('resume-text').value);}catch(e){$('upload-status').textContent=e.message;}};
-$('resume').onchange=async e=>{const f=e.target.files[0];if(!f)return;$('upload-status').textContent='Reading your resume…';try{if(f.size>5*1024*1024)throw new Error('Please choose a file smaller than 5 MB.');const ext=f.name.split('.').pop().toLowerCase();let text;if(ext==='txt')text=await f.text();else if(ext==='pdf'){const pdfjs=await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs');pdfjs.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';const pdf=await pdfjs.getDocument({data:await f.arrayBuffer()}).promise;const pages=[];for(let i=1;i<=pdf.numPages;i++)pages.push(pdfPageText((await(await pdf.getPage(i)).getTextContent()).items));text=pages.join('\n');}else if(ext==='docx'){if(!window.mammoth)await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js';s.onload=resolve;s.onerror=()=>reject(new Error('DOCX reader could not load. Paste your resume text instead.'));document.head.appendChild(s);});text=(await window.mammoth.extractRawText({arrayBuffer:await f.arrayBuffer()})).value;}else throw new Error('Use a PDF, DOCX or TXT file.');importText(text);}catch(e){$('upload-status').textContent=`Could not read resume: ${e.message} You can paste text below.`;}e.target.value='';};
+$('resume').onchange=async e=>{const f=e.target.files[0];if(!f)return;$('upload-status').textContent='Reading your resume…';try{if(f.size>5*1024*1024)throw new Error('Please choose a file smaller than 5 MB.');const ext=f.name.split('.').pop().toLowerCase();let text;if(ext==='txt')text=await f.text();else if(ext==='pdf'){const pdfjs=await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs');pdfjs.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs';const pdf=await pdfjs.getDocument({data:await f.arrayBuffer()}).promise;const pages=[];for(let i=1;i<=pdf.numPages;i++)pages.push(pdfPageText((await(await pdf.getPage(i)).getTextContent()).items));text=pages.join('\n');}else if(ext==='docx'){const parser=await loadMammoth();text=await extractDocxResume(parser,await f.arrayBuffer());}else throw new Error('Use a PDF, DOCX or TXT file.');importText(text);const fileSaved=await retainResumeFile(f,text);await updateResumeSavedStatus();if(!fileSaved&&ext!=='txt')resumeSavedStatus.textContent+=' The PDF/Word file could not be saved; select it again for autofill.';}catch(e){$('upload-status').textContent=`Could not read resume: ${e.message} You can paste text below.`;}e.target.value='';};
 // Public jobs are collected by the backend, independently of Gemini and applicant searches.
 let cachedApi=null,cachePoll=null,pollAttempts=0,browseGeneration=0;
-function currentFitPreferences(){return {experience:Number($('experience').value),cities:remoteMode()?[]:selectedCities,workstyle:remoteMode()?'Remote':$('workstyle').value,target_roles:$('search').value.trim()};}
-function uiJobs(items){return deduplicateJobs(eligibleListings(items)).map(j=>{const style=jobCardDetails(j).workStyle.replace(/^◷ /,'');const job={...j,style:['Remote','Hybrid','On-site'].includes(style)?style:j.style,skills:extract(j.title+' '+j.description).skills};const review=fitReviews.get(job.id);if(review?.context===fitReviewContext(job,$('resume-text').value,currentFitPreferences()))job.agent=review.assessment;return job;});}
+function currentFitPreferences(){return {experience:Number($('experience').value),cities:remoteMode()?[]:selectedCities,workstyle:remoteMode()?'Remote':$('workstyle').value,target_roles:$('search').value.trim(),include_nearby:!!$('include-nearby').checked};}
+function uiJobs(items){return deduplicateJobs(recommendedListings(items)).map(j=>{const style=jobCardDetails(j).workStyle.replace(/^◷ /,'');const job={...j,style:['Remote','Hybrid','On-site'].includes(style)?style:j.style,skills:extract(j.title+' '+j.description).skills};const review=fitReviews.get(job.id);if(review?.context===fitReviewContext(job,$('resume-text').value,currentFitPreferences()))job.agent=review.assessment;return job;});}
 function observeMatches(){opportunity.observe(jobs,preferenceKey($('resume-text').value,{cities:selectedCities,workstyle:$('workstyle').value,experience:$('experience').value,query:$('search').value}),resultsRanked);}
 function filterExplanation(data){
  if(data.jobs.length||!Number.isFinite(data.excluded_location))return '';
  const reasons=[];
  if(data.excluded_location)reasons.push(`${data.excluded_location} outside your selected cities or without a confirmed location`);
  if(data.excluded_workstyle)reasons.push(`${data.excluded_workstyle} with a different work style`);
- if(data.experience_gaps)reasons.push(`${data.experience_gaps} requiring more than your confirmed experience`);
+ if(data.excluded_experience_unknown)reasons.push(`${data.excluded_experience_unknown} without a clear experience requirement`);
+ if(data.experience_gaps)reasons.push(`${data.experience_gaps} outside your confirmed experience band`);
  return reasons.length?` Excluded: ${reasons.join('; ')}.`:'';
 }
 function showCacheMeta(data){
  return '';
 }
 async function loadJobs(refresh=false){
+ if(!['localhost','127.0.0.1'].includes(location.hostname)){try{const data=await runPublicSearch(refresh);jobs=uiJobs(data.jobs);loadedOnce=true;resultsRanked=data.resume_ranked;observeMatches();$('results-heading').firstChild.textContent='Relevant openings ';$('source-note').textContent=publicResultNote(data);render();return true;}catch(e){$('source-note').textContent=e.message;return false;}}
  const generation=browseGeneration,button=$('live');button.disabled=true;
  try{
   const backend=await findBackend();cachedApi=backend.origin;
   if(!(backend.status.capabilities||[]).includes('careers-page-scraping')){
    jobs=[];loadedOnce=false;render();$('find-jobs').disabled=true;
-   $('source-note').textContent='Restart the backend with python start_agent.py to load careers-page scraping. Then reload this page.';return false;
+   $('source-note').textContent='Job search is unavailable right now. You can explore job sites using the links below.';return false;
   }
   $('find-jobs').disabled=false;
-  if(!(backend.status.capabilities||[]).includes('cached-job-search'))throw new Error('Restart the backend with python start_agent.py to load cached job search.');
+  if(!(backend.status.capabilities||[]).includes('cached-job-search'))throw new Error('Job search is unavailable right now.');
   if(refresh)await apiRequest(cachedApi,'/api/jobs/refresh',{},10000);
   const resume=$('resume-text').value.trim().length>=40?$('resume-text').value:'';
   const data=await apiRequest(cachedApi,'/api/jobs/search',{resume,preferences:{experience:Number($('experience').value),cities:remoteMode()?[]:selectedCities,workstyle:remoteMode()?'Remote':$('workstyle').value,target_roles:$('search').value.trim()},limit:200},30000);
@@ -166,7 +184,7 @@ async function loadJobs(refresh=false){
   resultsRanked=!!resume&&data.ranking_mode!=='browse';
   observeMatches();
   $('results-heading').firstChild.textContent=resultsRanked?'Relevant openings ':'Company openings ';
-  $('source-note').textContent=showCacheMeta(data)+(resultsRanked?` Showing ${jobs.length} results ranked for your resume and preferences. Check each job's requirements before applying.`:` Showing ${jobs.length} jobs matching your preferences. Find jobs to rank them using your resume.`)+filterExplanation(data);
+  $('source-note').textContent=(data.feed_updated?publicResultNote(data):showCacheMeta(data))+(resultsRanked?` Showing ${jobs.length} results ranked for your resume and preferences. Check each job's requirements before applying.`:` Showing ${jobs.length} jobs matching your preferences. Find jobs to rank them using your resume.`)+filterExplanation(data);
   render();
   if((refresh||!data.jobs.length||data.refreshing)&&pollAttempts<45){clearTimeout(cachePoll);cachePoll=setTimeout(()=>{pollAttempts++;loadJobs(false);},3000);}
   return true;
@@ -176,30 +194,38 @@ async function loadJobs(refresh=false){
 function clearSearchMessage(){if($('search-status')){$('search-status').textContent='';$('search-status').hidden=true;}}
 $('live').onclick=()=>{clearSearchMessage();browseGeneration++;pollAttempts=0;loadJobs(true);};
 render();
+function publicResultNote(data){if(data.manual_only)return 'Showing jobs added by you. Company listings are temporarily unavailable.';return `Company listings last refreshed ${new Date(data.feed_updated*1000).toLocaleString()}. Check availability on the company site. ${data.feed_note||''}`;}
+let publicSearchGeneration=0;
+async function runPublicSearch(refresh=false){if(!$('experience').value.trim())throw Error('Confirm your years of experience to find matching roles.');const id=++publicSearchGeneration,snapshot=JSON.stringify([$('resume-text').value,currentFitPreferences()]);const result=await searchPublicJobs($('resume-text').value,currentFitPreferences(),{refresh,useSemantic:!!$('local-semantic')?.checked,progress:text=>{if($('search-status')){$('search-status').hidden=false;$('search-status').textContent=text;}}});if(id!==publicSearchGeneration||snapshot!==JSON.stringify([$('resume-text').value,currentFitPreferences()]))throw Error('Your resume or preferences changed. Search again.');return result;}
 const agentUI=setupAgentUI({
+ publicSearch:!['localhost','127.0.0.1'].includes(location.hostname)?async()=>runPublicSearch(false):null,
  canTailor:source=>extractionReview.ready(source),
- filterJobs:eligibleListings,
+ filterJobs:recommendedListings,
  onSearchStart:()=>{browseGeneration++;clearTimeout(cachePoll);},
  getResume:()=>$('resume-text').value,
  getPreferences:()=>({experience:Number($('experience').value),cities:remoteMode()?[]:selectedCities,workstyle:remoteMode()?'Remote':$('workstyle').value,target_roles:$('search').value.trim()}),
  acceptSearch:data=>{
-  browseGeneration++;clearTimeout(cachePoll);jobs=uiJobs(data.jobs);loadedOnce=true;relevantOnly=false;if(!data.incremental){if(view!=='referrals')view='all';tab='all';}updateCityPicker();
+  browseGeneration++;clearTimeout(cachePoll);jobs=uiJobs(data.jobs);loadedOnce=true;relevantOnly=false;if(!data.incremental){if(view!=='applications')view='all';tab='all';}updateCityPicker();
   resultsRanked=data.resume_ranked===true&&data.ranking_mode!=='browse';
   observeMatches();
   $('results-heading').firstChild.textContent=resultsRanked?'Relevant openings ':'Company openings ';
-  $('source-note').textContent=showCacheMeta(data)+(resultsRanked?` Showing ${jobs.length} results ranked for your resume and preferences. Check each job's requirements before applying.`:` Showing ${jobs.length} jobs matching your preferences. Upload a resume to rank them.`)+filterExplanation(data);
+  $('source-note').textContent=(data.feed_updated?publicResultNote(data):showCacheMeta(data))+(resultsRanked?` Showing ${jobs.length} results ranked for your resume and preferences. Check each job's requirements before applying.`:` Showing ${jobs.length} jobs matching your preferences. Upload a resume to rank them.`)+filterExplanation(data);
   render();
  },
  acceptAssessment:(job,assessment)=>{const context=fitReviewContext(job,$('resume-text').value,currentFitPreferences());fitReviews.set(job.id,{context,assessment});jobs=jobs.map(j=>j.id===job.id&&fitReviewContext(j,$('resume-text').value,currentFitPreferences())===context?{...j,agent:assessment}:j);render();}
 });
 const extractionReview=setupExtractionReview({getResume:()=>$('resume-text').value,onCorrected:text=>importText(text)});
 const retainedResume=readRetainedResume(resumeStorage);
-if(retainedResume){originalResume=retainedResume;$('resume-text').value=retainedResume;resumeRetained=true;removeResume.hidden=false;$('upload-status').textContent='Resume restored from this browser. It stays loaded until you replace or remove it.';extractionReview.render();}
-setupPlatformJobs({getPreferences:()=>({query:$('search').value.trim(),cities:remoteMode()?[]:selectedCities,workstyle:remoteMode()?'Remote':$('workstyle').value}),onImported:async()=>{browseGeneration++;clearTimeout(cachePoll);await loadJobs(false);}});
+if(retainedResume){originalResume=retainedResume;$('resume-text').value=retainedResume;resumeRetained=true;removeResume.hidden=false;$('upload-status').textContent='';extractionReview.render();updateResumeSavedStatus();}
+setupPlatformJobs({localOnly:!['localhost','127.0.0.1'].includes(location.hostname),getPreferences:()=>({query:$('search').value.trim(),cities:remoteMode()?[]:selectedCities,workstyle:remoteMode()?'Remote':$('workstyle').value}),onImported:async job=>{browseGeneration++;clearTimeout(cachePoll);if(job){job.skills=extract(job.description).skills;openDetail(job);}else await loadJobs(false);}});
 loadJobs(false);
 
 
 setupRecruiterInbox();
-setupInterviewPrep();
+
 // Refresh cached, locally ranked results while the app is visible. No Gemini call.
 setInterval(()=>{if(!document.hidden&&!$('detail').open&&!$('find-jobs').disabled&&$('resume-text').value.trim().length>=40)loadJobs(false);},300000);
+
+setupAutofillProfile({getResume:()=>$('resume-text').value,getYears:()=>$('experience').value,getResumeFile:retainedResumeFile,saveResumeFile:async(file,text)=>{const saved=await retainResumeFile(file,text);await updateResumeSavedStatus();return saved;},clearWebsiteResume:async()=>{if(!await removeResume.onclick())throw Error('Resume removal failed.');}});
+
+setupPublicExperience();

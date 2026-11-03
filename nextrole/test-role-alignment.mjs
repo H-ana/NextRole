@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {resumeRoleIntent,roleAlignment,filterRoleAlignedJobs} from './dist/role-alignment.mjs';
+const resume='Alex Example\nPROFILE\nAspiring Agentic AI Developer with hands-on experience building AI solutions using Python, FastAPI, LangGraph and PostgreSQL.\nEXPERIENCE\nSupport Specialist\nContributed to an AI agent for first-line ServiceNow ticket triage and incident management.\nBuilt and supported automation workflows.';
+const intent=resumeRoleIntent(resume);assert.equal(intent.family,'ai');assert.equal(intent.source,'resume-headline');
+for(const title of ['AI Engineer','GenAI Engineer','Generative AI Developer','Forward Deployed Engineer','Forward-Deployed Engineer','Machine Learning Engineer','Software Engineer','Software Development Engineer II','Backend Developer','AI/ML Engineer','Lead Agentic AI Developer','AI Research Engineer'])assert(roleAlignment({title},intent).aligned,title);
+for(const title of ['Support Engineer','AI Support Engineer','Technical Support Specialist','Incident Management Analyst','Incident Manager','Application Support Engineer','Service Desk Analyst','Customer Support Specialist','Data Analyst','Business Analyst','AI Sales Engineer','AI Product Manager','Software QA Engineer'])assert(!roleAlignment({title,description:'Python SQL GenAI LLM agentic AI development'},intent).aligned,title);
+assert(roleAlignment({title:'Software Engineer',description:'Build agentic workflows for ticket triage, incident management and support teams.'},intent).aligned,'Support responsibilities do not blacklist a development role');
+assert.equal(resumeRoleIntent('Alex Example\nSKILLS\nPython, SQL, AI\nPROJECTS\nBuilt AI developer tools.'),null,'Skills/project mentions alone do not invent a target occupation');
+assert(roleAlignment({title:'Data Analyst'},null).aligned,'Unknown intent does not invent a role filter');
+assert.equal(resumeRoleIntent(resume,'Python SQL').family,'ai','Skill-only search does not override the role');
+assert.equal(resumeRoleIntent(resume,'Data Analyst').family,'analytics','An explicit searched role can change intent');
+const support=resumeRoleIntent('Alex Example\nTechnical Support Engineer\nSkills\nPython SQL');assert.equal(support.family,'support');assert(roleAlignment({title:'Support Specialist'},support).aligned,'Other users retain their own role family');
+const jobs=[{title:'AI Engineer'},{title:'Support Engineer'},{title:'Software Engineer'}];assert.deepEqual(filterRoleAlignedJobs(jobs,resume).map(j=>j.title),['AI Engineer','Software Engineer']);
+console.log('Role alignment: headline intent, adjacent development roles, hyphenated titles, unrelated support/business jobs, responsibility mentions, skill-only profiles, explicit role searches and other role families passed.');

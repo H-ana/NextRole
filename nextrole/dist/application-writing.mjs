@@ -1,4 +1,4 @@
-import {safeUrl} from './resume-tools.mjs?v=91';
+import {safeUrl} from './resume-tools.mjs?v=113';
 const clean=value=>String(value??'').replace(/[\r\n\t]+/g,' ').trim();
 export const WRITING_TONES=['formal','friendly','concise'];
 export function applicationVariants(job,name='[Your name]'){

@@ -11,3 +11,9 @@ export-qa/
 client_secret*.json
 gmail-credentials*.json
 gmail-token*.json
+nextrole-autofill-profile*.json
+
+# Local publishing artifacts
+.site-publish/
+nextrole-deploy.tar.gz
+extension-release/

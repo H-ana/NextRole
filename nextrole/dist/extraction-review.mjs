@@ -45,6 +45,11 @@ export function extractionIssues(text){
  });
  return issues;
 }
+// Only offer concrete changes; diagnostics without a proposed edit stay internal.
+export function proposedExtractionCorrections(text){
+ const visible=value=>String(value||'').normalize('NFKC').replace(/\s+/g,' ').trim();
+ return extractionIssues(text).filter(issue=>issue.replacement&&visible(issue.replacement)!==visible(issue.original));
+}
 export function applyExtractionCorrections(text,issues,selected){
  const lines=text.split('\n'),seen=new Map();
  for(const i of selected){const issue=issues[i];if(!issue?.replacement)continue;if(seen.has(issue.index)){if(seen.get(issue.index)!==issue.replacement)throw new Error('Different corrections target the same line. Select one correction for that line.');continue;}if(lines[issue.index]!==issue.original)throw new Error('Resume changed. Review the extraction again.');lines[issue.index]=issue.replacement;seen.set(issue.index,issue.replacement);}
@@ -54,22 +59,20 @@ export function setupExtractionReview({getResume,onCorrected}){
  let acknowledged=null;
  const panel=document.createElement('section');panel.id='extraction-review';panel.className='extraction-review';panel.hidden=true;document.getElementById('job-search-form').after(panel);
  function render(){
-  const source=getResume(),issues=extractionIssues(source);
+  const source=getResume(),issues=proposedExtractionCorrections(source);
   if(!issues.length){panel.hidden=true;return;}panel.hidden=false;
-  panel.innerHTML=`<h3>Check your imported resume</h3><p>Review all proposed corrections, then apply them together or individually. Dates and uncertain text need your own correction; they are never guessed. Job search can continue.</p><div class="correction-actions"><button type="button" id="select-all-extraction" class="secondary">Select all available corrections</button><button type="button" id="clear-extraction-selection" class="secondary">Clear selection</button><button type="button" id="apply-all-extraction" class="find-jobs">Apply all available corrections</button></div>${issues.map((r,i)=>`<div class="extraction-issue"><label><input type="checkbox" data-correction="${i}" ${!r.replacement?'disabled':''}> ${r.replacement?'Apply proposed correction':'Apply my manual correction'}</label><p>${esc(r.reason)}</p><div><strong>Imported</strong><p>${esc(r.original)}</p>${r.replacement?`<strong>Proposed</strong><p>${esc(r.replacement)}</p>`:`<label>Corrected text from your original document<textarea data-manual-correction="${i}" aria-label="Manual correction for line ${r.index+1}" rows="2">${esc(r.original)}</textarea></label><p>Edit this text to make the correction available.</p>`}</div></div>`).join('')}<button type="button" id="apply-extraction" class="secondary">Apply selected corrections</button> <button type="button" id="ack-extraction" class="secondary">I checked the remaining warnings</button><p id="extraction-status" role="status">${acknowledged===source?'Warnings acknowledged for this resume.':''}</p>`;
+  panel.innerHTML=`<h3>Suggested resume corrections</h3><p>Compare each proposed change with your original document. Only selected changes are applied.</p><div class="correction-actions"><button type="button" id="select-all-extraction" class="secondary">Select all corrections</button><button type="button" id="clear-extraction-selection" class="secondary">Clear selection</button><button type="button" id="apply-all-extraction" class="find-jobs">Apply all corrections</button></div>${issues.map((r,i)=>`<div class="extraction-issue"><label><input type="checkbox" data-correction="${i}"> Apply proposed correction</label><p>${esc(r.reason)}</p><div><strong>Original</strong><p>${esc(r.original)}</p><strong>Proposed</strong><p>${esc(r.replacement)}</p></div></div>`).join('')}<button type="button" id="apply-extraction" class="secondary">Apply selected corrections</button> <button type="button" id="ack-extraction" class="secondary">Keep original text</button><p id="extraction-status" role="status">${acknowledged===source?'Original text kept.':''}</p>`;
   const selectAll=()=>{for(const input of panel.querySelectorAll('[data-correction]'))input.checked=!input.disabled;};
   document.getElementById('select-all-extraction').onclick=selectAll;
   document.getElementById('clear-extraction-selection').onclick=()=>{for(const input of panel.querySelectorAll('[data-correction]'))input.checked=false;};
-  for(const field of panel.querySelectorAll('[data-manual-correction]'))field.oninput=()=>{const index=Number(field.dataset.manualCorrection),input=panel.querySelector(`[data-correction="${index}"]`);input.disabled=!field.value.trim()||field.value===issues[index].original;input.checked=!input.disabled;};
   document.getElementById('apply-extraction').onclick=()=>{
    if(getResume()!==source){render();return;}
    const current=issues.map(issue=>({...issue}));
-   for(const field of panel.querySelectorAll('[data-manual-correction]'))if(field.value.trim()&&field.value!==current[Number(field.dataset.manualCorrection)].original)current[Number(field.dataset.manualCorrection)].replacement=field.value;
    const selected=[...panel.querySelectorAll('[data-correction]:checked')].filter(x=>!x.disabled).map(x=>Number(x.dataset.correction));
-   try{const updated=applyExtractionCorrections(source,current,selected);if(updated!==source){acknowledged=null;onCorrected(updated);render();}else document.getElementById('extraction-status').textContent='Select an available correction or enter corrected text first.';}catch(error){document.getElementById('extraction-status').textContent=error.message;}
+   try{const updated=applyExtractionCorrections(source,current,selected);if(updated!==source){acknowledged=null;onCorrected(updated);render();}else document.getElementById('extraction-status').textContent='Select a proposed correction first.';}catch(error){document.getElementById('extraction-status').textContent=error.message;}
   };
   document.getElementById('apply-all-extraction').onclick=()=>{selectAll();document.getElementById('apply-extraction').onclick();};
-  document.getElementById('ack-extraction').onclick=()=>{if(getResume()!==source){render();return;}acknowledged=source;document.getElementById('extraction-status').textContent='Warnings acknowledged for this resume.';};
+  document.getElementById('ack-extraction').onclick=()=>{if(getResume()!==source){render();return;}acknowledged=source;document.getElementById('extraction-status').textContent='Original text kept.';};
  }
- return {render,ready(source){return !extractionIssues(source).length||acknowledged===source;},reset(){acknowledged=null;render();}};
+ return {render,ready(source){return !proposedExtractionCorrections(source).length||acknowledged===source;},reset(){acknowledged=null;render();}};
 }

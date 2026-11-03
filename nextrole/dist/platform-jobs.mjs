@@ -1,4 +1,3 @@
-import {findBackend,apiRequest} from './api-client.mjs?v=91';
 
 export function platformName(value){
  try{const p=new URL(value),host=p.hostname;
@@ -35,32 +34,31 @@ export function platformSearches({query='',cities=[],workstyle='any'}={}){
  return {linkedin:linkedin.href,naukri:`https://www.naukri.com/${slug?slug+'-':''}jobs-in-${city}`,indeed:indeed.href};
 }
 
-export function setupPlatformJobs({getPreferences,onImported}){
+const MANUAL_KEY='nextrole-manual-jobs-v1';
+export function manualExperienceRequirement(description){
+ const text=String(description).split(/preferred qualifications|nice.to.have|preferred experience/i)[0],quotes=[],bands=[];
+ const pattern=/\b(\d{1,2})(?:\s*[-–—]\s*(\d{1,2}))?\s*(\+)?\s*(?:years|yrs)(?:\s+of)?\s+(?:[a-z/-]+\s+){0,5}experience\b/gi;
+ for(const match of text.matchAll(pattern)){const minimum=Number(match[1]),maximum=match[2]?Number(match[2]):null;if(minimum>80||maximum!==null&&(maximum<minimum||maximum>80))continue;quotes.push(match[0]);bands.push({minimum,maximum});}
+ if(!bands.length)return null;const minimum=Math.max(...bands.map(b=>b.minimum)),upper=bands.filter(b=>b.maximum!==null),maximum=upper.length?Math.min(...upper.map(b=>b.maximum)):null;
+ if(maximum!==null&&minimum>maximum)return null;
+ return {status:'known',minimum,maximum,quote:quotes[0],quotes,policy_version:'strict-experience-v2'};
+}
+export async function createManualJob(input,now=Date.now()/1000){
+ const body=Object.fromEntries(['url','company','title','location','description'].map(key=>[key,String(input[key]||'').trim()]));
+ const site=platformName(body.url);if(!site)throw Error('Paste a direct job link from one of the eight supported platforms.');
+ if(!body.company||body.company.length>200||!body.title||body.title.length>300||body.location.length>500||body.description.length<100||body.description.length>80000||body.url.length>2048)throw Error('Enter a company, job title and full description (100–80,000 characters).');
+ const url=new URL(body.url);url.hash='';body.url=url.href;const hash=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(body.url)),id='manual:'+ [...new Uint8Array(hash)].map(n=>n.toString(16).padStart(2,'0')).join('');
+ const location=body.location||'Location unavailable',style=/\bhybrid\b/i.test(location)?'Hybrid':/\bremote\b/i.test(location)?'Remote':/\bon[- ]site\b/i.test(location)?'On-site':'unknown';
+ return {...body,id,location,style,source:'manual:browser',listed_on:[site],application_links:[{platform:site,url:body.url}],collection_method:'Added by you',last_checked:now,experience_requirement:manualExperienceRequirement(body.description),skills:[]};
+}
+export function readManualJobs(storage){try{const rows=JSON.parse(storage.getItem(MANUAL_KEY)||'[]');return Array.isArray(rows)?rows.slice(0,100).filter(j=>j&&typeof j.id==='string'&&j.id.startsWith('manual:')&&platformName(j.url)&&typeof j.company==='string'&&j.company.length<=200&&typeof j.title==='string'&&j.title.length<=300&&typeof j.location==='string'&&j.location.length<=500&&typeof j.description==='string'&&j.description.length>=100&&j.description.length<=80000&&Number.isFinite(j.last_checked)&&j.last_checked>Date.now()/1000-7*86400).map(j=>({...j,experience_requirement:manualExperienceRequirement(j.description)})):[];}catch{return [];}}
+export async function saveManualJob(storage,input){const job=await createManualJob(input),rows=readManualJobs(storage).filter(j=>j.id!==job.id);try{storage.setItem(MANUAL_KEY,JSON.stringify([job,...rows].slice(0,100)));}catch{throw Error('Browser storage could not save this job. Free some space and try again.');}return job;}
+
+export function setupPlatformJobs({getPreferences,onImported,localOnly=false,storage=globalThis.localStorage}){
  const toolbar=document.querySelector('.toolbar');
  const section=document.createElement('div');section.className='platform-sources';
- section.innerHTML='<p>Jobs across platforms <small>LinkedIn, Indeed, Glassdoor, ZipRecruiter, Bayt, Naukri, BDJobs and HelloWork. Coverage depends on your location. Available listings are ranked with your original resume.</small></p><div><a id="search-linkedin" class="secondary" target="_blank" rel="noopener noreferrer">Search LinkedIn ↗</a><a id="search-naukri" class="secondary" target="_blank" rel="noopener noreferrer">Search Naukri ↗</a><a id="search-indeed" class="secondary" target="_blank" rel="noopener noreferrer">Search Indeed ↗</a><button id="add-platform-job" class="secondary" type="button">Add a job</button></div><span id="platform-status" role="status"></span>';
+ section.innerHTML='<p>Explore job sites <small>Search LinkedIn, Naukri and Indeed with your selected keywords and location. Applications are completed on the employer or job site.</small></p><div><a id="search-linkedin" class="secondary" target="_blank" rel="noopener noreferrer">Search LinkedIn ↗</a><a id="search-naukri" class="secondary" target="_blank" rel="noopener noreferrer">Search Naukri ↗</a><a id="search-indeed" class="secondary" target="_blank" rel="noopener noreferrer">Search Indeed ↗</a></div><span id="platform-status" role="status"></span>';
  toolbar.before(section);
  const update=()=>{const urls=platformSearches(getPreferences());for(const name of ['linkedin','naukri','indeed'])section.querySelector('#search-'+name).href=urls[name];};
  document.addEventListener('input',update);document.addEventListener('change',update);update();
- const dialog=document.createElement('dialog');dialog.id='platform-job-dialog';
- dialog.innerHTML='<form id="platform-job-form"><h2>Add a platform job</h2><p>Paste a LinkedIn, Indeed, Glassdoor, ZipRecruiter, Bayt, Naukri, BDJobs or HelloWork job and its full description to check your fit here. Confirm availability on the original site.</p><label>Job link<input name="url" type="url" required placeholder="https://www.linkedin.com/jobs/view/…"></label><label>Company<input name="company" maxlength="200" required></label><label>Job title<input name="title" maxlength="300" required></label><label>Location / work style<input name="location" maxlength="500" placeholder="e.g. Bengaluru, Hybrid or Remote - India"></label><label>Full job description<textarea name="description" minlength="100" maxlength="80000" rows="8" required></textarea></label><p id="platform-import-error" role="alert"></p><div class="permission-actions"><button id="cancel-platform-job" class="secondary" type="button">Cancel</button><button id="save-platform-job" class="primary" type="submit">Add job</button></div></form>';
- document.body.append(dialog);
- section.querySelector('#add-platform-job').onclick=()=>{dialog.querySelector('#platform-import-error').textContent='';dialog.showModal();};
- dialog.querySelector('#cancel-platform-job').onclick=()=>dialog.close();
- dialog.querySelector('form').onsubmit=async event=>{
-  event.preventDefault();const button=dialog.querySelector('#save-platform-job');button.disabled=true;
-  try{
-   const backend=await findBackend();
-   if(!(backend.status.capabilities||[]).includes('platform-job-import'))throw new Error('Restart the backend with python start_agent.py to load job imports.');
-   const body=Object.fromEntries(new FormData(event.currentTarget));
-   const parsed=new URL(body.url);
-   if(!platformName(body.url))throw new Error('Paste a direct job link from one of the eight supported platforms.');
-   if(platformName(body.url)==='Indeed'&&!(backend.status.capabilities||[]).includes('platform-job-search'))throw new Error('Restart the backend to load Indeed job imports.');
-   await apiRequest(backend.origin,'/api/jobs/import',body,30000);
-   dialog.close();dialog.querySelector('form').reset();
-   section.querySelector('#platform-status').textContent='Job added. Find jobs to rank it with your resume and preferences.';
-   await onImported();
-  }catch(error){dialog.querySelector('#platform-import-error').textContent=error.message;}
-  finally{button.disabled=false;}
- };
 }

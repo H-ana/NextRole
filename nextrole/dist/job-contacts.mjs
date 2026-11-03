@@ -1,4 +1,4 @@
-import {html,publicLink} from './opportunity-tools.mjs?v=91';
+import {html,publicLink} from './opportunity-tools.mjs?v=113';
 const hiring=/\b(?:recruiter|recruitment|hiring contact|hiring manager|talent acquisition|contact person|send (?:your )?(?:cv|resume|application)|(?:apply|applications?) (?:at|to|via))\b/i;
 const excluded=/accommodat|disabilit|privacy|legal|security|compliance|grievance|accessibility|no[-_.]?reply|unsubscribe|support@/i;
 export function publishedJobContacts(job){
