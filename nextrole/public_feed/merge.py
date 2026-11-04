@@ -4,6 +4,7 @@ from pathlib import Path
 from urllib.parse import urlsplit,parse_qsl,urlencode,urlunsplit
 from mnc_employers import mnc_employer,normalize_employer
 from collect import india_location
+from job_availability import is_unavailable,availability_key,closure_quote,closed_registry
 
 def canonical(url):
  p=urlsplit(url)
@@ -18,10 +19,15 @@ def identity_keys(j):
  return keys
 
 def merge_feeds(feeds,now=None):
- now=time.time() if now is None else now;groups=[];lookup={};sources={}
+ now=time.time() if now is None else now;groups=[];lookup={};sources={};closures={**closed_registry(),**{r['key']:r for f in feeds for r in f.get('closed_jobs',[]) if isinstance(r,dict) and r.get('status')=='closed' and isinstance(r.get('key'),str)}}
  # The most recently verified employer page is preferred over platform copies.
  jobs=sorted((j for f in feeds for j in f.get('jobs',[])),key=lambda j:(not str(j.get('source','')).startswith('careers:'),-float(j.get('last_checked',0))))
  for j in jobs:
+  if is_unavailable(j):
+   key=availability_key(j.get('url',''))
+   if key and key not in closures:closures[key]={'key':key,'url':j.get('url'),'status':'closed','checked_at':j.get('availability_checked_at',now),'quote':j.get('availability_quote') or closure_quote(j.get('description')) or 'Source marks this vacancy closed'}
+   continue
+  if availability_key(j.get('url','')) in closures:continue
   if not mnc_employer(j) or not india_location(j.get('location')) or not now-(86400 if str(j.get('source','')).startswith('platform:') else 7*86400)<=float(j.get('last_checked',0))<=now+300:continue
   keys=identity_keys(j);hits={lookup[k] for k in keys if k in lookup}
   target=min(hits) if hits else len(groups)
@@ -42,7 +48,7 @@ def merge_feeds(feeds,now=None):
  for f in feeds:
   for s in f.get('sources',[]):
    if float(s.get('last_attempt') or 0)>=float(sources.get(s['id'],{}).get('last_attempt') or 0):sources[s['id']]=s
- return {'format':'nextrole-public-jobs','version':1,'generated_at':now,'max_age_seconds':7*86400,'jobs':[j for j in groups if j],'sources':list(sources.values())}
+ return {'format':'nextrole-public-jobs','version':1,'generated_at':now,'max_age_seconds':7*86400,'jobs':[j for j in groups if j and availability_key(j.get('url','')) not in closures],'closed_jobs':list(closures.values()),'sources':list(sources.values())}
 
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--input-dir',required=True);p.add_argument('--previous');p.add_argument('--output',required=True);a=p.parse_args()

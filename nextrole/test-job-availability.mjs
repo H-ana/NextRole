@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {availabilityKey,closureQuote,isUnavailable,rememberClosedJobs} from './dist/job-availability.mjs?v=165';
+import {validatePublicFeed,filterPublicJobs} from './dist/public-search.mjs';
+import {eligibleListings} from './dist/listing-checks.mjs';
+const job={id:'hsbc',source:'platform:public:linkedin',company:'HSBC',title:'AI Engineer',url:'https://www.linkedin.com/jobs/view/4487032589/?trk=search',description:'Build Python AI applications and SQL data workflows. '.repeat(4),location:'Pune, India',style:'Hybrid',last_checked:Date.now()/1000};
+rememberClosedJobs(JSON.parse(fs.readFileSync('dist/closed-jobs.json','utf8')).entries);
+assert.equal(availabilityKey(job.url),'linkedin:4487032589');assert(isUnavailable(job));
+assert.equal(validatePublicFeed({format:'nextrole-public-jobs',version:1,jobs:[job]}).length,0);
+assert.equal(eligibleListings([job]).length,0);assert.equal(filterPublicJobs([job],{experience:2,cities:['Pune'],workstyle:'any'}).length,0);
+const open={...job,id:'open',url:'https://www.linkedin.com/jobs/view/1234567890/'};assert(!isUnavailable(open));assert.equal(eligibleListings([open]).length,1);
+for(const description of ['Not currently accepting applications','No longer accepting applications','This job has been filled','Not currently\naccepting applications'])assert(isUnavailable({...open,description}));
+for(const description of ['Not currently accepting applications from agencies.','Recommended jobs\nNo longer accepting applications','Salary not provided; description is short.'])assert(!closureQuote(description));
+assert(!isUnavailable({...open,availability_status:'unverified'}));assert(isUnavailable({...open,job_is_open:false}));
+console.log('Confirmed closure, tracking/locale URL aliases, stale feed exclusion, recommendation gates, source flags and unknown-status preservation passed.');

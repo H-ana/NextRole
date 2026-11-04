@@ -18,7 +18,7 @@ def run(plan):
         frame=scrape_jobs(**options)
         if frame.attrs.get('errors'):return {'error':'This source blocked or failed collection. Cached listings remain available; try after the cooldown.'}
         # pandas serializes NaN and datetimes safely; retain only public fields.
-        fields=['experience_range','work_from_home_type','id','job_url_direct','site','job_url','title','company','description','location','is_remote','company_description','date_posted','min_amount','max_amount','interval','currency']
+        fields=['is_expired','job_is_open','accepting_applications','job_status','application_status','experience_range','work_from_home_type','id','job_url_direct','site','job_url','title','company','description','location','is_remote','company_description','date_posted','min_amount','max_amount','interval','currency']
         rows=json.loads(frame[[c for c in fields if c in frame.columns]].to_json(orient='records'))
         return {'jobs':rows,'warnings':bool(frame.attrs.get('warnings'))}
 

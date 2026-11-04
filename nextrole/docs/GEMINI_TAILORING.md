@@ -25,3 +25,9 @@ Deterministic checks require exact source originals, real job quotes, visible ch
 Calibri Word exports try the selected size then smaller readable sizes down to 10 pt; overflow is blocked without deletion. Browser layout is not a Word renderer; the existing optional LibreOffice companion remains available for actual PDF page/text checks.
 
 Tests: test-gemini-client.mjs, test-gemini-tailoring.mjs, plus existing export, role matching, draft and public boundary checks. qa/gemini-tailoring.html is a fictional mocked-provider browser fixture; it is not part of the published source checkout or deployment. A live provider test requires the user to enter a private key and consent in their browser.
+
+## Supported job-description keywords
+
+Tailoring now covers the summary, comma-separated skills and relevant accomplishment blocks. Every introduced job term must carry a verbatim job quote and a resume quote; role-bullet evidence stays anchored to that accomplishment, while skill and summary suggestions can draw on the current reviewed draft. Validated acronym equivalents such as ML/machine learning and PostgreSQL/Postgres are recognized. New named technologies require explicit source evidence; a generic cloud task cannot establish AWS. General capability wording such as process automation requires actual supporting tasks and a separate semantic audit. Skills retain original entries and proficiency caveats.
+
+Suggestions remain opt-in and display before/after text; their supporting keywords appear under Why this change. Repetition guards reject keyword stuffing within a suggestion and excessive combined repetition. The unchanged five-request review budget includes generation and factual audits. Current matching resume content is not replaced by tailoring. Failed or unsupported suggestions are not applied. This adapts the contextual keyword principle in https://resumly.in/ats-friendly-resume, without adopting guaranteed ATS-score or selection claims.

@@ -48,3 +48,9 @@ Naukri targeted searches use the employer name alone and verify exact normalized
 Two bounded live batches returned 39 listings before applicant filters, including Cardinal Health, HCA Healthcare, TIAA, Northern Trust and Interactive Brokers. An empty result for another company is not proof of no vacancies. Public collection is partial and source-dependent. No resume, key, login or new paid service was used.
 
 The full public feed remains in GitHub. For the November 4 publication, the static hosted fallback contains 3,380 complete listings (including all 39 freshly collected Naukri jobs), selected across employer/location groups to stay under the hosting per-file limit. Job descriptions are not truncated. The existing loader reads the full GitHub feed first and uses the bundled data as fallback.
+
+## Closed application handling
+
+Explicit closure banners and closed/expired source flags are excluded from ingestion/search, public-feed merges and browser recommendation gates. `dist/closed-jobs.json` stores verified public closure records keyed by platform job ID or canonical URL; the reported LinkedIn vacancy 4487032589 was visibly confirmed as not accepting applications. These records prevent tracking-link variants and older bundled/cache copies from restoring that vacancy. Closed platform links do not prove that a separate employer careers vacancy is closed.
+
+The scheduled workflow performs up to 120 public-page status checks after each feed merge, with two workers and a four-minute budget. It rotates by oldest availability check, uses existing robots/DNS/redirect/rate protections, and never uses a LinkedIn login, cookies, applicant data or AI. Blocked pages, timeouts and missing markers remain unknown, so closures invisible to public checks can still require a new observation. This does not promise immediate detection of every external status change. Existing salary/description-gap policy stays unchanged.

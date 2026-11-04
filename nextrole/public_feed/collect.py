@@ -5,7 +5,7 @@ from job_store import JobStore,source_key
 from experience_policy import requirement
 from mnc_employers import mnc_employer
 ROOT=Path(__file__).parent
-FIELDS=('id','source','company','title','description','location','url','style','years','skills','experience_quote','experience_requirement','last_checked','collection_method','posted_at','date_posted','posting_date','salary_min','salary_max','salary_currency','salary_interval','salary_source','scraped_from','job_requisition_id','application_links','listed_on','source_job_id','experience_source_quote','experience_source_url')
+FIELDS=('id','source','company','title','description','location','url','style','years','skills','experience_quote','experience_requirement','last_checked','collection_method','posted_at','date_posted','posting_date','salary_min','salary_max','salary_currency','salary_interval','salary_source','scraped_from','job_requisition_id','application_links','listed_on','source_job_id','experience_source_quote','experience_source_url','availability_status','availability_checked_at','availability_last_attempt','availability_quote','is_expired','job_is_open','accepting_applications','job_status','application_status')
 
 def shard_sources(sources,index,count):
  if count<1 or not 0<=index<count:raise ValueError('Invalid source shard')

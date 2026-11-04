@@ -1,5 +1,5 @@
 import {setupPortableBackup} from './portable-backup.mjs?v=132';
-import {loadPublicFeed} from './public-search.mjs?v=153';
+import {loadPublicFeed} from './public-search.mjs?v=165';
 import {findBackend} from './api-client.mjs?v=116';
 export const hostedWebsite=()=>!['localhost','127.0.0.1'].includes(location.hostname);
 export function setupPublicExperience(){

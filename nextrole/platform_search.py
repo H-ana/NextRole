@@ -71,7 +71,17 @@ def normalize_results(rows):
         if not isinstance(item,dict):continue
         site=item.get('site');url=item.get('job_url')
         if site not in SITES or platform_for_url(url)!=SITES[site] or url in seen:continue
-        if item.get('is_expired') is True or item.get('job_is_open') is False:continue
+        from job_availability import is_unavailable
+        if is_unavailable(item,{}):
+            # Keep a closure event even when the provider removes its description,
+            # so an older cached record with this URL can be deactivated.
+            if all(isinstance(item.get(k),str) and item[k].strip() for k in ('title','company')):
+                jobs.append({'id':'platform:jobspy:'+hashlib.sha256(url.encode()).hexdigest()[:24],
+                             'source':'platform:jobspy','url':url,'title':item['title'],'company':item['company'],
+                             'description':str(item.get('description') or ''),'location':str(item.get('location') or ''),
+                             'listed_on':[SITES[site]],'availability_status':'closed'})
+                seen.add(url)
+            continue
         values=[item.get(k) for k in ('title','company','description')]
         if not all(isinstance(v,str) and v.strip() for v in values):continue
         title,company,description=values
@@ -94,6 +104,8 @@ def normalize_results(rows):
                      collection_method='JobSpy public listing',application_links=[{'platform':SITES[site],'url':url}],
                      listed_on=[SITES[site]],style=style,company_description=item.get('company_description','')[:2000] if isinstance(item.get('company_description'),str) else '')
         if job:
+            for field in ('is_expired','job_is_open','accepting_applications','availability_status','job_status','application_status'):
+                if field in item:job[field]=item[field]
             if source_band:job.update(experience_source_quote=source_band,experience_source_url=url)
             direct=item.get('job_url_direct')
             if isinstance(direct,str):

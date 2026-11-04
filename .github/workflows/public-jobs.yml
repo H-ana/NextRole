@@ -28,11 +28,13 @@ jobs:
           python nextrole/public_feed/collect_platforms.py --site all --previous nextrole/dist/public-jobs.json --output public-job-parts/platforms.json
       - name: Merge and deduplicate public listings
         run: python nextrole/public_feed/merge.py --input-dir public-job-parts --previous nextrole/dist/public-jobs.json --output nextrole/dist/public-jobs.json
+      - name: Check public vacancy availability
+        run: python nextrole/public_feed/check_availability.py --feed nextrole/dist/public-jobs.json --registry nextrole/dist/closed-jobs.json --max-jobs 120
       - name: Publish platform results before career scans
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- nextrole/dist/public-jobs.json
+          git add -- nextrole/dist/public-jobs.json nextrole/dist/closed-jobs.json
           if ! git diff --cached --quiet; then
             git commit -m 'Refresh expanded company and platform jobs [skip ci]'
             git pull --rebase origin main
@@ -44,11 +46,13 @@ jobs:
           python nextrole/public_feed/collect.py --previous nextrole/dist/public-jobs.json --output public-job-parts/careers.json --max-sources 512
       - name: Merge refreshed career and platform listings
         run: python nextrole/public_feed/merge.py --input-dir public-job-parts --previous nextrole/dist/public-jobs.json --output nextrole/dist/public-jobs.json
+      - name: Check merged vacancy availability
+        run: python nextrole/public_feed/check_availability.py --feed nextrole/dist/public-jobs.json --registry nextrole/dist/closed-jobs.json --max-jobs 120
       - name: Publish only public listing data
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- nextrole/dist/public-jobs.json
+          git add -- nextrole/dist/public-jobs.json nextrole/dist/closed-jobs.json
           if ! git diff --cached --quiet; then
             git commit -m 'Refresh expanded company and platform jobs [skip ci]'
             git pull --rebase origin main

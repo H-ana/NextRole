@@ -53,8 +53,13 @@ class NormalizationTests(unittest.TestCase):
             self.assertIsNone(platform_for_url(link))
 
     def test_incomplete_expired_duplicate_and_inferred_experience_are_not_accepted(self):
-        for changed in ({'job_is_open':False},{'is_expired':True},{'description':'Short snippet'},{'company':None}):
+        for changed in ({'description':'Short snippet'},{'company':None}):
             self.assertEqual(normalize_results([{**rows()[0],**changed}]),[])
+        from job_availability import is_unavailable
+        for changed in ({'job_is_open':False},{'is_expired':True},{'job_is_open':False,'description':''}):
+            closed=normalize_results([{**rows()[0],**changed}])
+            self.assertEqual(len(closed),1)
+            self.assertTrue(is_unavailable(closed[0]))
         job=normalize_results([{**rows()[0],'experience_range':'20 years'},*rows()])
         self.assertEqual(len(job),1);self.assertEqual(job[0]['years'],2)
 

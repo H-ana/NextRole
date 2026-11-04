@@ -1,3 +1,4 @@
+import {isUnavailable} from './job-availability.mjs?v=165';
 // Explainable checks on collected public adverts, not a fraud or hiring verdict.
 const DAY=86400000;
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -44,6 +45,7 @@ export function listingBadge(job){
 }
 export function eligibleListings(jobs,now=Date.now()){
  return jobs.filter(job=>{
+  if(isUnavailable(job))return false;
   const checks=listingChecks(job,now);
   return checks.cautions===0&&checks.freshness===0;
  });

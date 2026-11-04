@@ -159,6 +159,10 @@ CREATE TABLE IF NOT EXISTS sources (id TEXT PRIMARY KEY,last_attempt REAL,last_s
             if complete:db.execute('UPDATE jobs SET active=0 WHERE source=?',(key,))
             else:db.execute('UPDATE jobs SET active=0 WHERE source=? AND last_seen<?',(key,now-(30*86400 if source['provider']=='manual' else 86400)))
             for job in jobs:
+                from job_availability import is_unavailable
+                if is_unavailable(job):
+                    db.execute('UPDATE jobs SET active=0 WHERE id=?',(job['id'],))
+                    continue
                 digest=hashlib.sha256((job['title']+'\n'+job['description']).encode()).hexdigest()
                 db.execute('''INSERT INTO jobs(id,source,payload,content_hash,last_seen,active) VALUES(?,?,?,?,?,1)
 ON CONFLICT(id) DO UPDATE SET source=excluded.source,payload=excluded.payload,last_seen=excluded.last_seen,active=1,
@@ -274,6 +278,8 @@ vector_version=CASE WHEN jobs.content_hash=excluded.content_hash THEN jobs.vecto
         if not 1<=limit<=200:raise ValueError('Use a result limit from 1 to 200')
         snapshot=self.snapshot();eligible=[];gaps=[];excluded_location=0;excluded_style=0;unknown_location=0;excluded_employer=0;unknown_experience=0
         for job in snapshot['jobs']:
+            from job_availability import is_unavailable
+            if is_unavailable(job):continue
             if not mnc_employer(job):excluded_employer+=1;continue
             if style!='Remote' and not location_matches(job['location'],cities):
                 excluded_location+=1
