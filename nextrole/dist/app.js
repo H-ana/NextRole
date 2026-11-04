@@ -27,7 +27,7 @@ import {mountResumeBuilder} from './resume-builder.mjs?v=113';
 import {pdfPageText,setupExtractionReview} from './extraction-review.mjs?v=124';
 import {HIRING_CITIES, canonicalCity, matchesPreferredCities} from './locations.mjs?v=153';
 import {extract, safeUrl, evidenceFor, tailorResume, hasSkillOverlap, requiredYears, meetsKnownExperience} from './resume-tools.mjs?v=113';
-const mncIndex=employerIndex(await fetch(new URL('./mnc-employers.json?v=152',import.meta.url)).then(r=>{if(!r.ok)throw new Error('Employer policy unavailable');return r.json();}).catch(()=>({companies:[]})));
+const mncIndex=employerIndex(await fetch(new URL('./mnc-employers.json?v=163',import.meta.url)).then(r=>{if(!r.ok)throw new Error('Employer policy unavailable');return r.json();}).catch(()=>({companies:[]})));
 const recommendedListings=items=>filterRoleAlignedJobs(mncListings(eligibleListings(items),mncIndex).filter(job=>recommendationExperience(job,$('experience').value)),$('resume-text').value,{target_roles:$('search').value.trim()});
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

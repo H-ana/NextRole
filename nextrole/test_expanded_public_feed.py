@@ -44,7 +44,7 @@ class ExpandedFeedTests(unittest.TestCase):
 
  def test_every_registry_row_participates_and_progress_survives_refreshes(self):
   previous=None;seen=set()
-  for cycle in range(4):
+  for cycle in range((len(approved_targets())+TARGET_BATCH-1)//TARGET_BATCH):
    now=1000100+cycle*14400
    plans=search_plan('linkedin',now,previous);targeted=[p for p in plans if p.get('employer')]
    self.assertEqual(len(targeted),TARGET_BATCH)
@@ -52,7 +52,7 @@ class ExpandedFeedTests(unittest.TestCase):
    seen.update(p['employer'] for p in targeted)
    previous=collect('linkedin',previous=previous,fetcher=lambda p:([],False),now=now)
   self.assertEqual(seen,set(approved_targets()))
-  self.assertEqual(len(seen),251)
+  self.assertGreaterEqual(len(seen),251)
   self.assertTrue({'Apple','Meta','Anthropic','HashedIn by Deloitte','NCR Atleos'}.issubset(seen))
   states=previous['sources'][0]['employer_searches']
   self.assertTrue(all(states[name].get('last_attempt') for name in seen))

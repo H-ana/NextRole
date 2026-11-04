@@ -1,6 +1,6 @@
 {
-  "version": 4,
-  "reviewed_on": "2026-10-31",
+  "version": 5,
+  "reviewed_on": "2026-11-04",
   "policy": "Curated leading technology employers and major enterprises recruiting technology roles. Includes the user-requested historical Thomson Reuters tech list plus selected AI/SaaS/enterprise employers. This is a coverage scope, not an exhaustive or current company ranking. Exact employer names and explicit aliases only. A job advertisement is not proof that every advertised technology is deployed internally.",
   "companies": [
     {
@@ -19,8 +19,16 @@
       ],
       "scope_categories": [
         "technology",
-        "enterprise-technology-adopter"
-      ]
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        10476
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Accenture"
     },
     {
       "name": "Acer",
@@ -49,8 +57,16 @@
         "https://www.geeksforgeeks.org/blogs/top-software-companies-in-bangalore/"
       ],
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        244334
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Adobe"
     },
     {
       "name": "AMD",
@@ -64,8 +80,16 @@
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "User-requested company list; historical membership, not a current ranking.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        181534
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "AMD"
     },
     {
       "name": "Advantest",
@@ -158,8 +182,16 @@
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "User-requested company list; historical membership, not a current ranking.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        25376
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Analog Devices"
     },
     {
       "name": "Apple",
@@ -175,8 +207,16 @@
         "https://github.com/miketromba/highest-paying-software-companies"
       ],
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        445608
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Apple"
     },
     {
       "name": "Applied Materials",
@@ -188,8 +228,16 @@
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "User-requested company list; historical membership, not a current ranking.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        1574056
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Applied Materials"
     },
     {
       "name": "ARRIS (Vistance Networks)",
@@ -359,8 +407,16 @@
         "https://github.com/miketromba/highest-paying-software-companies"
       ],
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        45216
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Cisco"
     },
     {
       "name": "Cognizant",
@@ -447,8 +503,16 @@
         "https://www.beginnersly.com/article/indian-it-companies-list"
       ],
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        2641916
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "DXC Technology"
     },
     {
       "name": "eBay",
@@ -497,8 +561,16 @@
         "https://github.com/miketromba/highest-paying-software-companies"
       ],
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        867498
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Meta"
     },
     {
       "name": "FUJIFILM",
@@ -616,8 +688,16 @@
       ],
       "scope_categories": [
         "technology",
-        "enterprise-technology-adopter"
-      ]
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        19288
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "IBM"
     },
     {
       "name": "Infineon Technologies",
@@ -661,8 +741,16 @@
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "User-requested company list; historical membership, not a current ranking.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        166008
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Intel"
     },
     {
       "name": "Intuit",
@@ -691,8 +779,16 @@
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "User-requested company list; historical membership, not a current ranking.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        714730
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Lam Research"
     },
     {
       "name": "Leidos",
@@ -772,8 +868,16 @@
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "User-requested company list; historical membership, not a current ranking.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        696200
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Mastercard"
     },
     {
       "name": "Micron Technology",
@@ -785,8 +889,16 @@
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "User-requested company list; historical membership, not a current ranking.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4609845
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Micron Technology"
     },
     {
       "name": "Microsoft",
@@ -907,8 +1019,16 @@
         "https://github.com/miketromba/highest-paying-software-companies"
       ],
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        80560
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "NVIDIA"
     },
     {
       "name": "NXP Semiconductors",
@@ -947,8 +1067,16 @@
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "User-requested company list; historical membership, not a current ranking.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4615709
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "onsemi"
     },
     {
       "name": "Oracle",
@@ -1023,8 +1151,16 @@
         "https://github.com/miketromba/highest-paying-software-companies"
       ],
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        356782
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Qualcomm"
     },
     {
       "name": "Quanta Computer",
@@ -1081,8 +1217,16 @@
         "https://github.com/miketromba/highest-paying-software-companies"
       ],
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        230842
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Salesforce"
     },
     {
       "name": "Samsung Electronics",
@@ -1314,8 +1458,16 @@
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "User-requested company list; historical membership, not a current ranking.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        3448628
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Texas Instruments"
     },
     {
       "name": "Tieto",
@@ -1783,15 +1935,24 @@
     {
       "name": "Broadcom",
       "aliases": [
-        "broadcom"
+        "broadcom",
+        "Broadcom"
       ],
       "evidence_url": "https://github.com/miketromba/highest-paying-software-companies",
       "catalog": "requested-employer-lists-2026",
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "Explicit user-requested employer lists; not a claim of current MNC status or compensation.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        680786
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Broadcom"
     },
     {
       "name": "PayPal",
@@ -2151,15 +2312,24 @@
     {
       "name": "Airbnb",
       "aliases": [
-        "airbnb"
+        "airbnb",
+        "Airbnb"
       ],
       "evidence_url": "https://github.com/miketromba/highest-paying-software-companies",
       "catalog": "requested-employer-lists-2026",
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "Explicit user-requested employer lists; not a claim of current MNC status or compensation.",
       "scope_categories": [
-        "technology"
-      ]
+        "technology",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        1523938
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Airbnb"
     },
     {
       "name": "Netflix",
@@ -2360,21 +2530,38 @@
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "Explicit user-requested employer lists; not a claim of current MNC status or compensation.",
       "scope_categories": [
-        "enterprise-technology-adopter"
-      ]
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        530892
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Goldman Sachs"
     },
     {
       "name": "Novartis",
       "aliases": [
-        "Novartis"
+        "Novartis",
+        "NOVARTIS"
       ],
       "evidence_url": "https://www.novartis.com/careers/career-search/tag/LOC_IN",
       "catalog": "requested-employer-lists-2026",
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "Explicit user-requested employer lists; not a claim of current MNC status or compensation.",
       "scope_categories": [
-        "enterprise-technology-adopter"
-      ]
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4613591
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Novartis"
     },
     {
       "name": "Eli Lilly",
@@ -2382,15 +2569,24 @@
         "Eli Lilly",
         "Eli Lilly and Company",
         "Lilly",
-        "Eli Lilly Services India"
+        "Eli Lilly Services India",
+        "Eli Lilly And Company"
       ],
       "evidence_url": "https://careers.lilly.com/us/en/search-results?keywords=India",
       "catalog": "requested-employer-lists-2026",
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "Explicit user-requested employer lists; not a claim of current MNC status or compensation.",
       "scope_categories": [
-        "enterprise-technology-adopter"
-      ]
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        3036788
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Eli Lilly"
     },
     {
       "name": "Roche",
@@ -2426,15 +2622,24 @@
     {
       "name": "Walmart",
       "aliases": [
-        "walmart"
+        "walmart",
+        "Walmart"
       ],
       "evidence_url": "https://github.com/miketromba/highest-paying-software-companies",
       "catalog": "requested-employer-lists-2026",
       "reviewed_on": "2026-10-26",
       "inclusion_basis": "Explicit user-requested employer lists; not a claim of current MNC status or compensation.",
       "scope_categories": [
-        "enterprise-technology-adopter"
-      ]
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        1293920
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Walmart"
     },
     {
       "name": "Rubrik",
@@ -2500,11 +2705,20 @@
       "careers_url": "https://www.samsung.com/us/careers/",
       "aliases": [
         "Samsung Electronics",
-        "Samsung R&D Institute India"
+        "Samsung R&D Institute India",
+        "Samsung India"
       ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        23222
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Samsung"
     },
     {
       "name": "Arm",
@@ -2543,11 +2757,20 @@
       "careers_url": "https://jobs.siemens.com/careers",
       "aliases": [
         "Siemens AG",
-        "Siemens Technology and Services"
+        "Siemens Technology and Services",
+        "Siemens"
       ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        40604
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Siemens"
     },
     {
       "name": "MathWorks",
@@ -2574,11 +2797,20 @@
       "evidence_url": "https://www.americanexpress.com/en-us/careers/",
       "careers_url": "https://www.americanexpress.com/en-us/careers/",
       "aliases": [
-        "Amex"
+        "Amex",
+        "AMERICAN EXPRESS"
       ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        82242
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "American Express"
     },
     {
       "name": "ADP",
@@ -2682,8 +2914,16 @@
         "Expedia"
       ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        584024
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Expedia Group"
     },
     {
       "name": "Agoda",
@@ -2811,31 +3051,59 @@
         "JPMorganChase",
         "JPMorgan Chase & Co.",
         "JP Morgan",
-        "JP Morgan Chase"
+        "JP Morgan Chase",
+        "JPMorgan Chase Bank"
       ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        240936
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "JPMorgan Chase"
     },
     {
       "name": "Morgan Stanley",
       "evidence_url": "https://www.morganstanley.com/people-opportunities/",
       "careers_url": "https://www.morganstanley.com/people-opportunities/",
-      "aliases": [],
+      "aliases": [
+        "Morgan Stanley"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        228864
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Morgan Stanley"
     },
     {
       "name": "Bank of America",
       "evidence_url": "https://careers.bankofamerica.com/en-us",
       "careers_url": "https://careers.bankofamerica.com/en-us",
       "aliases": [
-        "BofA"
+        "BofA",
+        "Bank Of America"
       ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        122496
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Bank of America"
     },
     {
       "name": "Citi",
@@ -2853,10 +3121,20 @@
       "name": "Wells Fargo",
       "evidence_url": "https://www.wellsfargojobs.com/",
       "careers_url": "https://www.wellsfargojobs.com/",
-      "aliases": [],
+      "aliases": [
+        "Wells Fargo"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        5239022
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Wells Fargo"
     },
     {
       "name": "Barclays",
@@ -2871,10 +3149,20 @@
       "name": "HSBC",
       "evidence_url": "https://apply.careers.hsbc.com/",
       "careers_url": "https://apply.careers.hsbc.com/",
-      "aliases": [],
+      "aliases": [
+        "Hsbc"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        164080
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "HSBC"
     },
     {
       "name": "Standard Chartered",
@@ -2891,10 +3179,20 @@
       "name": "Deutsche Bank",
       "evidence_url": "https://careers.db.com/",
       "careers_url": "https://careers.db.com/",
-      "aliases": [],
+      "aliases": [
+        "Deutsche Bank"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        468918
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Deutsche Bank"
     },
     {
       "name": "UBS",
@@ -2936,10 +3234,20 @@
       "name": "BNP Paribas",
       "evidence_url": "https://group.bnpparibas/en/careers",
       "careers_url": "https://group.bnpparibas/en/careers",
-      "aliases": [],
+      "aliases": [
+        "BNP Paribas"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        152694
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "BNP Paribas"
     },
     {
       "name": "S&P Global",
@@ -3003,10 +3311,20 @@
       "name": "Pfizer",
       "evidence_url": "https://www.pfizer.com/about/careers",
       "careers_url": "https://www.pfizer.com/about/careers",
-      "aliases": [],
+      "aliases": [
+        "Pfizer"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        233602
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Pfizer"
     },
     {
       "name": "Sanofi",
@@ -3042,11 +3360,20 @@
       "evidence_url": "https://jobs.thermofisher.com/global/en",
       "careers_url": "https://jobs.thermofisher.com/global/en",
       "aliases": [
-        "Thermo Fisher"
+        "Thermo Fisher",
+        "Thermo Fisher Scientific"
       ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        526200
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Thermo Fisher Scientific"
     },
     {
       "name": "Johnson & Johnson",
@@ -3075,19 +3402,39 @@
       "name": "Target",
       "evidence_url": "https://jobs.target.com/",
       "careers_url": "https://jobs.target.com/",
-      "aliases": [],
+      "aliases": [
+        "Target"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        24912
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Target"
     },
     {
       "name": "Tesco",
       "evidence_url": "https://www.tesco-careers.com/",
       "careers_url": "https://www.tesco-careers.com/",
-      "aliases": [],
+      "aliases": [
+        "Tesco"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        24010
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Tesco"
     },
     {
       "name": "Unilever",
@@ -3102,10 +3449,20 @@
       "name": "PepsiCo",
       "evidence_url": "https://www.pepsicojobs.com/",
       "careers_url": "https://www.pepsicojobs.com/",
-      "aliases": [],
+      "aliases": [
+        "Pepsico"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        235536
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "PepsiCo"
     },
     {
       "name": "Procter & Gamble",
@@ -3145,10 +3502,20 @@
       "name": "Schneider Electric",
       "evidence_url": "https://www.se.com/us/en/about-us/careers/overview.jsp",
       "careers_url": "https://www.se.com/us/en/about-us/careers/overview.jsp",
-      "aliases": [],
+      "aliases": [
+        "Schneider Electric"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        20302
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Schneider Electric"
     },
     {
       "name": "Honeywell",
@@ -3163,10 +3530,20 @@
       "name": "ABB",
       "evidence_url": "https://careers.abb/global/en",
       "careers_url": "https://careers.abb/global/en",
-      "aliases": [],
+      "aliases": [
+        "ABB"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        9400
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "ABB"
     },
     {
       "name": "Airbus",
@@ -3181,19 +3558,39 @@
       "name": "Boeing",
       "evidence_url": "https://jobs.boeing.com/",
       "careers_url": "https://jobs.boeing.com/",
-      "aliases": [],
+      "aliases": [
+        "Boeing"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        97322
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Boeing"
     },
     {
       "name": "Shell",
       "evidence_url": "https://www.shell.com/careers.html",
       "careers_url": "https://www.shell.com/careers.html",
-      "aliases": [],
+      "aliases": [
+        "Shell"
+      ],
       "scope_categories": [
-        "major-technology-or-enterprise-employer"
-      ]
+        "major-technology-or-enterprise-employer",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        142634
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Shell"
     },
     {
       "name": "SLB",
@@ -3212,6 +3609,990 @@
       "evidence_url": "https://www.ncratleos.com/careers",
       "catalog": "thomson-reuters-tech-2018",
       "reviewed_on": "2026-10-26"
+    },
+    {
+      "name": "Caterpillar Inc",
+      "aliases": [
+        "Caterpillar Inc"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4585477
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Caterpillar Inc"
+    },
+    {
+      "name": "Mondelez",
+      "aliases": [
+        "Mondelez"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4238850
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Mondelez"
+    },
+    {
+      "name": "Anheuser Busch InBev",
+      "aliases": [
+        "Anheuser Busch InBev"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4668557
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Anheuser Busch InBev"
+    },
+    {
+      "name": "Merck",
+      "aliases": [
+        "Merck"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        269320
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Merck"
+    },
+    {
+      "name": "Metlife",
+      "aliases": [
+        "Metlife"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        115024
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Metlife"
+    },
+    {
+      "name": "Glencore",
+      "aliases": [
+        "Glencore"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4667285
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Glencore"
+    },
+    {
+      "name": "Abbott",
+      "aliases": [
+        "Abbott"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        434716
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Abbott"
+    },
+    {
+      "name": "Teachers Insurance and Annuity Association of America (TIAA)",
+      "aliases": [
+        "Teachers Insurance and Annuity Association of America (TIAA)",
+        "TIAA"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        3822304
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "TIAA"
+    },
+    {
+      "name": "National Australia Bank (NAB)",
+      "aliases": [
+        "National Australia Bank (NAB)",
+        "National Australia Bank",
+        "NAB"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4659867
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "National Australia Bank"
+    },
+    {
+      "name": "Hdfc Bank",
+      "aliases": [
+        "Hdfc Bank"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        67548
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Hdfc Bank"
+    },
+    {
+      "name": "Xylem Water Solutions",
+      "aliases": [
+        "Xylem Water Solutions",
+        "Xylem"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4641049
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Xylem Water Solutions"
+    },
+    {
+      "name": "HCA Healthcare",
+      "aliases": [
+        "HCA Healthcare"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        6044227
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "HCA Healthcare"
+    },
+    {
+      "name": "Lowe's",
+      "aliases": [
+        "Lowe's",
+        "Lowe's India"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        3867866
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Lowe's"
+    },
+    {
+      "name": "Stryker",
+      "aliases": [
+        "Stryker"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        683688
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Stryker"
+    },
+    {
+      "name": "PVH",
+      "aliases": [
+        "PVH"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4836271
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "PVH"
+    },
+    {
+      "name": "Allstate India Private Limited",
+      "aliases": [
+        "Allstate India Private Limited"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4579363
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Allstate India Private Limited"
+    },
+    {
+      "name": "Arrow Electronics",
+      "aliases": [
+        "Arrow Electronics"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        255972
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Arrow Electronics"
+    },
+    {
+      "name": "Dover India Pvt Ltd",
+      "aliases": [
+        "Dover India Pvt Ltd"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        33960
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Dover India Pvt Ltd"
+    },
+    {
+      "name": "UBS Group",
+      "aliases": [
+        "UBS Group"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        228844
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "UBS Group"
+    },
+    {
+      "name": "ExxonMobil",
+      "aliases": [
+        "ExxonMobil"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        2588242
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "ExxonMobil"
+    },
+    {
+      "name": "Continental",
+      "aliases": [
+        "Continental"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        221044
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Continental"
+    },
+    {
+      "name": "Saint Gobain",
+      "aliases": [
+        "Saint Gobain"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        966646
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Saint Gobain"
+    },
+    {
+      "name": "Louis Dreyfus Company",
+      "aliases": [
+        "Louis Dreyfus Company"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        137016
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Louis Dreyfus Company"
+    },
+    {
+      "name": "Northern Trust",
+      "aliases": [
+        "Northern Trust"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4615289
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Northern Trust"
+    },
+    {
+      "name": "Reliance Nippon Life Insurance Company (RNLIC)",
+      "aliases": [
+        "Reliance Nippon Life Insurance Company (RNLIC)",
+        "RNLIC"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        84158
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Reliance Nippon Life Insurance"
+    },
+    {
+      "name": "Ecolab Global Services",
+      "aliases": [
+        "Ecolab Global Services"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        11546544
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Ecolab Global Services"
+    },
+    {
+      "name": "Dupont",
+      "aliases": [
+        "Dupont"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        214338
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Dupont"
+    },
+    {
+      "name": "Magna International",
+      "aliases": [
+        "Magna International"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        207554
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Magna International"
+    },
+    {
+      "name": "Eastman Chemical",
+      "aliases": [
+        "Eastman Chemical"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4663877
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Eastman Chemical"
+    },
+    {
+      "name": "Lloyds Technology Centre",
+      "aliases": [
+        "Lloyds Technology Centre"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4702913
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Lloyds Technology Centre"
+    },
+    {
+      "name": "Interactive Brokers",
+      "aliases": [
+        "Interactive Brokers"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        662466
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Interactive Brokers"
+    },
+    {
+      "name": "Xiaomi",
+      "aliases": [
+        "Xiaomi"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        1953680
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Xiaomi"
+    },
+    {
+      "name": "General Mills",
+      "aliases": [
+        "General Mills"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        1493572
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "General Mills"
+    },
+    {
+      "name": "Chevron India",
+      "aliases": [
+        "Chevron India"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        11471354
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Chevron India"
+    },
+    {
+      "name": "Equinix",
+      "aliases": [
+        "Equinix"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4261398
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Equinix"
+    },
+    {
+      "name": "Fiserv",
+      "aliases": [
+        "Fiserv"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        240920
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Fiserv"
+    },
+    {
+      "name": "Denso",
+      "aliases": [
+        "Denso"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        332254
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Denso"
+    },
+    {
+      "name": "Toyota Tsusho",
+      "aliases": [
+        "Toyota Tsusho"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4635291
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Toyota Tsusho"
+    },
+    {
+      "name": "GSK India",
+      "aliases": [
+        "GSK India"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        18718
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "GSK India"
+    },
+    {
+      "name": "Mobis India",
+      "aliases": [
+        "Mobis India"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        1146482
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Mobis India"
+    },
+    {
+      "name": "Jones Lang LaSalle (JLL)",
+      "aliases": [
+        "Jones Lang LaSalle (JLL)",
+        "JLL",
+        "Jones Lang LaSalle"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4808609
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "JLL"
+    },
+    {
+      "name": "Dow Chemical International Private Limited",
+      "aliases": [
+        "Dow Chemical International Private Limited"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4656239
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Dow Chemical International Private Limited"
+    },
+    {
+      "name": "Bristol Myers Squibb",
+      "aliases": [
+        "Bristol Myers Squibb"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4762145
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Bristol Myers Squibb"
+    },
+    {
+      "name": "Cardinal Health",
+      "aliases": [
+        "Cardinal Health"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4673837
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Cardinal Health"
+    },
+    {
+      "name": "3M India",
+      "aliases": [
+        "3M India"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        364014
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "3M India"
+    },
+    {
+      "name": "UPS Supply Chain Solutions (UPS SCS)",
+      "aliases": [
+        "UPS Supply Chain Solutions (UPS SCS)",
+        "UPS Supply Chain Solutions",
+        "UPS SCS"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        1097340
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "UPS Supply Chain Solutions"
+    },
+    {
+      "name": "BNY",
+      "aliases": [
+        "BNY"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        293492
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "BNY"
+    },
+    {
+      "name": "Swiss Re",
+      "aliases": [
+        "Swiss Re"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        207088
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Swiss Re"
+    },
+    {
+      "name": "Tjx",
+      "aliases": [
+        "Tjx"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        4753725
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Tjx"
+    },
+    {
+      "name": "Newell Brands",
+      "aliases": [
+        "Newell Brands"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        2446928
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Newell Brands"
+    },
+    {
+      "name": "State Bank of India (SBI)",
+      "aliases": [
+        "State Bank of India (SBI)",
+        "SBI",
+        "State Bank of India"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        179636
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "State Bank of India"
+    },
+    {
+      "name": "Societe Generale Global Solution Centre",
+      "aliases": [
+        "Societe Generale Global Solution Centre"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        1078056
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Societe Generale Global Solution Centre"
+    },
+    {
+      "name": "Cummins",
+      "aliases": [
+        "Cummins"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        15932
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Cummins"
+    },
+    {
+      "name": "Jabil Circuit India",
+      "aliases": [
+        "Jabil Circuit India"
+      ],
+      "evidence_url": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "scope_categories": [
+        "enterprise-technology-adopter",
+        "naukri-fortune-software"
+      ],
+      "naukri_fortune_software_verified": true,
+      "naukri_company_ids": [
+        244606
+      ],
+      "naukri_directory_source": "https://www.naukri.com/companies-hiring-in-india?title=Fortune%20500%20actively%20hiring&pageNo=1&categoryId=115&qccustomTag=247&qccustomTag=288&qcallDept=5",
+      "naukri_directory_reviewed_on": "2026-11-04",
+      "naukri_search_name": "Jabil Circuit India"
     }
   ]
 }

@@ -11,6 +11,7 @@ ROLES=['AI Engineer','Generative AI Engineer','GenAI Engineer','Agentic AI Engin
 SITES={'linkedin':'LinkedIn','indeed':'Indeed','naukri':'Naukri','glassdoor':'Glassdoor','bayt':'Bayt'}
 
 TARGET_BATCH=64
+NAUKRI_FORTUNE_BATCH=32
 TARGET_ROLES=['AI Engineer','Generative AI Engineer','Machine Learning Engineer','Software Engineer']
 
 def approved_targets():
@@ -23,7 +24,7 @@ def employer_history(site,previous):
  source=next((s for s in (previous or {}).get('sources',[]) if s.get('id')=='platform:public:'+site),{})
  raw=source.get('employer_searches') or {};result={}
  if not isinstance(raw,dict):return result
- for name in approved_targets():
+ for name,row in approved_targets().items():
   state=raw.get(name,{})
   if not isinstance(state,dict):continue
   clean={}
@@ -40,11 +41,19 @@ def search_plan(site,now,previous=None):
  general += [dict(site=site,role=role,city=city,remote=False,results=count) for city in CITIES for role in ['AI Engineer','Generative AI Engineer']]
  general += [dict(site=site,role=role,city='India',remote=True,results=count) for role in ['AI Engineer','Generative AI Engineer']]
  history=employer_history(site,previous);rows=approved_targets()
- names=sorted(rows,key=lambda name:(history.get(name,{}).get('last_attempt',0),name.casefold()))[:TARGET_BATCH]
+ ordered=sorted(rows,key=lambda name:(history.get(name,{}).get('last_attempt',0),name.casefold()))
+ # Reserve bounded Naukri coverage for the verified software-hiring directory.
+ # The remaining slots still rotate through every other approved employer.
+ priority=[name for name in ordered if rows[name].get('naukri_fortune_software_verified') is True][:NAUKRI_FORTUNE_BATCH] if site=='naukri' else []
+ names=priority+[name for name in ordered if name not in priority][:TARGET_BATCH-len(priority)]
  targeted=[]
  for name in names:
   index=history.get(name,{}).get('next_role',0)
   plan=dict(site=site,role=TARGET_ROLES[index]+' '+name,city='India',remote=False,results=count,employer=name,target_role_index=index)
+  # Naukri's combined role/company keyword search can bury the employer's
+  # vacancies under unrelated results. Search its name, require an exact
+  # registry match below, and let the normal role/preferences path rank jobs.
+  if site=='naukri':plan['role']=rows[name].get('naukri_search_name',name)
   # Optional IDs must be explicitly verified in the registry. Never infer them.
   ids=rows[name].get('linkedin_company_ids')
   if site=='linkedin' and rows[name].get('linkedin_ids_verified') is True and isinstance(ids,list) and ids and all(isinstance(i,int) and not isinstance(i,bool) and i>0 for i in ids):plan['linkedin_company_ids']=ids[:10]

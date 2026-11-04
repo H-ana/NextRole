@@ -38,3 +38,11 @@ Each query may read one additional page when its first page fills, with source-r
 The unfamiliar-title fallback requires an explicit AI development responsibility plus engineering context; support, sales and unrelated occupations remain excluded. Hyderabad/Secunderabad are aliases. Nearby metropolitan areas are opt-in and stored with browser preferences. Unknown experience is displayed separately and never presented as confirmed eligibility or a strong match merely because it was included.
 
 Career collection can dispatch configured or explicitly employer-linked Workday and SmartRecruiters portals without relying on JavaScript HTML. The SmartRecruiters external-postings adapter retains full descriptions, locations, publication dates and requisition IDs, with bounded pagination, saved continuation cursors and partial-result retention. No authenticated/internal postings are requested. Generic site blocking remains a coverage limit.
+
+## Naukri Fortune software hiring — November 4, 2026
+
+Verified all 99 cards over three pages of Naukri's Fortune 500 company directory with Engineering - Software & QA selected. The registry now contains 305 employers after adding 54 missing rows and reviewed aliases. The snapshot in `naukri-fortune-software-companies.json` records the source, date and Naukri card IDs. Those IDs are provenance, not unsupported JobSpy API filters; category membership does not certify an independent current Fortune ranking.
+
+Naukri targeted searches use the employer name alone and verify exact normalized employer/alias matches. Combining a role and company name previously missed visible company jobs. Role, qualifications evidence, experience, cities, work style and posting checks remain in the normal recommendation path. Software/AI role terms still run as general searches. Each Naukri cycle reserves 32 of 64 employer slots for this verified group, retaining bounded pagination, failure cooldowns, successful empty results and other employer rotation.
+
+Two bounded live batches returned 39 listings before applicant filters, including Cardinal Health, HCA Healthcare, TIAA, Northern Trust and Interactive Brokers. An empty result for another company is not proof of no vacancies. Public collection is partial and source-dependent. No resume, key, login or new paid service was used.
