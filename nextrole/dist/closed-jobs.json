@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1793797053.9868486,
+  "updated_at": 1793823650.0218184,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -92,6 +92,20 @@
       "url": "https://in.indeed.com/viewjob?jk=9f017270074cd3d7",
       "status": "closed",
       "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.bayt.com/en/india/jobs/ai-operations-engineer-ai-agent-ai-tool-75323835",
+      "url": "https://www.bayt.com/en/india/jobs/ai-operations-engineer-ai-agent-ai-tool-75323835/",
+      "status": "closed",
+      "checked_at": 1793823635.7926712,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:e363ec1071f89aca",
+      "url": "https://in.indeed.com/viewjob?jk=e363ec1071f89aca",
+      "status": "closed",
+      "checked_at": 1793823635.7926712,
       "quote": "position is filled"
     }
   ]
