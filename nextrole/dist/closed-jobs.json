@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1793782421.5279846,
+  "updated_at": 1793796318.195753,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -9,6 +9,90 @@
       "status": "closed",
       "checked_at": 1793782421.5279846,
       "quote": "Not currently accepting applications"
+    },
+    {
+      "key": "indeed:c5ff2c5062fb31ae",
+      "url": "https://in.indeed.com/viewjob?jk=c5ff2c5062fb31ae",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:7e13a6a5a9016e02",
+      "url": "https://in.indeed.com/viewjob?jk=7e13a6a5a9016e02",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:56fe9a441d094548",
+      "url": "https://in.indeed.com/viewjob?jk=56fe9a441d094548",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:49b41dd6c60c932e",
+      "url": "https://in.indeed.com/viewjob?jk=49b41dd6c60c932e",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:ab24ff8db0d9adcd",
+      "url": "https://in.indeed.com/viewjob?jk=ab24ff8db0d9adcd",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:31fb4aa83933f8ba",
+      "url": "https://in.indeed.com/viewjob?jk=31fb4aa83933f8ba",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:004aae7a81fbf100",
+      "url": "https://in.indeed.com/viewjob?jk=004aae7a81fbf100",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:a19f136239a12c0e",
+      "url": "https://in.indeed.com/viewjob?jk=a19f136239a12c0e",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:ec7c7c6b88dab7ef",
+      "url": "https://in.indeed.com/viewjob?jk=ec7c7c6b88dab7ef",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:f874c1dbc4c70e35",
+      "url": "https://in.indeed.com/viewjob?jk=f874c1dbc4c70e35",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:e98f2cf6874b79bf",
+      "url": "https://in.indeed.com/viewjob?jk=e98f2cf6874b79bf",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:9f017270074cd3d7",
+      "url": "https://in.indeed.com/viewjob?jk=9f017270074cd3d7",
+      "status": "closed",
+      "checked_at": 1793796310.8787584,
+      "quote": "position is filled"
     }
   ]
 }
