@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1793842352.813755,
+  "updated_at": 1793882864.027666,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -120,6 +120,69 @@
       "url": "https://in.indeed.com/viewjob?jk=7fdb04f5e28b05fd",
       "status": "closed",
       "checked_at": 1793841581.017326,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.glassdoor.co.in/job-listing/j?jl=1010315478072",
+      "url": "https://www.glassdoor.co.in/job-listing/j?jl=1010315478072",
+      "status": "closed",
+      "checked_at": 1793882855.522106,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.glassdoor.co.in/job-listing/j?jl=1010301127041",
+      "url": "https://www.glassdoor.co.in/job-listing/j?jl=1010301127041",
+      "status": "closed",
+      "checked_at": 1793882855.522106,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.glassdoor.co.in/job-listing/j?jl=1010302456988",
+      "url": "https://www.glassdoor.co.in/job-listing/j?jl=1010302456988",
+      "status": "closed",
+      "checked_at": 1793882855.522106,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.glassdoor.co.in/job-listing/j?jl=1010296349831",
+      "url": "https://www.glassdoor.co.in/job-listing/j?jl=1010296349831",
+      "status": "closed",
+      "checked_at": 1793882855.522106,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:2f9fa848643819cf",
+      "url": "https://in.indeed.com/viewjob?jk=2f9fa848643819cf",
+      "status": "closed",
+      "checked_at": 1793882855.522106,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:63d3b1c0ddd4b825",
+      "url": "https://in.indeed.com/viewjob?jk=63d3b1c0ddd4b825",
+      "status": "closed",
+      "checked_at": 1793882855.522106,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:c966960e4d9106eb",
+      "url": "https://in.indeed.com/viewjob?jk=c966960e4d9106eb",
+      "status": "closed",
+      "checked_at": 1793882855.522106,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4479812148",
+      "url": "https://www.linkedin.com/jobs/view/4479812148",
+      "status": "closed",
+      "checked_at": 1793882855.522106,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4479805548",
+      "url": "https://www.linkedin.com/jobs/view/4479805548",
+      "status": "closed",
+      "checked_at": 1793882855.522106,
       "quote": "position is filled"
     }
   ]
