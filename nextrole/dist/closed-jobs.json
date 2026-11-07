@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1794065468.3752904,
+  "updated_at": 1794085189.5212517,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -225,6 +225,41 @@
       "url": "https://in.indeed.com/viewjob?jk=5a1f76f9f5fb87c9",
       "status": "closed",
       "checked_at": 1794064715.4066179,
+      "quote": "position is filled"
+    },
+    {
+      "key": "naukri:260826502337",
+      "url": "https://www.naukri.com/job-listings-soft-engineering-technical-leader-golang-networking-cloud-security-cisco-bengaluru-4-to-9-years-260826502337",
+      "status": "closed",
+      "checked_at": 1794085182.0903308,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4482473717",
+      "url": "https://www.linkedin.com/jobs/view/4482473717",
+      "status": "closed",
+      "checked_at": 1794085182.0903308,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4482067222",
+      "url": "https://www.linkedin.com/jobs/view/4482067222",
+      "status": "closed",
+      "checked_at": 1794085182.0903308,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4481562986",
+      "url": "https://www.linkedin.com/jobs/view/4481562986",
+      "status": "closed",
+      "checked_at": 1794085182.0903308,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4481576495",
+      "url": "https://www.linkedin.com/jobs/view/4481576495",
+      "status": "closed",
+      "checked_at": 1794085182.0903308,
       "quote": "position is filled"
     }
   ]
