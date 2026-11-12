@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1794471178.2218704,
+  "updated_at": 1794503990.579889,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -309,6 +309,13 @@
       "url": "https://www.linkedin.com/jobs/view/4479820004",
       "status": "closed",
       "checked_at": 1794470435.4241784,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:888dc2106c12300a",
+      "url": "https://in.indeed.com/viewjob?jk=888dc2106c12300a",
+      "status": "closed",
+      "checked_at": 1794503978.720356,
       "quote": "position is filled"
     }
   ]
