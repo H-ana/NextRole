@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1794671624.18433,
+  "updated_at": 1794690496.5747402,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -372,6 +372,20 @@
       "url": "https://www.naukri.com/job-listings-asic-engineer-new-grad-india-cisco-cag-uhr-evergreen-cisco-bengaluru-7-to-10-years-131126502286",
       "status": "closed",
       "checked_at": 1794640600.2499356,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:d5ff6fac9ff01424",
+      "url": "https://in.indeed.com/viewjob?jk=d5ff6fac9ff01424",
+      "status": "closed",
+      "checked_at": 1794690486.09327,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4489964486",
+      "url": "https://www.linkedin.com/jobs/view/4489964486",
+      "status": "closed",
+      "checked_at": 1794690486.09327,
       "quote": "position is filled"
     }
   ]
