@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1794759730.070773,
+  "updated_at": 1794778173.9997072,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -386,6 +386,13 @@
       "url": "https://www.linkedin.com/jobs/view/4489964486",
       "status": "closed",
       "checked_at": 1794690486.09327,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.bayt.com/en/india/jobs/software-engineer-ii-75418600",
+      "url": "https://www.bayt.com/en/india/jobs/software-engineer-ii-75418600/",
+      "status": "closed",
+      "checked_at": 1794778163.8111167,
       "quote": "position is filled"
     }
   ]
