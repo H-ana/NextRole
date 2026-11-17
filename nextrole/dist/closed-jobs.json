@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1794856867.6150904,
+  "updated_at": 1794885942.6840456,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -400,6 +400,13 @@
       "url": "https://in.indeed.com/viewjob?jk=9c915e7d4fa4ef4d",
       "status": "closed",
       "checked_at": 1794856109.8470852,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.bayt.com/en/india/jobs/platform-engineer-75429441",
+      "url": "https://www.bayt.com/en/india/jobs/platform-engineer-75429441/",
+      "status": "closed",
+      "checked_at": 1794885933.9649804,
       "quote": "position is filled"
     }
   ]
