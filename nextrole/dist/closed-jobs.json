@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1794991057.7574425,
+  "updated_at": 1795024353.1229494,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -407,6 +407,83 @@
       "url": "https://www.bayt.com/en/india/jobs/platform-engineer-75429441/",
       "status": "closed",
       "checked_at": 1794885933.9649804,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4492031993",
+      "url": "https://www.linkedin.com/jobs/view/4492031993",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4491584245",
+      "url": "https://www.linkedin.com/jobs/view/4491584245",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4490685013",
+      "url": "https://www.linkedin.com/jobs/view/4490685013",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4474191322",
+      "url": "https://www.linkedin.com/jobs/view/4474191322",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4490745158",
+      "url": "https://www.linkedin.com/jobs/view/4490745158",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4490358510",
+      "url": "https://www.linkedin.com/jobs/view/4490358510",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4480381038",
+      "url": "https://www.linkedin.com/jobs/view/4480381038",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4487294330",
+      "url": "https://www.linkedin.com/jobs/view/4487294330",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4486878955",
+      "url": "https://www.linkedin.com/jobs/view/4486878955",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4486883688",
+      "url": "https://www.linkedin.com/jobs/view/4486883688",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4486199169",
+      "url": "https://www.linkedin.com/jobs/view/4486199169",
+      "status": "closed",
+      "checked_at": 1795024340.358848,
       "quote": "position is filled"
     }
   ]
