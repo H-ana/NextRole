@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1795184002.5069354,
+  "updated_at": 1795196318.1852944,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -547,6 +547,111 @@
       "url": "https://in.indeed.com/viewjob?jk=36f6b195a5377328",
       "status": "closed",
       "checked_at": 1795183991.049275,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4491577493",
+      "url": "https://www.linkedin.com/jobs/view/4491577493",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4482465941",
+      "url": "https://www.linkedin.com/jobs/view/4482465941",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4482876025",
+      "url": "https://www.linkedin.com/jobs/view/4482876025",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4455743169",
+      "url": "https://www.linkedin.com/jobs/view/4455743169",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "linkedin:4488178418",
+      "url": "https://www.linkedin.com/jobs/view/4488178418",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.bayt.com/en/india/jobs/technical-solution-manager-75459736",
+      "url": "https://www.bayt.com/en/india/jobs/technical-solution-manager-75459736/",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.bayt.com/en/india/jobs/product-management-75429412",
+      "url": "https://www.bayt.com/en/india/jobs/product-management-75429412/",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:ad1cc914387b3c9f",
+      "url": "https://in.indeed.com/viewjob?jk=ad1cc914387b3c9f",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:c980d18e65f61a0e",
+      "url": "https://in.indeed.com/viewjob?jk=c980d18e65f61a0e",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:7d9481ea09fe4072",
+      "url": "https://in.indeed.com/viewjob?jk=7d9481ea09fe4072",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:36c3f99037a17a91",
+      "url": "https://in.indeed.com/viewjob?jk=36c3f99037a17a91",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:701ca3b943f80c1e",
+      "url": "https://in.indeed.com/viewjob?jk=701ca3b943f80c1e",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:1c8ccf3fae0da9fc",
+      "url": "https://in.indeed.com/viewjob?jk=1c8ccf3fae0da9fc",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:1ee3c9da2a71f998",
+      "url": "https://in.indeed.com/viewjob?jk=1ee3c9da2a71f998",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:e1ec894c82e73076",
+      "url": "https://in.indeed.com/viewjob?jk=e1ec894c82e73076",
+      "status": "closed",
+      "checked_at": 1795196304.3045294,
       "quote": "position is filled"
     }
   ]
