@@ -4,24 +4,33 @@ from pathlib import Path
 from urllib.parse import urlsplit,parse_qsl,urlencode,urlunsplit
 from mnc_employers import mnc_employer,normalize_employer
 from collect import india_location
+from build_delivery_locations import specific_city
 from job_availability import is_unavailable,availability_key,closure_quote,closed_registry
 
 def canonical(url):
  p=urlsplit(url)
- return urlunsplit((p.scheme,p.netloc.lower(),p.path.rstrip('/'),urlencode(sorted((k,v) for k,v in parse_qsl(p.query) if not re.match(r'utm_|^(source|ref|gh_src|trk|trackingId)$',k,re.I))),''))
+ for key,value in parse_qsl(p.query):
+  if key=='rx_url':
+   target=urlsplit(value)
+   if target.scheme=='https' and target.hostname and not target.username and not target.password:p=target;break
+ if (p.hostname or '').endswith('linkedin.com'):
+  match=re.fullmatch(r'/jobs/view/(?:[a-zA-Z0-9-]+-)?(\d+)/?',p.path)
+  if match:p=p._replace(netloc='www.linkedin.com',path='/jobs/view/'+match.group(1),query='')
+ return urlunsplit((p.scheme,p.netloc.lower(),p.path.rstrip('/'),urlencode(sorted((k,v) for k,v in parse_qsl(p.query) if not re.match(r'utm_|rx_|^(source|ref|gh_src|trk|trackingId|board_id)$',k,re.I))),''))
 
 def identity_keys(j):
  employer=normalize_employer((mnc_employer(j) or {}).get('name',j.get('company','')))
  keys=['url:'+canonical(u) for u in [j.get('url',''),*(l.get('url','') for l in j.get('application_links',[]))] if u.startswith('https://')]
  if j.get('id'):keys.append('id:'+employer+'|'+j['id'])
- req=str(j.get('job_requisition_id') or '').strip().lower()
+ match=re.search(r'(?im)^\s*(?:job requisition|requisition|job|role)\s*(?:id|number|#)\s*[:#]\s*([A-Za-z0-9_-]{4,40})\s*$',j.get('description',''))
+ req=str(j.get('job_requisition_id') or (match.group(1) if match else '')).strip().lower()
  if req:keys.append('req:'+employer+'|'+req)
  return keys
 
 def merge_feeds(feeds,now=None):
  now=time.time() if now is None else now;groups=[];lookup={};sources={};closures={**closed_registry(),**{r['key']:r for f in feeds for r in f.get('closed_jobs',[]) if isinstance(r,dict) and r.get('status')=='closed' and isinstance(r.get('key'),str)}}
  # The most recently verified employer page is preferred over platform copies.
- jobs=sorted((j for f in feeds for j in f.get('jobs',[])),key=lambda j:(not str(j.get('source','')).startswith('careers:'),-float(j.get('last_checked',0))))
+ jobs=sorted((j for f in feeds for j in f.get('jobs',[])),key=lambda j:(not str(j.get('source','')).startswith('careers:'),not specific_city(j.get('location','')),-float(j.get('last_checked',0))))
  for j in jobs:
   if is_unavailable(j):
    key=availability_key(j.get('url',''))

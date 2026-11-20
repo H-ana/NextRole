@@ -2,10 +2,10 @@ import {loadClosedJobs} from './job-availability.mjs?v=165';
 import {extractDocxResume,loadMammoth} from './docx-text.mjs?v=159';
 import {filterRoleAlignedJobs} from './role-alignment.mjs?v=153';
 import {openJobResume} from './free-resume-tools.mjs?v=164';
-import {searchPublicJobs} from './public-search.mjs?v=165';
-import {setupPublicExperience} from './public-experience.mjs?v=165';
+import {searchPublicJobs} from './public-search.mjs?v=168';
+import {setupPublicExperience} from './public-experience.mjs?v=168';
 import {retainResumeFile,retainedResumeFile,retainedResumeMetadata,clearResumeFile} from './resume-file-store.mjs?v=126';
-import {setupAutofillProfile} from './autofill-profile.mjs?v=133';
+import {setupAutofillProfile} from './autofill-profile.mjs?v=166';
 import {experienceFit,recommendationExperience} from './experience-policy.mjs?v=153';
 import {employerIndex,isMncEmployer,mncListings} from './mnc-employers.mjs?v=113';
 import {postingFreshness,matchesPostingFreshness} from './posting-freshness.mjs?v=113';
@@ -16,7 +16,7 @@ import {jobCardDetails} from './job-card-details.mjs?v=113';
 import {setupApplicationTracker} from './application-tracker.mjs?v=136';
 import {mountApplicationWriting} from './application-writing.mjs?v=113';
 import {eligibleListings} from './listing-checks.mjs?v=165';
-import {setupRecruiterInbox} from './recruiter-inbox.mjs?v=134';
+import {setupRecruiterInbox} from './recruiter-inbox.mjs?v=167';
 import {mountReferralTools} from './referral-tools.mjs?v=155';
 import {findBackend,apiRequest} from './api-client.mjs?v=116';
 import {setupAgentUI} from './agent-ui.mjs?v=153';
@@ -26,8 +26,10 @@ import {downloadOnePageResume} from './one-page-export.mjs?v=116';
 import {formatSkillSections} from './skill-format.mjs?v=113';
 import {mountResumeBuilder} from './resume-builder.mjs?v=113';
 import {pdfPageText,setupExtractionReview} from './extraction-review.mjs?v=124';
-import {HIRING_CITIES, canonicalCity, matchesPreferredCities} from './locations.mjs?v=153';
+import {HIRING_CITIES, canonicalCity, matchesPreferredCities} from './locations.mjs?v=168';
 import {extract, safeUrl, evidenceFor, tailorResume, hasSkillOverlap, requiredYears, meetsKnownExperience} from './resume-tools.mjs?v=113';
+// Mount private notifications before job-feed requests or resume setup can delay them.
+setupRecruiterInbox();
 await loadClosedJobs();
 const mncIndex=employerIndex(await fetch(new URL('./mnc-employers.json?v=163',import.meta.url)).then(r=>{if(!r.ok)throw new Error('Employer policy unavailable');return r.json();}).catch(()=>({companies:[]})));
 const recommendedListings=items=>filterRoleAlignedJobs(mncListings(eligibleListings(items),mncIndex).filter(job=>recommendationExperience(job,$('experience').value)),$('resume-text').value,{target_roles:$('search').value.trim()});
@@ -180,7 +182,9 @@ async function loadJobs(refresh=false){
   if(!(backend.status.capabilities||[]).includes('cached-job-search'))throw new Error('Job search is unavailable right now.');
   if(refresh)await apiRequest(cachedApi,'/api/jobs/refresh',{},10000);
   const resume=$('resume-text').value.trim().length>=40?$('resume-text').value:'';
-  const data=await apiRequest(cachedApi,'/api/jobs/search',{resume,preferences:{experience:Number($('experience').value),cities:remoteMode()?[]:selectedCities,workstyle:remoteMode()?'Remote':$('workstyle').value,target_roles:$('search').value.trim()},limit:200},30000);
+  const searchBody={resume,preferences:{experience:Number($('experience').value),cities:remoteMode()?[]:selectedCities,workstyle:remoteMode()?'Remote':$('workstyle').value,target_roles:$('search').value.trim()},limit:200};
+  if(refresh&&backend.status.platform_jobs?.configured)try{await apiRequest(cachedApi,'/api/jobs/platform-search',{...searchBody,refresh:true},10000);}catch{/* Cached recommendations remain usable while a source is unavailable. */}
+  const data=await apiRequest(cachedApi,'/api/jobs/search',searchBody,30000);
   if(generation!==browseGeneration)return false;
   jobs=uiJobs(data.jobs);loadedOnce=true;relevantOnly=false;
   resultsRanked=!!resume&&data.ranking_mode!=='browse';
@@ -223,7 +227,6 @@ setupPlatformJobs({localOnly:!['localhost','127.0.0.1'].includes(location.hostna
 loadJobs(false);
 
 
-setupRecruiterInbox();
 
 // Refresh cached, locally ranked results while the app is visible. No Gemini call.
 setInterval(()=>{if(!document.hidden&&!$('detail').open&&!$('find-jobs').disabled&&$('resume-text').value.trim().length>=40)loadJobs(false);},300000);

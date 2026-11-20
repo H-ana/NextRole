@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {gzipSync} from 'node:zlib';
+import {deliveryParts,loadJobDelivery,selectedDeliveryKeys} from './dist/job-delivery.mjs';
+import {matchesPreferredCities} from './dist/locations.mjs';
+const now=Date.now()/1000,part=(key)=>({key,url:'job-feeds/'+key+'-0-0123456789abcdef.json.gz',bytes:500});
+const index={format:'nextrole-job-index',version:1,generated_at:now,shards:[part('bengaluru'),part('pune'),part('remote')]};
+assert.deepEqual(deliveryParts(index,{cities:['Bangalore']}).map(p=>p.key),['bengaluru','remote']);assert.deepEqual(deliveryParts(index,{workstyle:'Remote'}).map(p=>p.key),['remote']);
+assert(selectedDeliveryKeys({cities:['Gurugram'],include_nearby:true}).has('noida'));
+assert.throws(()=>deliveryParts({...index,shards:[{...part('pune'),url:'https://untrusted.example/file'}]}),/Invalid job shard/);
+assert(matchesPreferredCities('Hyderābād, India',['Hyderabad']));
+const calls=[];globalThis.fetch=async url=>{calls.push(String(url));if(String(url).endsWith('jobs-index.json'))return new Response(JSON.stringify(index));if(String(url).includes('bengaluru-'))return new Response(gzipSync(JSON.stringify({jobs:[{id:'a',description:'Original source text'}]})));if(String(url).includes('remote-'))return new Response(gzipSync(JSON.stringify({jobs:[]})));throw Error('Unselected city must not be downloaded');};
+const data=await loadJobDelivery({cities:['Bengaluru']},true,value=>value.jobs);assert.equal(data.jobs[0].description,'Original source text');assert(!calls.some(url=>url.includes('pune-')));assert(!calls.some(url=>url.includes('public-jobs.json')));
+console.log('Gzip delivery, selected-city downloads, remote/NCR coverage, Unicode city matching and source URL validation passed.');

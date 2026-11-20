@@ -5,7 +5,7 @@ const inbox=await fs.readFile('dist/recruiter-inbox.mjs','utf8');
 let appended=[],polls=0;
 function node(){return {hidden:false,prepend(){},append(){},setAttribute(){},querySelector(){return {onclick:null};},showModal(){this.open=true;},close(){this.open=false;}};}
 const context=vm.createContext({location:{hostname:'nextrole-job-match.blueowl129.chatgpt.site'},document:{createElement:node,body:{append(n){appended.push(n);}},querySelector:node},findBackend(){polls++;throw Error('Must not access a shared mailbox');},setTimeout(){polls++;},URL});
-vm.runInContext(inbox.replace(/^\uFEFF?import[^\n]*\n/,'').replace('export function setupRecruiterInbox','function setupRecruiterInbox')+'\nsetupRecruiterInbox();',context);
+vm.runInContext(inbox.replace(/^\uFEFF?import[^\n]*\n/,'').replaceAll('export function ','function ')+'\nsetupRecruiterInbox();',context);
 assert.equal(polls,0,'Public inbox must not poll local/shared Gmail endpoints');
 assert.match(appended[0].innerHTML,/Gmail sync stays in your private workspace/);
 assert.match(appended[0].innerHTML,/http:\/\/localhost:8081\/\?view=notifications/);
@@ -19,7 +19,7 @@ console.log('Public copy, help links, safe errors and hosted Gmail isolation pas
 
 const experience=await fs.readFile('dist/public-experience.mjs','utf8');
 assert.doesNotMatch(experience,/public-availability|Find company jobs\. Keep your resume|data-service-state/);
-assert.match(experience,/loadPublicFeed\(\)\.catch/,'Feed still preloads without rendering the banner');
+assert.match(experience,/preloadJobIndex\(\)\.catch/,'Only the small public index preloads, without downloading every job');
 
 assert.doesNotMatch(experience,/Resume tools|setupFreeResumeTools/);
 const backup=await fs.readFile('dist/portable-backup.mjs','utf8');assert.match(backup,/getElementById\('application-tools'\)\.append/);

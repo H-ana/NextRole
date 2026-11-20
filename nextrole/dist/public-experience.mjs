@@ -1,5 +1,5 @@
 import {setupPortableBackup} from './portable-backup.mjs?v=132';
-import {loadPublicFeed} from './public-search.mjs?v=165';
+import {preloadJobIndex} from './job-delivery.mjs?v=168';
 import {findBackend} from './api-client.mjs?v=116';
 export const hostedWebsite=()=>!['localhost','127.0.0.1'].includes(location.hostname);
 export function setupPublicExperience(){
@@ -10,5 +10,5 @@ export function setupPublicExperience(){
  if(!hostedWebsite())return;
  const semantic=document.createElement('label');semantic.className='autofill-confirm';semantic.innerHTML='<input type="checkbox" id="local-semantic" aria-describedby="local-semantic-help"> Improve matching with on-device AI. Your resume stays in your browser.';document.querySelector('.search-actions').after(semantic);const semanticHelp=document.createElement('p');semanticHelp.id='local-semantic-help';semanticHelp.className='file-hint';semanticHelp.textContent='Downloads a matching model the first time you use it.';semantic.after(semanticHelp);
  // Warm the public feed internally. Search owns visible errors and retry actions.
- loadPublicFeed().catch(()=>{});
+ preloadJobIndex().catch(()=>{});
 }

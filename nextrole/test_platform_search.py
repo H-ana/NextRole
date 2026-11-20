@@ -98,13 +98,16 @@ class NormalizationTests(unittest.TestCase):
             def to_json(self,orient):return json.dumps(rows('naukri'))
         calls=[]
         def scrape(**kwargs):calls.append(kwargs);return Frame()
-        plan={'site':'naukri','role':'Data Analyst','city':'India','remote':True}
+        plan={'site':'naukri','role':'Data Analyst','city':'India','remote':True,'hours_old':48}
         with patch.dict('sys.modules',{'jobspy':types.SimpleNamespace(scrape_jobs=scrape)}):
             self.assertEqual(len(jobspy_worker.run(plan)['jobs']),1)
             self.assertTrue(calls[0]['fetch_description']);self.assertTrue(calls[0]['is_remote'])
             self.assertEqual(calls[0]['country_indeed'],'India')
+            self.assertEqual(calls[0]['hours_old'],48)
             self.assertNotIn('proxies',calls[0])
             Frame.attrs={'errors':{'naukri':'blocked'}}
+            self.assertTrue(jobspy_worker.run(plan)['warnings']);self.assertEqual(len(jobspy_worker.run(plan)['jobs']),1)
+            Frame.to_json=lambda self,**kwargs:'[]'
             self.assertIn('error',jobspy_worker.run(plan))
 
 class CollectorTests(unittest.TestCase):
@@ -127,9 +130,10 @@ class CollectorTests(unittest.TestCase):
         with patch('platform_search.jobspy_installed',return_value=False):
             self.assertFalse(self.collector.request(body,fetch)['configured']);self.assertEqual(calls,[])
         with patch('platform_search.jobspy_installed',return_value=True):
-            self.collector.request(body,fetch);self.wait();self.assertEqual(len(calls),5)
-            self.collector.request(body,fetch);self.wait();self.assertEqual(len(calls),10)
-            self.collector.request(body,fetch);self.wait();self.assertEqual(len(calls),10)
+            self.collector.request(body,fetch);self.wait();self.assertEqual(len(calls),20)
+            self.assertEqual({p['city'] for p in calls},{'Bengaluru','Chennai'},'All selected cities finish in one search')
+            self.collector.request(body,fetch);self.wait();self.assertEqual(len(calls),20)
+            self.collector.request(body,fetch);self.wait();self.assertEqual(len(calls),20)
             status=self.collector.status()
         self.assertEqual(status['counts']['Indeed'],1);self.assertEqual(status['counts']['Naukri'],1)
         self.assertEqual(status['sources']['BDJobs']['state'],'unsupported_location')
@@ -152,7 +156,7 @@ class CollectorTests(unittest.TestCase):
             with patch('platform_search.time.time',return_value=time.time()+901):
                 calls=[]
                 self.collector.request(body,lambda p:(calls.append(p) or [],False));self.wait()
-                self.assertEqual([p['site'] for p in calls],['indeed'])
+                self.assertEqual({p['site'] for p in calls},{'linkedin','naukri','indeed','glassdoor','bayt'})
 
     def test_manual_application_identifiers_and_legacy_cache_exclusion(self):
         with patch.object(self.store,'build_index'):

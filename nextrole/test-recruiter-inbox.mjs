@@ -15,6 +15,7 @@ const header=new Element();
 globalThis.document={body:new Element(),createElement:tag=>new Element(tag),querySelector:selector=>selector==='header'?header:null};
 globalThis.location={origin:'http://localhost:8080',hostname:'localhost',port:'8080'};
 let snapshot={connected:true,configured:true,checking:false,error:'',unread:1,applications:[],email:'synthetic@example.com',notifications:[{category:'Recruiter outreach',subject:'<img src=x onerror=bad()> New role',sender:'Recruiter <hiring@example.com>',received_at:Date.now()/1000,message_id:'abcdef654321',thread_id:'abcdef123456',seen:0}]};
+const originalNotifications=snapshot.notifications;
 globalThis.setTimeout=()=>0;
 globalThis.fetch=async(url,options={})=>{
  calls.push(url);
@@ -43,9 +44,23 @@ await open();assert.equal(calls.some(url=>url.endsWith('/api/gmail/check')),true
 await node('seen-recruiter-mail').onclick();assert.equal(node('seen-recruiter-mail').disabled,true);
 snapshot={...snapshot,connected:false,configured:false,notifications:[]};await open();
 assert.equal(node('connect-gmail').hidden,false);assert.equal(node('gmail-setup').hidden,false,'Initial connection setup is available');
-snapshot={...snapshot,connected:true,configured:true,error:'Google authorization expired. Reconnect Gmail.'};await open();
+snapshot={...snapshot,connected:true,configured:true,notifications:originalNotifications,error:'Google authorization expired. Reconnect Gmail.'};await open();
 assert.equal(node('connect-gmail').hidden,false,'Recovery appears only when access needs renewal');
 assert.equal(node('connect-gmail').textContent,'Reconnect Gmail');
+assert.equal(node('check-recruiter-mail').hidden,true,'Do not offer a failed sync until authorization is renewed');
+assert.match(node('gmail-connection-state').textContent,/saved notifications.*shown/);
+const checksBefore=calls.filter(url=>url.endsWith('/api/gmail/check')).length;await open();assert.equal(calls.filter(url=>url.endsWith('/api/gmail/check')).length,checksBefore,'Opening an expired connection must not launch another failed Gmail scan');
+assert(node('positive-recruiter-notifications').children.some(child=>child.tag==='a'),'Saved messages remain visible during reconnection');
+snapshot={...snapshot,notifications:[]};await open();assert.match(node('positive-recruiter-notifications').children[0].textContent,/Reconnect Gmail to check/,'An authorization failure is not a successful empty search');
 snapshot={...snapshot,error:''};await open();
 assert.equal(node('connect-gmail').hidden,true);assert.equal(node('inbox-action-status').textContent,'');
 console.log('Passed: connected inbox hides setup/account controls; no tracking required; opening checks recruiter mail; safe text rendering; seen state and expired-access recovery.');
+// Opening the inbox must await the first background load instead of showing a blank panel.
+let releaseNotifications;const delayedNotifications=new Promise(resolve=>{releaseNotifications=resolve;});let delayedChecks=0;
+snapshot={...snapshot,connected:true,configured:true,error:'',notifications:originalNotifications};
+globalThis.fetch=async url=>{let data;if(url.endsWith('/api/status'))data={connected:false,capabilities:['recruiter-mail-inbox-v2']};else if(url.endsWith('/api/notifications'))data=await delayedNotifications;else if(url.endsWith('/api/gmail/check')){delayedChecks++;data={checking:true};}else throw Error('Unexpected request');return {ok:true,json:async()=>data};};
+setupRecruiterInbox();await new Promise(resolve=>setImmediate(resolve));const opening=node('notifications-button').onclick();assert.match(node('inbox-action-status').textContent,/Loading your saved/);releaseNotifications(snapshot);await opening;assert.equal(delayedChecks,1);assert.equal(node('positive-recruiter-notifications').children[0].tag,'a');
+// The hosted app only links to the private workspace; it never requests mailbox data.
+let hostedRequests=0;globalThis.fetch=async()=>{hostedRequests++;throw Error('Mailbox access must stay local');};globalThis.location={origin:'https://nextrole-job-match.hanashelbin.chatgpt.site',hostname:'nextrole-job-match.hanashelbin.chatgpt.site',port:''};
+setupRecruiterInbox();await node('notifications-button').onclick();assert.equal(hostedRequests,0);assert.match(nodes.get('recruiter-inbox').html,/http:\/\/localhost:8081\/\?view=notifications/);
+console.log('Passed: initial-load sharing, automatic private inbox opening and no hosted mailbox requests.');

@@ -36,7 +36,7 @@ def employer_history(site,previous):
  return result
 
 def search_plan(site,now,previous=None):
- count=20 if site=='linkedin' else 40
+ count=40
  general=[dict(site=site,role=role,city='India',remote=False,results=count) for role in ROLES]
  general += [dict(site=site,role=role,city=city,remote=False,results=count) for city in CITIES for role in ['AI Engineer','Generative AI Engineer']]
  general += [dict(site=site,role=role,city='India',remote=True,results=count) for role in ['AI Engineer','Generative AI Engineer']]
@@ -65,24 +65,28 @@ def search_plan(site,now,previous=None):
   if i<len(general):plans.append(general[i])
  return plans
 
-def collect(site,previous=None,fetcher=fetch_jobs,now=None):
+def collect(site,previous=None,fetcher=fetch_jobs,now=None,mode='full'):
  now=time.time() if now is None else now;source='platform:public:'+site
  plans=search_plan(site,now,previous);history=employer_history(site,previous)
+ if mode=='recent':
+  targeted=[p for p in plans if p.get('employer')][:16];general=[p for p in plans if not p.get('employer')];plans=[{**p,'hours_old':48} for pair in zip(general,targeted) for p in pair]+[{**p,'hours_old':48} for p in general[len(targeted):]]
  jobs={j['id']:j for j in (previous or {}).get('jobs',[]) if j.get('source')==source and now-86400<=j.get('last_checked',0)<=now+300}
- successes=0;attempts=0;deadline=time.monotonic()+40*60
+ successes=0;attempts=0;deadline=time.monotonic()+(8*60 if mode=='recent' else 40*60)
  def one(plan):
   if time.monotonic()>=deadline:return plan,None,0,0
   try:batch=fetcher(plan)[0]
   except Exception:return plan,None,1,0
   attempted=1;successful=1
-  # One additional page per query only when the first page fills. Failures on
-  # the second page never throw away first-page results. No proxy or login.
-  if len(batch)>=plan['results'] and time.monotonic()<deadline:
+  # Continue pages while they add new IDs; preserve partial results on failure.
+  known={j['id'] for j in batch};page_size=plan['results'];last_count=len(batch)
+  for page in range(1,2 if mode=='recent' else 4):
+   if last_count<page_size or time.monotonic()>=deadline:break
    attempted+=1
    try:
-    extra=fetcher({**plan,'offset':plan['results']})[0];successful+=1
-    batch=list({j['id']:j for j in [*batch,*extra]}.values())
-   except Exception:pass
+    extra=fetcher({**plan,'offset':page*page_size})[0];successful+=1;last_count=len(extra)
+    new=[j for j in extra if j['id'] not in known];known.update(j['id'] for j in extra);batch.extend(new)
+    if not new:break
+   except Exception:break
   return plan,batch,attempted,successful
  with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
   for plan,batch,count,successful in pool.map(one,plans):
@@ -97,13 +101,13 @@ def collect(site,previous=None,fetcher=fetch_jobs,now=None):
     if plan.get('employer') and mnc_employer(j)!=mnc_employer({'company':plan['employer']}):continue
     clean={k:j[k] for k in FIELDS if k in j};clean.update(source=source,company=mnc_employer(j)['name'],last_checked=now,experience_requirement=requirement(j.get('description','')))
     jobs[clean['id']]=clean
- return {'format':'nextrole-public-jobs','version':1,'generated_at':now,'jobs':list(jobs.values()),'sources':[{'id':source,'company':SITES[site]+' public listings','last_attempt':now,'last_success':now if successes else None,'available':bool(successes),'queries_succeeded':successes,'queries_attempted':attempts,'planned_queries':len(plans),'employer_searches':history,'approved_employers':len(approved_targets()),'targeted_employers_planned':sum(bool(p.get('employer')) for p in plans)}]}
+ return {'format':'nextrole-public-jobs','version':1,'generated_at':now,'jobs':list(jobs.values()),'sources':[{'id':source,'company':SITES[site]+' public listings','last_attempt':now,'last_success':now if successes else None,'available':bool(successes),'queries_succeeded':successes,'queries_attempted':attempts,'planned_queries':len(plans),'employer_searches':history,'approved_employers':len(approved_targets()),'targeted_employers_planned':sum(bool(p.get('employer')) for p in plans),'mode':mode}]}
 
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('--site',choices=[*SITES,'all'],required=True);p.add_argument('--previous');p.add_argument('--output',required=True);a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--site',choices=[*SITES,'all'],required=True);p.add_argument('--previous');p.add_argument('--output',required=True);p.add_argument('--mode',choices=['full','recent'],default='full');a=p.parse_args()
  old=json.loads(Path(a.previous).read_text(encoding='utf-8')) if a.previous and Path(a.previous).exists() else None
  if a.site=='all':
   from merge import merge_feeds
-  with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:data=merge_feeds(list(pool.map(lambda site:collect(site,old),SITES)))
- else:data=collect(a.site,old)
+  with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:data=merge_feeds(list(pool.map(lambda site:collect(site,old,mode=a.mode),(['linkedin','naukri','indeed'] if a.mode=='recent' else SITES))))
+ else:data=collect(a.site,old,mode=a.mode)
  Path(a.output).write_text(json.dumps(data,ensure_ascii=False,separators=(',',':')),encoding='utf-8');print(json.dumps({'site':a.site,'jobs':len(data['jobs']),'successful_queries':sum(s.get('queries_succeeded',0) for s in data['sources'])}))

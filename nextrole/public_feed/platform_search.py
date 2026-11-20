@@ -59,8 +59,8 @@ def discovery_plan(body):
     places=['India'] if remote or not cities else list(dict.fromkeys(cities))
     # The current product offers Indian cities. Do not search foreign regions
     # or treat overseas remote roles as available to applicants in India.
-    return [{'role':role,'city':city,'remote':remote,'site':site}
-            for city in places for site in SITES if site not in REGIONS],''
+    return [{'role':role,'city':city,'remote':remote,'site':site,'results':40}
+            for city in places for site in ['linkedin','naukri','indeed','glassdoor','bayt']],''
 
 def normalize_results(rows):
     from careers_scraper import make_job
@@ -112,7 +112,7 @@ def normalize_results(rows):
                 from job_store import safe_url
                 if safe_url(direct) and not platform_for_url(direct):job['application_links'].append({'platform':'Company careers','url':direct})
             if isinstance(item.get('id'),str):job['source_job_id']=item['id']
-            match=re.search(r'(?im)^\s*(?:job requisition|requisition|job)\s*(?:id|number|#)\s*[:#]\s*([A-Za-z0-9_-]{4,40})\s*$',description)
+            match=re.search(r'(?im)^\s*(?:job requisition|requisition|job|role)\s*(?:id|number|#)\s*[:#]\s*([A-Za-z0-9_-]{4,40})\s*$',description)
             if match:job['job_requisition_id']=match.group(1)
             # Preserve public source metadata; missing values remain unknown.
             for field in ('date_posted','min_amount','max_amount','interval','currency'):
@@ -140,7 +140,7 @@ def fetch_jobs(plan):
 
 class PlatformSearch:
     def __init__(self,store):
-        self.store=store;self.lock=threading.Lock();self.refreshing=False;self.checked={};self.message='';self.completed=0;self.planned=0
+        self.store=store;self.lock=threading.Lock();self.refreshing=False;self.checked={};self.message='';self.completed=0;self.planned=0;self.failed=set()
         self.site_states={site:{'state':'unsupported_location','message':f'JobSpy covers {REGIONS[site]}; the current location preferences cover India.'}
                           if site in REGIONS else {'state':'not_searched','message':'Not searched this session.'} for site in SITES}
 
@@ -159,31 +159,43 @@ class PlatformSearch:
         plans,note=discovery_plan(body)
         if note:self.message=note;return self.status()
         def identity(plan):return hashlib.sha256(json.dumps(plan,sort_keys=True).encode()).hexdigest()
-        missing=[p for p in plans if self.checked.get(identity(p),(0,0))[0]<time.time()-self.checked.get(identity(p),(0,0))[1]]
+        missing=[p for p in plans if self.checked.get(identity(p),(0,0))[0]<time.time()-self.checked.get(identity(p),(0,0))[1] or body.get('refresh') is True and identity(p) not in self.failed and time.time()-self.checked.get(identity(p),(0,0))[0]>=60]
         if not self.lock.acquire(blocking=False):return self.status()
         if not missing:
-            self.lock.release();self.message='Using cached JobSpy searches. Successful searches refresh after six hours; failed sources have a 15-minute cooldown.';return self.status()
+            self.lock.release();self.message='Using cached JobSpy searches. Successful searches refresh after 15 minutes; failed sources have a 15-minute cooldown.';return self.status()
         self.refreshing=True;self.planned=len(plans);self.completed=len(plans)-len(missing);self.message='Collecting public job listings with JobSpy.'
         def collect(plan):
             site=plan['site'];self.site_states[site]={'state':'collecting','message':'Checking public listings.'}
             try:
-                jobs,warnings=fetcher(plan)
+                jobs,warnings=fetcher({**plan,'hours_old':48})
                 jobs=[j for j in jobs if j.get('listed_on')==[SITES[site]]]
                 self.store.update_source(SOURCE,jobs,complete=False,note='JobSpy public listings; verify availability at the destination. Collection may be partial.')
-                self.checked[identity(plan)]=(time.time(),21600)
+                # A fresh-only search must not hide older vacancies that remain open.
+                known={j['id'] for j in jobs}
+                for page in range(2):
+                    try:extra,partial=fetcher({**plan,'offset':page*plan.get('results',40)})
+                    except Exception:warnings=True;break
+                    extra=[j for j in extra if j.get('listed_on')==[SITES[site]]]
+                    new=[j for j in extra if j['id'] not in known];known.update(j['id'] for j in extra)
+                    if new:self.store.update_source(SOURCE,new,complete=False,note='Additional platform search pages.');jobs.extend(new)
+                    warnings=warnings or partial
+                    if len(extra)<plan.get('results',40) or not new:break
+                self.checked[identity(plan)]=(time.time(),900)
+                self.failed.discard(identity(plan))
                 state='partial' if warnings else 'updated' if jobs else 'no_results'
                 self.site_states[site]={'state':state,'message':f'{len(jobs)} usable listings returned for {plan["city"]}.'+(' Some details could not be collected.' if warnings else '')}
             except Exception as error:
+                self.failed.add(identity(plan))
                 self.checked[identity(plan)]=(time.time(),900)
                 self.site_states[site]={'state':'unavailable','message':str(error) if isinstance(error,PlatformError) else 'Collector unavailable. Cached listings retained.'}
             finally:self.completed+=1
         def work():
             try:
-                # One city per action; every applicable source gets a turn.
+                # Visit every selected city without requiring another click; publish each result as it finishes.
                 with ThreadPoolExecutor(max_workers=2) as pool:
-                    for future in as_completed([pool.submit(collect,p) for p in missing[:5]]):future.result()
+                    for future in as_completed([pool.submit(collect,p) for p in missing]):future.result()
                 self.message='JobSpy collection finished. Confirm availability on the original site.'
-                if self.completed<self.planned:self.message+=' Find jobs again to continue remaining locations.'
+                if self.completed<self.planned:self.message+=' Some sources could not be completed.'
                 self.store.build_index()
             except Exception:self.message='Collection interrupted. Cached jobs remain searchable.'
             finally:self.refreshing=False;self.lock.release()

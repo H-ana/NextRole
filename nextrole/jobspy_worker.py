@@ -11,16 +11,19 @@ def run(plan):
     with contextlib.redirect_stdout(io.StringIO()),contextlib.redirect_stderr(io.StringIO()):
         from jobspy import scrape_jobs
         options=dict(site_name=[plan['site']],search_term=plan['role'],location=plan['city'] if plan['city']=='India' else plan['city']+', India',
-                     country_indeed='India',results_wanted=max(10,min(40,int(plan.get('results',20)))),offset=max(0,min(80,int(plan.get('offset',0)))),description_format='plain',fetch_description=True,verbose=0)
+                     country_indeed='India',results_wanted=max(10,min(60,int(plan.get('results',40)))),offset=max(0,min(400,int(plan.get('offset',0)))),description_format='plain',fetch_description=True,verbose=0)
         if plan['remote']:options['is_remote']=True
+        hours=plan.get('hours_old')
+        if isinstance(hours,int) and not isinstance(hours,bool) and 1<=hours<=720:options['hours_old']=hours
         ids=plan.get('linkedin_company_ids')
         if plan['site']=='linkedin' and isinstance(ids,list) and ids and all(isinstance(i,int) and not isinstance(i,bool) and i>0 for i in ids):options['linkedin_company_ids']=ids[:10]
         frame=scrape_jobs(**options)
-        if frame.attrs.get('errors'):return {'error':'This source blocked or failed collection. Cached listings remain available; try after the cooldown.'}
+        errors=frame.attrs.get('errors')
         # pandas serializes NaN and datetimes safely; retain only public fields.
         fields=['is_expired','job_is_open','accepting_applications','job_status','application_status','experience_range','work_from_home_type','id','job_url_direct','site','job_url','title','company','description','location','is_remote','company_description','date_posted','min_amount','max_amount','interval','currency']
         rows=json.loads(frame[[c for c in fields if c in frame.columns]].to_json(orient='records'))
-        return {'jobs':rows,'warnings':bool(frame.attrs.get('warnings'))}
+        if errors and not rows:return {'error':'This source blocked or failed collection. Cached listings remain available; try after the cooldown.'}
+        return {'jobs':rows,'warnings':bool(errors or frame.attrs.get('warnings'))}
 
 if __name__=='__main__':
     try:result=run(json.loads(sys.stdin.read(4096)))

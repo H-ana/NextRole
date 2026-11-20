@@ -3,6 +3,8 @@ import {findBackend,apiRequest} from './api-client.mjs?v=116';
 const el=(tag,text,className)=>{const e=document.createElement(tag);if(text)e.textContent=text;if(className)e.className=className;return e;};
 const shortDate=value=>new Date(value*1000).toLocaleString(undefined,{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
 
+export function gmailNeedsReconnect(state){return !!state&&/reconnect|authorization.*(?:expired|rejected)|invalid_grant/i.test(state.error||'');}
+
 export function setupRecruiterInbox(){
  const bell=el('button','Notifications','inbox-bell');bell.id='notifications-button';bell.type='button';
  const badge=el('span','0','inbox-badge');badge.hidden=true;bell.prepend(el('span','🔔 '));bell.append(badge);(document.querySelector('#header-actions')||document.querySelector('header')).append(bell);
@@ -20,17 +22,17 @@ export function setupRecruiterInbox(){
  function render(){
   if(!state)return;
   badge.hidden=!state.unread;badge.textContent=String(state.unread||0);bell.setAttribute('aria-label',`Notifications, ${state.unread||0} unseen positive updates`);
-  const reconnect=state.connected&&/reconnect|authorization expired/i.test(state.error||'');
-  $('#gmail-connection-state').textContent=state.connected?(state.checking?'Checking for recruiter messages…':state.last_checked?'Last checked '+shortDate(state.last_checked):'Recruiter messages will appear here automatically.'):'Connect Gmail once to receive recruiter messages.';
+  const reconnect=gmailNeedsReconnect(state),canCheck=state.connected&&!reconnect;
+  $('#gmail-connection-state').textContent=reconnect?'Gmail needs to be reconnected. Your saved notifications are still shown below.':state.connected?(state.checking?'Checking for recruiter messages…':state.last_checked?'Last checked '+shortDate(state.last_checked):'Recruiter messages will appear here automatically.'):'Connect Gmail once to receive recruiter messages.';
   $('#connect-gmail').hidden=state.connected&&!reconnect;
   $('#connect-gmail').textContent=reconnect?'Reconnect Gmail':'Connect Gmail';
-  $('#check-recruiter-mail').hidden=!state.connected;
-  $('#check-recruiter-mail').disabled=!state.connected||state.checking;
+  $('#check-recruiter-mail').hidden=!canCheck;
+  $('#check-recruiter-mail').disabled=!canCheck||state.checking;
   $('#seen-recruiter-mail').hidden=!state.connected;
   $('#seen-recruiter-mail').disabled=!state.unread;
   $('#gmail-setup').hidden=state.connected||state.configured;
   if(state.connected&&!reconnect){$('#gmail-authorize-link').hidden=true;if(authorizing)action.textContent='';authorizing=false;}
-  if(state.error)action.textContent=state.error;
+  if(state.error&&!authorizing)action.textContent=state.error;
   else if(lastError&&action.textContent===lastError)action.textContent='';
   lastError=state.error||'';
   const list=$('#positive-recruiter-notifications');list.replaceChildren();
@@ -42,10 +44,11 @@ export function setupRecruiterInbox(){
    card.append(el('strong',item.category),el('p',item.subject),el('small',`${item.sender} · ${shortDate(item.received_at)}`));
    card.append(el('span','Open in Gmail ↗','inbox-open-label'));list.append(card);
   }
-  if(!list.children.length)list.append(el('p',state.connected?'No positive recruiter messages found yet.':'Your recruiter messages will appear here once Gmail is connected.','inbox-empty'));
+  if(!list.children.length)list.append(el('p',reconnect?'Reconnect Gmail to check for new recruiter messages.':state.connected?'No positive recruiter messages found yet.':'Your recruiter messages will appear here once Gmail is connected.','inbox-empty'));
  }
- async function refresh(){if(loading)return;loading=true;try{state=await api('/api/notifications');render();}catch(error){if(dialog.open)action.textContent=error.message;}finally{loading=false;}}
- bell.onclick=async()=>{dialog.showModal();await refresh();if(state?.connected)try{await api('/api/gmail/check',{});await refresh();}catch(error){action.textContent=error.message;}};
+ let pendingRefresh=null;
+ async function refresh(){if(pendingRefresh)return pendingRefresh;loading=true;pendingRefresh=(async()=>{try{state=await api('/api/notifications');render();if(!state.error&&!authorizing)action.textContent='';}catch(error){if(dialog.open)action.textContent='Could not load recruiter updates. '+error.message;}finally{loading=false;}})();try{await pendingRefresh;}finally{pendingRefresh=null;}}
+ bell.onclick=async()=>{dialog.showModal();action.textContent='Loading your saved recruiter updates…';await refresh();if(state?.connected&&!gmailNeedsReconnect(state))try{await api('/api/gmail/check',{});await refresh();}catch(error){action.textContent=error.message;}};
  $('.inbox-close').onclick=()=>dialog.close();
  $('#save-gmail-client').onclick=async()=>{
   const file=$('#gmail-client-file').files[0];
@@ -57,7 +60,7 @@ export function setupRecruiterInbox(){
  };
  $('#connect-gmail').onclick=async()=>{
   if(!state?.configured){$('#gmail-setup').hidden=false;$('#gmail-setup').open=true;action.textContent='Complete the one-time Desktop OAuth setup below first.';return;}
-  try{const result=await api('/api/gmail/connect',{});const url=new URL(result.url);if(url.origin!=='https://accounts.google.com')throw new Error('Google authorization URL was invalid.');$('#gmail-authorize-link').href=url.href;$('#gmail-authorize-link').hidden=false;authorizing=true;action.textContent='Continue with Google using the link above. You choose whether to grant read-only mailbox access.';}
+  try{action.textContent='Preparing your Gmail reconnection…';const result=await api('/api/gmail/connect',{});const url=new URL(result.url);if(url.origin!=='https://accounts.google.com')throw new Error('Google authorization URL was invalid.');$('#gmail-authorize-link').href=url.href;$('#gmail-authorize-link').hidden=false;authorizing=true;action.textContent='Continue with Google using the link above. You choose whether to grant read-only mailbox access.';}
   catch(error){action.textContent=error.message;}
  };
  $('#check-recruiter-mail').onclick=async()=>{try{await api('/api/gmail/check',{});action.textContent='';await refresh();}catch(error){action.textContent=error.message;}};

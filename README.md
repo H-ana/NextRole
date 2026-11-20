@@ -20,7 +20,7 @@ The public app runs primarily in your browser. An optional Python backend adds l
 | Downloads | Browser-generated one-page PDF, Word draft and text exports. PDF retains bullet markers and indentation with compact section spacing. |
 | Application writing | Formal, friendly and concise cover-letter, recruiter-message and referral-request drafts. Nothing is sent automatically. |
 | Applications | Local application timelines, referral details and interview preparation for relevant statuses. The optional local backend can add Gmail lifecycle updates. |
-| Edge autofill | Extract and review profile facts, save a profile and resume to the extension, then scan and fill selected fields on careers sites. |
+| Edge autofill | Extract and review profile facts, save a profile and resume to the extension, then scan and fill selected fields on careers sites. Version 1.5 adds local company-answer memory and a history of filled roles (requires the Edge update). |
 | Portable backup | Password-encrypted browser-data backup and restore, with a separate extension confirmation when restoring its documents. |
 
 ## Use the public app
@@ -77,7 +77,9 @@ Saved Gmail credentials use Windows DPAPI. Notification/application metadata is 
 
 ## How matching and collection work
 
-Public listing refresh is configured in [GitHub Actions](.github/workflows/public-jobs.yml), including a four-hour schedule and manual trigger. Jobs are collected independently of applicant resumes from configured company careers sources and supported JobSpy platforms. The browser merges the full GitHub public feed with bundled listings and deduplicates results. The hosted bundle can contain a balanced subset to meet hosting file-size limits; the full feed remains on GitHub and is fetched when available. Refreshes are subject to GitHub scheduling, source availability and collection limits; this is not a real-time or exhaustive feed.
+Public listing refresh is configured in [GitHub Actions](.github/workflows/public-jobs.yml): an hourly scan prioritizes the last 48 hours on LinkedIn, Naukri and Indeed, while a four-hour full scan also searches older open vacancies and configured company careers sources. Both modes have a manual trigger. Searches rotate through approved employers, retain partial pages when a later request fails, and deduplicate original URLs and employer requisition IDs. Collection runs independently of applicant resumes.
+
+The browser first loads a small `jobs-index.json`, then downloads compressed `job-feeds/` parts for the selected locations, remote roles and unspecified locations. It retains the full-feed compatibility fallback. Local JobSpy searches cover every selected city, publish each completed page into the cache, and refresh after 15 minutes; explicit refresh can retry successful searches after one minute while failed sources retain their cooldown. Platform restrictions, GitHub scheduling delays and public search limits still apply: neither collection mode guarantees every personalized LinkedIn/Naukri result or real-time availability.
 
 The employer registry also includes a reviewed snapshot of 99 companies from Naukri's Fortune 500 directory filtered to Engineering - Software & QA (54 added employers). Targeted Naukri searches use employer names, verify returned company names, and reserve 32 of 64 rotating employer-query slots for this group; the normal resume, role and preference filters still apply. Category membership is a Naukri label, not independent certification of a current Fortune ranking or guaranteed suitable openings. See the [source snapshot](nextrole/docs/naukri-fortune-software-companies.json).
 

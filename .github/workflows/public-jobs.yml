@@ -1,9 +1,16 @@
 name: Refresh public company jobs
 on:
   workflow_dispatch:
+    inputs:
+      scope:
+        description: Refresh recent platform jobs or all company sources
+        type: choice
+        options: [recent, full]
+        default: recent
   push:
     paths: ['nextrole/public_feed/**', '.github/workflows/public-jobs.yml']
   schedule:
+    - cron: '17 * * * *'
     - cron: '23 */4 * * *'
 permissions:
   contents: write
@@ -15,6 +22,8 @@ jobs:
     if: github.event.repository.private == false
     runs-on: ubuntu-latest
     timeout-minutes: 150
+    env:
+      COLLECTION_MODE: ${{ (github.event.schedule == '23 */4 * * *' || github.event.inputs.scope == 'full') && 'full' || 'recent' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -25,34 +34,45 @@ jobs:
       - name: Collect public platform listings
         run: |
           mkdir -p public-job-parts
-          python nextrole/public_feed/collect_platforms.py --site all --previous nextrole/dist/public-jobs.json --output public-job-parts/platforms.json
+          python nextrole/public_feed/collect_platforms.py --site all --mode "$COLLECTION_MODE" --previous nextrole/dist/public-jobs.json --output public-job-parts/platforms.json
       - name: Merge and deduplicate public listings
         run: python nextrole/public_feed/merge.py --input-dir public-job-parts --previous nextrole/dist/public-jobs.json --output nextrole/dist/public-jobs.json
       - name: Check public vacancy availability
         run: python nextrole/public_feed/check_availability.py --feed nextrole/dist/public-jobs.json --registry nextrole/dist/closed-jobs.json --max-jobs 120
+      - name: Build small location-addressed public feeds
+        run: python nextrole/public_feed/build_delivery.py --feed nextrole/dist/public-jobs.json --output-dir nextrole/dist
       - name: Publish platform results before career scans
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- nextrole/dist/public-jobs.json nextrole/dist/closed-jobs.json
+          git add -- nextrole/dist/public-jobs.json nextrole/dist/closed-jobs.json nextrole/dist/jobs-index.json
+          git add -A -- nextrole/dist/job-feeds
           if ! git diff --cached --quiet; then
             git commit -m 'Refresh expanded company and platform jobs [skip ci]'
             git pull --rebase origin main
             git push origin HEAD:main
           fi
       - name: Collect every configured company without applicant data
+        if: env.COLLECTION_MODE == 'full'
         run: |
           mkdir -p public-job-parts
           python nextrole/public_feed/collect.py --previous nextrole/dist/public-jobs.json --output public-job-parts/careers.json --max-sources 512
       - name: Merge refreshed career and platform listings
+        if: env.COLLECTION_MODE == 'full'
         run: python nextrole/public_feed/merge.py --input-dir public-job-parts --previous nextrole/dist/public-jobs.json --output nextrole/dist/public-jobs.json
       - name: Check merged vacancy availability
+        if: env.COLLECTION_MODE == 'full'
         run: python nextrole/public_feed/check_availability.py --feed nextrole/dist/public-jobs.json --registry nextrole/dist/closed-jobs.json --max-jobs 120
+      - name: Rebuild delivery after company updates
+        if: env.COLLECTION_MODE == 'full'
+        run: python nextrole/public_feed/build_delivery.py --feed nextrole/dist/public-jobs.json --output-dir nextrole/dist
       - name: Publish only public listing data
+        if: env.COLLECTION_MODE == 'full'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- nextrole/dist/public-jobs.json nextrole/dist/closed-jobs.json
+          git add -- nextrole/dist/public-jobs.json nextrole/dist/closed-jobs.json nextrole/dist/jobs-index.json
+          git add -A -- nextrole/dist/job-feeds
           if ! git diff --cached --quiet; then
             git commit -m 'Refresh expanded company and platform jobs [skip ci]'
             git pull --rebase origin main

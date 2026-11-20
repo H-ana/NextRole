@@ -35,7 +35,7 @@ class ExpandedFeedTests(unittest.TestCase):
    self.assertEqual(sum(p['remote'] for p in plans),2)
    self.assertEqual(len(plans),len(ROLES)+34+2+TARGET_BATCH)
    self.assertTrue(all(p['results']==40 for p in plans))
-  self.assertTrue(all(p['results']==20 for p in search_plan('linkedin',0)))
+  self.assertTrue(all(p['results']==40 for p in search_plan('linkedin',0)))
  def test_employer_mentions_do_not_admit_unscoped_companies(self):
   result=collect('naukri',fetcher=lambda p:([{**self.job(),'company':'Unknown AI startup'}],False),now=1000100)
   self.assertEqual(result['jobs'],[])
@@ -106,6 +106,27 @@ class ExpandedFeedTests(unittest.TestCase):
    return [self.job(str(i)) for i in range(20)] if not p.get('offset') else [self.job('19'),self.job('20')],False
   with patch('collect_platforms.search_plan',return_value=[plan]):result=collect('linkedin',fetcher=fetch,now=1000100)
   self.assertEqual([p.get('offset',0) for p in calls],[0,20]);self.assertEqual(len(result['jobs']),21)
+
+ def test_recent_scan_filters_dates_but_retains_previous_open_jobs(self):
+  from unittest.mock import patch
+  calls=[];plan=dict(site='linkedin',role='AI Engineer',city='India',remote=False,results=40)
+  old=self.job('old');old['source']='platform:public:linkedin'
+  with patch('collect_platforms.search_plan',return_value=[plan]):
+   result=collect('linkedin',previous={'jobs':[old]},fetcher=lambda p:(calls.append(p) or [self.job('new')],False),now=1000100,mode='recent')
+  self.assertTrue(all(p['hours_old']==48 for p in calls));self.assertEqual({j['id'] for j in result['jobs']},{'old','new'})
+  self.assertEqual(result['sources'][0]['mode'],'recent')
+
+ def test_full_scan_visits_four_pages_and_stops_duplicate_pages(self):
+  from unittest.mock import patch
+  plan=dict(site='linkedin',role='AI Engineer',city='India',remote=False,results=10);calls=[]
+  def fetch(p):
+   offset=p.get('offset',0);calls.append(offset)
+   return [self.job(str(i)) for i in range(offset,offset+10)],False
+  with patch('collect_platforms.search_plan',return_value=[plan]):result=collect('linkedin',fetcher=fetch,now=1000100)
+  self.assertEqual(calls,[0,10,20,30]);self.assertEqual(len(result['jobs']),40)
+  calls.clear()
+  with patch('collect_platforms.search_plan',return_value=[plan]):result=collect('linkedin',fetcher=lambda p:(calls.append(p.get('offset',0)) or [self.job(str(i)) for i in range(10)],False),now=1000100)
+  self.assertEqual(calls,[0,10]);self.assertEqual(len(result['jobs']),10)
 
  def test_failed_second_platform_page_preserves_first(self):
   from unittest.mock import patch
