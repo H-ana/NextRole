@@ -15,7 +15,7 @@ The public app runs primarily in your browser. An optional Python backend adds l
 | Local matching | Keyword ranking with optional on-device MiniLM semantic similarity; a relevance score is not proof of eligibility. |
 | Search controls | Multiple cities, optional nearby locations, platform filters, saved jobs and 24/48-hour posting filters. |
 | Resume import | PDF, DOCX and text extraction, extraction review, and list-aware Word import. The retained original remains separate from the tailored draft. |
-| Gemini tailoring | Whole-resume review, evidence-backed wording, summary and ordering suggestions, and at most two missing-evidence questions. |
+| Gemini tailoring | Per-job fact-bank review, minimal evidence-backed edits, skill prioritization, weighted keyword coverage, and at most two missing-evidence questions. |
 | Clarification answers | Turns confirmed answers into complete accomplishment sentences, checks their meaning, and asks you to approve the wording before saving. |
 | Downloads | Browser-generated one-page PDF, Word draft and text exports. PDF retains bullet markers and indentation with compact section spacing. |
 | Application writing | Formal, friendly and concise cover-letter, recruiter-message and referral-request drafts. Nothing is sent automatically. |
@@ -40,6 +40,10 @@ Use your own Google Gemini API key in the private field and explicitly consent t
 The browser client currently uses `gemini-3.1-flash-lite`, with limits of **3 reviews/day, 15 requests/day and 5 requests/review**, paced at up to 3 requests/minute. Model selection and limits are defined in [`gemini-client.mjs`](nextrole/dist/gemini-client.mjs). These browser controls do not override Google quotas or billing settings. Use a project with billing disabled if you require free-tier-only usage. No shared owner key or paid fallback is configured.
 
 Tailoring preserves names, employers, dates, qualifications, numbers, technologies, proficiency and contribution level. Confirmed short answers first become proposed complete sentences. Local guards and a separate Gemini factual audit reject unsupported changes; you then select the wording to include. Teamwork and uncertainty must retain their meaning. Missing qualifications are not inserted. Failed AI requests do not erase already approved sentences. Further wording, summary and ordering changes remain opt-in.
+
+Each recommendation has a **Tailor resume** action that opens its own title, company and full collected job description. The review organizes original resume blocks into a fact bank, extracts source-backed technical, role, context, responsibility, domain and explicit-requirement terms, and asks Gemini for minimal relevant edits across all supported sections. Existing relevant skills can move first without adding unsupported skills or changing historical job titles. Up to eight role-specific drafts remain separate in tab memory; changing the original resume or job description produces a different draft identity. These drafts are not synced or persisted by this session cache.
+
+Keyword coverage compares the same original/current text scope before and after approval: technical terms weigh 2, role/function terms 1.5, and context, actions and domain terms 1. Years, degrees and certifications remain separate evidence checks. Selecting changes previews their coverage; applying or manually editing the draft recalculates it locally without another Gemini request. This is a transparent text-coverage indicator, not an employer ATS score or eligibility prediction. The existing Gemini review/request limits and factual audits remain in place; one-page export does not silently delete accomplishments to improve fit.
 
 ### One-page PDF and Word
 

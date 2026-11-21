@@ -1,5 +1,7 @@
 # Resume builder reference
 
+NextRole's per-job tailoring plan was independently adapted from [JaimeYeung/Resume-Tailor-AI](https://github.com/JaimeYeung/Resume-Tailor-AI), commit `f3c2c327c7f4deb1ae4fbbd4389f879b2e225d83`, reviewed on 21 November 2026. Reviewed files: `lib/prompts.ts`, `lib/types.ts`, `app/api/generate-resume/route.ts` and `app/api/boost-ats/route.ts`. The README declares MIT. Adopted design patterns include a structured fact bank, categorized JD keywords, minimal evidence-based bullet edits, skill ordering and weighted keyword coverage. NextRole retains its own Gemini transport, user-owned keys, quotas, factual validation, explicit approval and verified exports. It does not copy upstream source, switch providers, invent title versions, add unsupported boost-mode skills, silently trim facts, or mark downloads as submitted applications.
+
 NextRole's structured resume workbench is independently implemented using the public design patterns in [sauravhathi/atsresume](https://github.com/sauravhathi/atsresume), inspected on 24 October 2026. That repository identifies its license as MIT.
 
 Reviewed references: `src/components/builder.jsx`, `src/components/utility/DefaultResumeData.jsx`, and the README. They describe structured resume state, experience/project achievements, grouped skills, a live preview and section reordering. The README's AI tailoring promotion links to a separate service; that service's private implementation is not part of the inspected source.
