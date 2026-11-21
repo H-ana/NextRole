@@ -20,7 +20,8 @@ concurrency:
 jobs:
   collect:
     if: github.event.repository.private == false
-    runs-on: ubuntu-latest
+    # Keep the browser runtime on its supported OS rather than a moving image.
+    runs-on: ubuntu-24.04
     timeout-minutes: 150
     env:
       COLLECTION_MODE: ${{ (github.event.schedule == '23 */4 * * *' || github.event.inputs.scope == 'full') && 'full' || 'recent' }}
