@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1795212002.7407398,
+  "updated_at": 1795226769.2745287,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -666,6 +666,27 @@
       "url": "https://in.indeed.com/viewjob?jk=1f735f39e17a7f1d",
       "status": "closed",
       "checked_at": 1795211991.1525493,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:bd6e9af8ab249c65",
+      "url": "https://in.indeed.com/viewjob?jk=bd6e9af8ab249c65",
+      "status": "closed",
+      "checked_at": 1795226756.1446044,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:6bb8a74e0995172d",
+      "url": "https://in.indeed.com/viewjob?jk=6bb8a74e0995172d",
+      "status": "closed",
+      "checked_at": 1795226756.1446044,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:8e20e6f5df0f7e4f",
+      "url": "https://in.indeed.com/viewjob?jk=8e20e6f5df0f7e4f",
+      "status": "closed",
+      "checked_at": 1795226756.1446044,
       "quote": "position is filled"
     }
   ]
