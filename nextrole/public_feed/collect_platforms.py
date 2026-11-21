@@ -71,11 +71,11 @@ def collect(site,previous=None,fetcher=fetch_jobs,now=None,mode='full'):
  if mode=='recent':
   targeted=[p for p in plans if p.get('employer')][:16];general=[p for p in plans if not p.get('employer')];plans=[{**p,'hours_old':48} for pair in zip(general,targeted) for p in pair]+[{**p,'hours_old':48} for p in general[len(targeted):]]
  jobs={j['id']:j for j in (previous or {}).get('jobs',[]) if j.get('source')==source and now-86400<=j.get('last_checked',0)<=now+300}
- successes=0;attempts=0;deadline=time.monotonic()+(8*60 if mode=='recent' else 40*60)
+ successes=0;attempts=0;partials=0;methods={};deadline=time.monotonic()+(8*60 if mode=='recent' else 40*60)
  def one(plan):
-  if time.monotonic()>=deadline:return plan,None,0,0
-  try:batch=fetcher(plan)[0]
-  except Exception:return plan,None,1,0
+  if time.monotonic()>=deadline:return plan,None,0,0,False
+  try:batch,partial=fetcher(plan)
+  except Exception:return plan,None,1,0,True
   attempted=1;successful=1
   # Continue pages while they add new IDs; preserve partial results on failure.
   known={j['id'] for j in batch};page_size=plan['results'];last_count=len(batch)
@@ -83,14 +83,14 @@ def collect(site,previous=None,fetcher=fetch_jobs,now=None,mode='full'):
    if last_count<page_size or time.monotonic()>=deadline:break
    attempted+=1
    try:
-    extra=fetcher({**plan,'offset':page*page_size})[0];successful+=1;last_count=len(extra)
+    extra,warning=fetcher({**plan,'offset':page*page_size});partial=partial or warning;successful+=1;last_count=len(extra)
     new=[j for j in extra if j['id'] not in known];known.update(j['id'] for j in extra);batch.extend(new)
     if not new:break
-   except Exception:break
-  return plan,batch,attempted,successful
+   except Exception:partial=True;break
+  return plan,batch,attempted,successful,partial
  with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-  for plan,batch,count,successful in pool.map(one,plans):
-   attempts+=count;successes+=successful
+  for plan,batch,count,successful,partial in pool.map(one,plans):
+   attempts+=count;successes+=successful;partials+=int(partial)
    if plan.get('employer') and count:
     state={**history.get(plan['employer'],{}),'last_attempt':now,'next_role':(plan['target_role_index']+1)%len(TARGET_ROLES)}
     if successful:state['last_success']=now
@@ -101,7 +101,8 @@ def collect(site,previous=None,fetcher=fetch_jobs,now=None,mode='full'):
     if plan.get('employer') and mnc_employer(j)!=mnc_employer({'company':plan['employer']}):continue
     clean={k:j[k] for k in FIELDS if k in j};clean.update(source=source,company=mnc_employer(j)['name'],last_checked=now,experience_requirement=requirement(j.get('description','')))
     jobs[clean['id']]=clean
- return {'format':'nextrole-public-jobs','version':1,'generated_at':now,'jobs':list(jobs.values()),'sources':[{'id':source,'company':SITES[site]+' public listings','last_attempt':now,'last_success':now if successes else None,'available':bool(successes),'queries_succeeded':successes,'queries_attempted':attempts,'planned_queries':len(plans),'employer_searches':history,'approved_employers':len(approved_targets()),'targeted_employers_planned':sum(bool(p.get('employer')) for p in plans),'mode':mode}]}
+    method=clean.get('collection_method','unknown');methods[method]=methods.get(method,0)+1
+ return {'format':'nextrole-public-jobs','version':1,'generated_at':now,'jobs':list(jobs.values()),'sources':[{'id':source,'company':SITES[site]+' public listings','last_attempt':now,'last_success':now if successes else None,'available':bool(successes),'queries_succeeded':successes,'queries_attempted':attempts,'partial_queries':partials,'collection_method_counts':methods,'planned_queries':len(plans),'employer_searches':history,'approved_employers':len(approved_targets()),'targeted_employers_planned':sum(bool(p.get('employer')) for p in plans),'mode':mode}]}
 
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--site',choices=[*SITES,'all'],required=True);p.add_argument('--previous');p.add_argument('--output',required=True);p.add_argument('--mode',choices=['full','recent'],default='full');a=p.parse_args()

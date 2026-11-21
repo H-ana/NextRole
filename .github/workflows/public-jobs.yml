@@ -30,7 +30,12 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install public platform collector
-        run: python -m pip install 'python-jobspy==1.4.1'
+        run: |
+          python -m pip install 'python-jobspy==1.4.1' 'playwright==1.56.0'
+          python -m playwright install --with-deps chromium
+      - name: Verify platform extraction and recommendation boundaries
+        working-directory: nextrole
+        run: python -m unittest test_platform_html test_platform_search test_expanded_public_feed test_job_delivery test_public_feed
       - name: Collect public platform listings
         run: |
           mkdir -p public-job-parts

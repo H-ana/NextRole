@@ -101,7 +101,7 @@ def normalize_results(rows):
         elif declared_style in ('work from office','onsite','on-site'):style='On-site'
         if style=='Remote' and 'remote' not in location.lower():location='Remote - '+(location or 'Location not specified')
         job=make_job({**SOURCE,'company':company},title,plain_text(description),location,url,
-                     collection_method='JobSpy public listing',application_links=[{'platform':SITES[site],'url':url}],
+                     collection_method='Public search-page extraction' if item.get('extraction_method')=='public-search-html' else 'JobSpy public listing',application_links=[{'platform':SITES[site],'url':url}],
                      listed_on=[SITES[site]],style=style,company_description=item.get('company_description','')[:2000] if isinstance(item.get('company_description'),str) else '')
         if job:
             for field in ('is_expired','job_is_open','accepting_applications','availability_status','job_status','application_status'):
@@ -127,7 +127,7 @@ def fetch_jobs(plan):
     # Its input contains no resume, employer history, key or contact details.
     env={k:v for k,v in os.environ.items() if not any(s in k.upper() for s in ('API_KEY','TOKEN','SECRET','PROXY'))}
     try:
-        result=subprocess.run([sys.executable,str(ROOT/'jobspy_worker.py')],input=json.dumps(plan),
+        result=subprocess.run([sys.executable,str(ROOT/'platform_worker.py')],input=json.dumps(plan),
                               text=True,capture_output=True,timeout=90,cwd=str(ROOT),env=env)
         if result.returncode:raise PlatformError('Collector failed. Cached listings remain available.')
         if len(result.stdout)>8_000_000:raise PlatformError('Collector response exceeded the supported size.')
