@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1795524476.4848013,
+  "updated_at": 1795533649.2955952,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -806,6 +806,13 @@
       "url": "https://in.indeed.com/viewjob?jk=20d8a11f27873674",
       "status": "closed",
       "checked_at": 1795524471.91688,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.glassdoor.co.in/job-listing/j?jl=1010301127033",
+      "url": "https://www.glassdoor.co.in/job-listing/j?jl=1010301127033",
+      "status": "closed",
+      "checked_at": 1795533643.1404386,
       "quote": "position is filled"
     }
   ]
