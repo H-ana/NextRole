@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1795561993.3685112,
+  "updated_at": 1795570228.6006503,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -813,6 +813,20 @@
       "url": "https://www.glassdoor.co.in/job-listing/j?jl=1010301127033",
       "status": "closed",
       "checked_at": 1795533643.1404386,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.bayt.com/en/india/jobs/principal-software-engineer-75498466",
+      "url": "https://www.bayt.com/en/india/jobs/principal-software-engineer-75498466/",
+      "status": "closed",
+      "checked_at": 1795570216.6890206,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.bayt.com/en/india/jobs/senior-software-engineer-75498421",
+      "url": "https://www.bayt.com/en/india/jobs/senior-software-engineer-75498421/",
+      "status": "closed",
+      "checked_at": 1795570216.6890206,
       "quote": "position is filled"
     }
   ]
