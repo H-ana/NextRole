@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1795585045.3453515,
+  "updated_at": 1795620176.6213138,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -827,6 +827,13 @@
       "url": "https://www.bayt.com/en/india/jobs/senior-software-engineer-75498421/",
       "status": "closed",
       "checked_at": 1795570216.6890206,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.bayt.com/en/india/jobs/senior-consultant-data-ai-75498416",
+      "url": "https://www.bayt.com/en/india/jobs/senior-consultant-data-ai-75498416/",
+      "status": "closed",
+      "checked_at": 1795620163.6234102,
       "quote": "position is filled"
     }
   ]
