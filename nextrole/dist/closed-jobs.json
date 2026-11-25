@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1795620782.168768,
+  "updated_at": 1795627787.7554224,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -834,6 +834,34 @@
       "url": "https://www.bayt.com/en/india/jobs/senior-consultant-data-ai-75498416/",
       "status": "closed",
       "checked_at": 1795620163.6234102,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:b8700638bf07dc80",
+      "url": "https://in.indeed.com/viewjob?jk=b8700638bf07dc80",
+      "status": "closed",
+      "checked_at": 1795627775.8142054,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:3561c0d5628c1704",
+      "url": "https://in.indeed.com/viewjob?jk=3561c0d5628c1704",
+      "status": "closed",
+      "checked_at": 1795627775.8142054,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:25cde924f5443ec3",
+      "url": "https://in.indeed.com/viewjob?jk=25cde924f5443ec3",
+      "status": "closed",
+      "checked_at": 1795627775.8142054,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:f6be068d2f52e32f",
+      "url": "https://in.indeed.com/viewjob?jk=f6be068d2f52e32f",
+      "status": "closed",
+      "checked_at": 1795627775.8142054,
       "quote": "position is filled"
     }
   ]
