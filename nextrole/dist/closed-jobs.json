@@ -1,7 +1,7 @@
 {
   "format": "nextrole-closed-jobs",
   "version": 1,
-  "updated_at": 1795627787.7554224,
+  "updated_at": 1795655365.2955725,
   "entries": [
     {
       "key": "linkedin:4487032589",
@@ -862,6 +862,62 @@
       "url": "https://in.indeed.com/viewjob?jk=f6be068d2f52e32f",
       "status": "closed",
       "checked_at": 1795627775.8142054,
+      "quote": "position is filled"
+    },
+    {
+      "key": "url:https://www.bayt.com/en/india/jobs/applied-sciences-75429404",
+      "url": "https://www.bayt.com/en/india/jobs/applied-sciences-75429404/",
+      "status": "closed",
+      "checked_at": 1795655351.3213875,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:004207225bfbcbee",
+      "url": "https://in.indeed.com/viewjob?jk=004207225bfbcbee",
+      "status": "closed",
+      "checked_at": 1795655351.3213875,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:84077f9f47bb4293",
+      "url": "https://in.indeed.com/viewjob?jk=84077f9f47bb4293",
+      "status": "closed",
+      "checked_at": 1795655351.3213875,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:1ca8bc9c25dfa35d",
+      "url": "https://in.indeed.com/viewjob?jk=1ca8bc9c25dfa35d",
+      "status": "closed",
+      "checked_at": 1795655351.3213875,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:1bb276f7c05261f0",
+      "url": "https://in.indeed.com/viewjob?jk=1bb276f7c05261f0",
+      "status": "closed",
+      "checked_at": 1795655351.3213875,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:fe630e109d16f836",
+      "url": "https://in.indeed.com/viewjob?jk=fe630e109d16f836",
+      "status": "closed",
+      "checked_at": 1795655351.3213875,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:234b9be60c85bc2f",
+      "url": "https://in.indeed.com/viewjob?jk=234b9be60c85bc2f",
+      "status": "closed",
+      "checked_at": 1795655351.3213875,
+      "quote": "position is filled"
+    },
+    {
+      "key": "indeed:6ba306c9239bd167",
+      "url": "https://in.indeed.com/viewjob?jk=6ba306c9239bd167",
+      "status": "closed",
+      "checked_at": 1795655351.3213875,
       "quote": "position is filled"
     }
   ]
